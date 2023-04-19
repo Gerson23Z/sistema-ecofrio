@@ -16,7 +16,7 @@ class UsuariosModel extends Query
 
   public function getUsuarios()
   {
-    $sql = "SELECT * FROM usuarios";
+    $sql = "SELECT * FROM usuarios WHERE estado = 1";
     $data = $this->selectAll($sql);
     return $data;
   }
@@ -90,12 +90,11 @@ class UsuariosModel extends Query
     return $data;
   }
 
-  public function accionUser(int $estado, int $id)
+  public function eliminarUser(int $id)
   {
     $this->id = $id;
-    $this->estado = $estado;
-    $sql = "UPDATE usuarios SET estado = ? WHERE id = ?";
-    $datos = array($this->estado, $this->id);
+    $sql = "UPDATE usuarios SET estado = 0 WHERE id = ?";
+    $datos = array($this->id);
     $data = $this->save($sql, $datos);
     return $data;
   }

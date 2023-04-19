@@ -1,10 +1,41 @@
 let tblUsuarios;
+let tblUserEliminados;
 let tblInventario;
 
 document.addEventListener("DOMContentLoaded", function () {
   tblUsuarios = $("#tblUsuarios").DataTable({
     ajax: {
       url: base_url + "Usuarios/listar",
+      dataSrc: "",
+    },
+    columns: [
+      {
+        data: "id",
+      },
+      {
+        data: "nombre",
+      },
+      {
+        data: "apellido",
+      },
+      {
+        data: "user",
+      },
+      {
+        data: "rol",
+      },
+      {
+        data: "estado",
+      },
+      {
+        data: "acciones",
+      },
+    ],
+  });
+
+  tblUserEliminados = $("#tblUserEliminados").DataTable({
+    ajax: {
+      url: base_url + "UserEliminado/listar",
       dataSrc: "",
     },
     columns: [
@@ -68,6 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ],
   });
 });
+
 
 function frmLogin(event) {
   event.preventDefault();
@@ -218,7 +250,7 @@ function btnReingresarUser(id) {
     cancelButtonText: "No",
   }).then((result) => {
     if (result.isConfirmed) {
-      const url = base_url + "Usuarios/reingresar/" + id;
+      const url = base_url + "UserEliminado/reingresar/" + id;
       const http = new XMLHttpRequest();
       http.open("GET", url, true);
       http.send();
@@ -227,7 +259,7 @@ function btnReingresarUser(id) {
           const res = JSON.parse(this.responseText);
           if (res == "ok") {
             Swal.fire("Mensaje", "Usuario Reingresado Éxitosamente", "success");
-            tblUsuarios.ajax.reload();
+            tblUserEliminados.ajax.reload();
           } else {
             Swal.fire("Mensaje", res, "error");
           }

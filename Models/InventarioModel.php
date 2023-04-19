@@ -8,7 +8,7 @@ class InventarioModel extends Query
     }
     public function getInventario()
     {
-      $sql = "SELECT * FROM inventario WHERE est = 1";
+      $sql = "SELECT * FROM inventario WHERE estado = 1";
       $data = $this->selectAll($sql);
       return $data;
     }
@@ -85,7 +85,7 @@ class InventarioModel extends Query
   {
     $this->id = $id;
     $this->estado = $estado;
-    $sql = "UPDATE inventario SET est = ? WHERE id = ?";
+    $sql = "UPDATE inventario SET estado = ? WHERE id = ?";
     $datos = array($this->estado, $this->id);
     $data = $this->save($sql, $datos);
     return $data;

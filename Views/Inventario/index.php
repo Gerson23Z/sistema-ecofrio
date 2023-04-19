@@ -59,7 +59,7 @@
                     </div>
                     <div class="form-group">
                         <label for="txtUnidades">Unidades</label>
-                        <input id="txtUnidades" class="form-control" type="number" name="txtUnidades" placeholder="Unidades">
+                        <input id="txtUnidades" class="form-control" type="text" name="txtUnidades" placeholder="Unidades">
                     </div>
 
                     <button class="btn btn-primary" type="button" onclick="registrarProducto(event)" id="btnId">Registrar</button>

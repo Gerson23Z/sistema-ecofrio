@@ -69,7 +69,7 @@
             </div>
 
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="UserEliminado">
                     <i class="fa-brands fa-instalod fa-2x"></i>
                     <span>Instalacines</span></a>
             </li>

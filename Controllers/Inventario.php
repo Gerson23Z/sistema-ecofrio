@@ -16,10 +16,17 @@ class Inventario extends Controller
   {
     $data = $this->model->getInventario();
     for ($i = 0; $i < count($data); $i++) {
+      if ($data[$i]['unidades'] > 0) {
         $data[$i]['estado'] = '<span class="badge badge-success">Disponible</span>';
         $data[$i]['acciones'] = '<div><button type="button" class="btn btn-primary" onclick="btnEditarProducto(' . $data[$i]['id'] . ')">Editar</button>
             <button type="button" class="btn btn-danger"onclick="btnEliminarProducto(' . $data[$i]['id'] . ')">Eliminar</button>
             </div>';
+      }else{
+        $data[$i]['estado'] = '<span class="badge badge-danger">No Disponible</span>';
+        $data[$i]['acciones'] = '<div><button type="button" class="btn btn-primary" onclick="btnEditarProducto(' . $data[$i]['id'] . ')">Editar</button>
+            <button type="button" class="btn btn-danger"onclick="btnEliminarProducto(' . $data[$i]['id'] . ')">Eliminar</button>
+            </div>';
+      }
     }
     echo json_encode($data, JSON_UNESCAPED_UNICODE);
     die();

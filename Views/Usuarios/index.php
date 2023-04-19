@@ -22,6 +22,9 @@
         </tr>
     </tbody>
 </table>
+<a href="UserEliminado">  <button class="btn btn-primary mb-2" type="button">
+        Usuarios Desactivados
+    </button>
 
 <div id="nuevo_usuario" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title"
     aria-hidden="true">

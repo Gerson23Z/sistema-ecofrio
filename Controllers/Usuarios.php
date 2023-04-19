@@ -16,17 +16,10 @@ class Usuarios extends Controller
   {
     $data = $this->model->GetUsuarios();
     for ($i = 0; $i < count($data); $i++) {
-      if ($data[$i]['estado'] == 1) {
         $data[$i]['estado'] = '<span class="badge badge-success">Activo</span>';
         $data[$i]['acciones'] = '<div><button type="button" class="btn btn-primary" onclick="btnEditarUser(' . $data[$i]['id'] . ')">Editar</button>
-            <button type="button" class="btn btn-danger"onclick="btnEliminarProducto(' . $data[$i]['id'] . ')">Eliminar</button>
+            <button type="button" class="btn btn-danger"onclick="btnEliminarUser(' . $data[$i]['id'] . ')">Eliminar</button>
             </div>';
-      } else {
-        $data[$i]['estado'] = '<span class="badge badge-danger">Inactivo</span>';
-        $data[$i]['acciones'] = ' <div>
-        <button type="button" class="btn btn-success" type="button" onclick="btnReingresarUser(' . $data[$i]['id'] . ')">Reingresar</button>
-        </div> ';
-      }
     }
     echo json_encode($data, JSON_UNESCAPED_UNICODE);
     die();
@@ -105,22 +98,11 @@ class Usuarios extends Controller
 
   public function eliminar(int $id)
   {
-    $data = $this->model->accionUser(0, $id);
+    $data = $this->model->eliminarUser($id);
     if ($data == 1) {
       $msg = "ok";
     } else {
       $msg = "Error al eliminar el usuario";
-    }
-    echo json_encode($msg, JSON_UNESCAPED_UNICODE);
-    die();
-  }
-  public function reingresar(int $id)
-  {
-    $data = $this->model->accionUser(1, $id);
-    if ($data == 1) {
-      $msg = "ok";
-    } else {
-      $msg = "Error al reingresar el usuario";
     }
     echo json_encode($msg, JSON_UNESCAPED_UNICODE);
     die();
