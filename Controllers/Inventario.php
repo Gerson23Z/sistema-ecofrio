@@ -74,7 +74,7 @@ class Inventario extends Controller
 
   public function eliminar(int $id)
   {
-    $data = $this->model->eliminarProd(0, $id);
+    $data = $this->model->eliminarProducto($id);
     if ($data == 1) {
       $msg = "ok";
     } else {

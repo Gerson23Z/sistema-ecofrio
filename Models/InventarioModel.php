@@ -81,12 +81,11 @@ class InventarioModel extends Query
     return $data;
   }
 
-  public function eliminarProd(int $estado, int $id)
+  public function eliminarProducto(int $id)
   {
     $this->id = $id;
-    $this->estado = $estado;
-    $sql = "UPDATE inventario SET estado = ? WHERE id = ?";
-    $datos = array($this->estado, $this->id);
+    $sql = "UPDATE inventario SET estado = 0 WHERE id = ?";
+    $datos = array($this->id);
     $data = $this->save($sql, $datos);
     return $data;
   }

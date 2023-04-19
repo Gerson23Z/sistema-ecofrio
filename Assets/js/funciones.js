@@ -1,6 +1,7 @@
 let tblUsuarios;
 let tblUserEliminados;
 let tblInventario;
+let tblProductosEliminados;
 
 document.addEventListener("DOMContentLoaded", function () {
   tblUsuarios = $("#tblUsuarios").DataTable({
@@ -98,6 +99,43 @@ document.addEventListener("DOMContentLoaded", function () {
       },
     ],
   });
+
+  tblProductosEliminados = $("#tblProductosEliminados").DataTable({
+    ajax: {
+      url: base_url + "ProductosEliminados/listar",
+      dataSrc: "",
+    },
+    columns: [
+      {
+        data: "id",
+      },
+      {
+        data: "codigo",
+      },
+      {
+        data: "producto",
+      },
+      {
+        data: "tipo",
+      },
+      {
+        data: "especificaciones",
+      },
+      {
+        data: "fecha",
+      },
+      {
+        data: "unidades",
+      },
+      {
+        data: "estado",
+      },
+      {
+        data: "acciones",
+      },
+    ],
+  });
+
 });
 
 
@@ -351,6 +389,36 @@ function btnEliminarProducto(id) {
           if (res == "ok") {
             Swal.fire("Mensaje", "Producto Borrado Éxitosamente", "success");
             tblInventario.ajax.reload();
+          } else {
+            Swal.fire("Mensaje", res, "error");
+          }
+        }
+      };
+    }
+  });
+}
+
+function btnReingresarProducto(id) {
+  Swal.fire({
+    title: "Esta seguro de reingresar?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Si!",
+    cancelButtonText: "No",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const url = base_url + "ProductosEliminados/reingresar/" + id;
+      const http = new XMLHttpRequest();
+      http.open("GET", url, true);
+      http.send();
+      http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          const res = JSON.parse(this.responseText);
+          if (res == "ok") {
+            Swal.fire("Mensaje", "Producto Reingresado Éxitosamente", "success");
+            tblProductosEliminados.ajax.reload();
           } else {
             Swal.fire("Mensaje", res, "error");
           }

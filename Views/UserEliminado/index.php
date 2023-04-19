@@ -22,8 +22,6 @@
     </tbody>
 </table>
 
-<a href="Usuarios">  <button class="btn btn-primary mb-2" type="button">
-        Volver a Usuarios
-    </button>
-</a>
+<a href="Usuarios" class="btn btn-primary">Volver a Usuarios</a>
+
 <?php include "Views/Templates/footer.php"; ?>
