@@ -4,6 +4,7 @@
     <h1 class="h3 mb-0 text-gray-800">Inventario</h1>
 </div>
 <button class="btn btn-primary mb-2" type="button" onclick="frmInventario()" ;>Nuevo</button>
+<a href="ProductosEliminados" class="btn btn-primary float-right">Productos Eliminados</a>
 <table class="table table-light" id="tblInventario">
     <thead class="table-success">
         <tr>
@@ -24,8 +25,6 @@
         </tr>
     </tbody>
 </table>
-
-<a href="ProductosEliminados" class="btn btn-primary">Productos Eliminados</a>
 
 <div id="nuevo_producto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title"
     aria-hidden="true">

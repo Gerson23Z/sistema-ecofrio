@@ -3,6 +3,7 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Usuarios Desactivados</h1>
 </div>
+<a href="Usuarios" class="btn btn-primary float-right">Volver a Usuarios</a>
 <table class="table table-light" id="tblUserEliminados">
     <thead class="table-success">
         <tr>
@@ -21,7 +22,5 @@
         </tr>
     </tbody>
 </table>
-
-<a href="Usuarios" class="btn btn-primary">Volver a Usuarios</a>
 
 <?php include "Views/Templates/footer.php"; ?>
