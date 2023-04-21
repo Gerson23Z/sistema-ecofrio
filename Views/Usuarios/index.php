@@ -4,7 +4,7 @@
     <h1 class="h3 mb-0 text-gray-800">Usuarios</h1>
 </div>
 <button class="btn btn-primary mb-2" type="button" onclick="frmUsuario()" ;>Nuevo</button>
-<a href="UserEliminado" class="btn btn-primary float-right">Usuarios Eliminados</a>
+<a href="UsuariosEliminados" class="btn btn-primary float-right">Usuarios Eliminados</a>
 <table class="table table-light" id="tblUsuarios">
     <thead class="table-success">
         <tr>

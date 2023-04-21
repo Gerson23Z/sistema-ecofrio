@@ -93,7 +93,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="Inventario">
+                <a class="nav-link" href="InventarioRespuestos">
                     <i class="fas fa-box-open fa-2x"></i>
                     <span>Inventario</span></a>
             </li>

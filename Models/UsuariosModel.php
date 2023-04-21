@@ -83,14 +83,14 @@ class UsuariosModel extends Query
     return $res;
   }
 
-  public function editarUser(int $id)
+  public function editarUsuario(int $id)
   {
     $sql = "SELECT * FROM usuarios WHERE id = $id";
     $data = $this->select($sql);
     return $data;
   }
 
-  public function eliminarUser(int $id)
+  public function eliminarUsuario(int $id)
   {
     $this->id = $id;
     $sql = "UPDATE usuarios SET estado = 0 WHERE id = ?";

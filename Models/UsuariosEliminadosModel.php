@@ -1,5 +1,5 @@
 <?php
-class UserEliminadoModel extends Query
+class UsuariosEliminadosModel extends Query
 {
 private $id;
   public function __construct()
@@ -13,7 +13,7 @@ private $id;
     return $data;
   }
 
-  public function reingresarUser(int $id)
+  public function reingresarUsuario(int $id)
   {
     $this->id = $id;
     $sql = "UPDATE usuarios SET estado = 1 WHERE id = ?";

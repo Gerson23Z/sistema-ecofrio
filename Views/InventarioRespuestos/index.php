@@ -1,17 +1,21 @@
 <?php include "Views/Templates/header.php"; ?>
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Inventario</h1>
+    <h1 class="h3 mb-0 text-gray-800">Inventario Respuestos</h1>
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <a href="InventarioAires" class="btn btn-secondary col-6">Ir a Aires</a>
+    </div>
 </div>
-<button class="btn btn-primary mb-2" type="button" onclick="frmInventario()" ;>Nuevo</button>
-<a href="ProductosEliminados" class="btn btn-primary float-right">Productos Eliminados</a>
-<table class="table table-light" id="tblInventario">
+
+<button class="btn btn-success mb-2" type="button" onclick="frmInventarioRespuestos()" ;>Agregar</button>
+<a href="RespuestosEliminados" class="btn btn-primary mb-2 float-right">Productos Eliminados</a>
+
+<table class="table table-light" id="tblInventarioRespuestos">
     <thead class="table-success">
         <tr>
             <th>Id</th>
             <th>Codigo</th>
             <th>Producto</th>
-            <th>Tipo</th>
             <th>Especificaciones</th>
             <th>Fecha</th>
             <th>Unidades</th>
@@ -26,7 +30,7 @@
     </tbody>
 </table>
 
-<div id="nuevo_producto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title"
+<div id="nuevo_respuesto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -37,7 +41,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" id="frmProductos">
+                <form method="post" id="frmRespuestos">
                     <div class="form-group">
                         <label for="txtCodigo">Codigo</label>
                         <input type="hidden" id="id" name="id">
@@ -45,25 +49,22 @@
                     </div>
                     <div class="form-group">
                         <label for="txtProducto">Producto</label>
-                        <input id="txtProducto" class="form-control" type="text" name="txtProducto" placeholder="Producto">
-                    </div>
-                    <div class="form-group">
-                        <label for="slcTipo">Tipo</label>
-                        <select id="slcTipo" class="form-control" name="slcTipo">
-                            <option>Aire</option>
-                            <option>Respuesto</option>
-                        </select>
+                        <input id="txtProducto" class="form-control" type="text" name="txtProducto"
+                            placeholder="Producto">
                     </div>
                     <div class="form-group">
                         <label for="txtEspecificaciones">Especificaciones</label>
-                        <input id="txtEspecificaciones" class="form-control" type="text" name="txtEspecificaciones" placeholder="Especificaciones">
+                        <input id="txtEspecificaciones" class="form-control" type="text" name="txtEspecificaciones"
+                            placeholder="Especificaciones">
                     </div>
                     <div class="form-group">
                         <label for="txtUnidades">Unidades</label>
-                        <input id="txtUnidades" class="form-control" type="number" name="txtUnidades" placeholder="Unidades">
+                        <input id="txtUnidades" class="form-control" type="number" name="txtUnidades"
+                            placeholder="Unidades">
                     </div>
 
-                    <button class="btn btn-primary" type="button" onclick="registrarProducto(event)" id="btnId">Registrar</button>
+                    <button class="btn btn-primary" type="button" onclick="registrarRespuesto(event)"
+                        id="btnId">Registrar</button>
                     <button class="btn btn-danger" type="button" data-dismiss="modal">Cancelar</button>
                 </form>
             </div>

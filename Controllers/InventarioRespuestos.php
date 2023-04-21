@@ -1,5 +1,5 @@
 <?php
-class Inventario extends Controller
+class InventarioRespuestos extends Controller
 {
   public function __construct()
   {
@@ -14,17 +14,17 @@ class Inventario extends Controller
 
   public function listar()
   {
-    $data = $this->model->getInventario();
+    $data = $this->model->getInventarioRespuestos();
     for ($i = 0; $i < count($data); $i++) {
       if ($data[$i]['unidades'] > 0) {
         $data[$i]['estado'] = '<span class="badge badge-success">Disponible</span>';
-        $data[$i]['acciones'] = '<div><button type="button" class="btn btn-primary" onclick="btnEditarProducto(' . $data[$i]['id'] . ')">Editar</button>
-            <button type="button" class="btn btn-danger"onclick="btnEliminarProducto(' . $data[$i]['id'] . ')">Eliminar</button>
+        $data[$i]['acciones'] = '<div><button type="button" class="btn btn-primary" onclick="btnEditarRespuesto(' . $data[$i]['id'] . ')"><i class="fas fa-pen-to-square"></i></button>
+            <button type="button" class="btn btn-danger"onclick="btnEliminarRespuesto(' . $data[$i]['id'] . ')"><i class="fas fa-trash"></i></button>
             </div>';
       }else{
         $data[$i]['estado'] = '<span class="badge badge-danger">No Disponible</span>';
-        $data[$i]['acciones'] = '<div><button type="button" class="btn btn-primary" onclick="btnEditarProducto(' . $data[$i]['id'] . ')">Editar</button>
-            <button type="button" class="btn btn-danger"onclick="btnEliminarProducto(' . $data[$i]['id'] . ')">Eliminar</button>
+        $data[$i]['acciones'] = '<div><button type="button" class="btn btn-primary" onclick="btnEditarRespuesto(' . $data[$i]['id'] . ')"><i class="fas fa-pen-to-square"></i></button>
+            <button type="button" class="btn btn-danger"onclick="btnEliminarRespuesto(' . $data[$i]['id'] . ')"><i class="fas fa-trash"></i></button>
             </div>';
       }
     }
@@ -36,29 +36,28 @@ class Inventario extends Controller
     $id = $_POST['id'];
     $codigo = $_POST['txtCodigo'];
     $producto = $_POST['txtProducto'];
-    $tipo = $_POST['slcTipo'];
     $especificaciones = $_POST['txtEspecificaciones'];
     $unidades = $_POST['txtUnidades'];
-    if (empty($codigo) || empty($producto) || empty($tipo) || empty($especificaciones) || empty($unidades)) {
+    if (empty($codigo) || empty($producto) || empty($especificaciones)) {
       $msg = "Todos los campos son obligatorios";
     } else {
       if ($id == "") {
-          $data = $this->model->registrarProducto($codigo, $producto, $tipo, $especificaciones, $unidades);
+          $data = $this->model->registrarRespuesto($codigo, $producto, $especificaciones, $unidades);
           if ($data == "¡OK!") {
             $msg = "si";
           } else if ($data == "existe") {
-            $msg = "El producto ya existe";
+            $msg = "El Producto ya existe";
           } else {
-            $msg = "Error al registrar el producto";
+            $msg = "Error al registrar el Producto";
           }
       } else {
-        $data = $this->model->modificarProducto($codigo, $producto, $tipo, $especificaciones, $unidades, $id);
+        $data = $this->model->modificarRespuesto($codigo, $producto, $especificaciones, $unidades, $id);
         if ($data == "modificado") {
           $msg = "modificado";
         } else if ($data == "existe") {
           $msg = "El Producto ya existe";
         } else {
-          $msg = "Error al Modificar el Producto";
+          $msg = "Error al Modificar el Respuesto";
         }
       }
     }
@@ -67,14 +66,14 @@ class Inventario extends Controller
   }
   public function editar(int $id)
   {
-    $data = $this->model->editarProducto($id);
+    $data = $this->model->editarRespuesto($id);
     echo json_encode($data, JSON_UNESCAPED_UNICODE);
     die();
   }
 
   public function eliminar(int $id)
   {
-    $data = $this->model->eliminarProducto($id);
+    $data = $this->model->eliminarRespuesto($id);
     if ($data == 1) {
       $msg = "ok";
     } else {
@@ -83,6 +82,5 @@ class Inventario extends Controller
     echo json_encode($msg, JSON_UNESCAPED_UNICODE);
     die();
   }
-
 }
 ?>

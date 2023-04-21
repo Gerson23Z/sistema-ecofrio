@@ -4,7 +4,7 @@
     <h1 class="h3 mb-0 text-gray-800">Usuarios Desactivados</h1>
 </div>
 <a href="Usuarios" class="btn btn-primary float-right">Volver a Usuarios</a>
-<table class="table table-light" id="tblUserEliminados">
+<table class="table table-light" id="tblUsuariosEliminados">
     <thead class="table-success">
         <tr>
             <th>Id</th>

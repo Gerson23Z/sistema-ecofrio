@@ -16,9 +16,9 @@ class Usuarios extends Controller
   {
     $data = $this->model->GetUsuarios();
     for ($i = 0; $i < count($data); $i++) {
-        $data[$i]['estado'] = '<span class="badge badge-success">Activo</span>';
-        $data[$i]['acciones'] = '<div><button type="button" class="btn btn-primary" onclick="btnEditarUser(' . $data[$i]['id'] . ')">Editar</button>
-            <button type="button" class="btn btn-danger"onclick="btnEliminarUser(' . $data[$i]['id'] . ')">Eliminar</button>
+      $data[$i]['estado'] = '<span class="badge badge-success">Activo</span>';
+      $data[$i]['acciones'] = '<div><button type="button" class="btn btn-primary" onclick="btnEditarUsuario(' . $data[$i]['id'] . ')"><i class="fas fa-pen-to-square"></i></button>
+            <button type="button" class="btn btn-danger"onclick="btnEliminarUsuario(' . $data[$i]['id'] . ')"><i class="fas fa-trash"></i></button>
             </div>';
     }
     echo json_encode($data, JSON_UNESCAPED_UNICODE);
@@ -74,13 +74,17 @@ class Usuarios extends Controller
           }
         }
       } else {
-        $data = $this->model->modificarUsuario($nombre, $apellido, $usuario,$hash, $rol, $id);
-        if ($data == "modificado") {
-          $msg = "modificado";
-        } else if ($data == "existe") {
-          $msg = "El usuario ya existe";
+        if ($password != $confirmar) {
+          $msg = "Las contraseñas no coinciden";
         } else {
-          $msg = "Error al Modificar el Usuario";
+          $data = $this->model->modificarUsuario($nombre, $apellido, $usuario, $hash, $rol, $id);
+          if ($data == "modificado") {
+            $msg = "modificado";
+          } else if ($data == "existe") {
+            $msg = "El usuario ya existe";
+          } else {
+            $msg = "Error al Modificar el Usuario";
+          }
         }
       }
     }
@@ -91,14 +95,14 @@ class Usuarios extends Controller
 
   public function editar(int $id)
   {
-    $data = $this->model->editarUser($id);
+    $data = $this->model->editarUsuario($id);
     echo json_encode($data, JSON_UNESCAPED_UNICODE);
     die();
   }
 
   public function eliminar(int $id)
   {
-    $data = $this->model->eliminarUser($id);
+    $data = $this->model->eliminarUsuario($id);
     if ($data == 1) {
       $msg = "ok";
     } else {

@@ -1,5 +1,5 @@
 <?php
-class UserEliminado extends Controller
+class UsuariosEliminados extends Controller
 {
   public function __construct()
   {
@@ -18,7 +18,7 @@ class UserEliminado extends Controller
     for ($i = 0; $i < count($data); $i++) {
         $data[$i]['estado'] = '<span class="badge badge-danger">Inactivo</span>';
         $data[$i]['acciones'] = ' <div>
-        <button type="button" class="btn btn-success" type="button" onclick="btnReingresarUser(' . $data[$i]['id'] . ')">Reingresar</button>
+        <button type="button" class="btn btn-success" type="button" onclick="btnReingresarUsuario(' . $data[$i]['id'] . ')"><i class="fas fa-rotate-left"></i></button>
         </div> ';
     }
     echo json_encode($data, JSON_UNESCAPED_UNICODE);
@@ -27,7 +27,7 @@ class UserEliminado extends Controller
 
   public function reingresar(int $id)
   {
-    $data = $this->model->reingresarUser($id);
+    $data = $this->model->reingresarUsuario($id);
     if ($data == 1) {
       $msg = "ok";
     } else {

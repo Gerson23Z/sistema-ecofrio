@@ -1,7 +1,5 @@
 let tblUsuarios;
-let tblUserEliminados;
-let tblInventario;
-let tblProductosEliminados;
+let tblUsuariosEliminados;
 
 document.addEventListener("DOMContentLoaded", function () {
   tblUsuarios = $("#tblUsuarios").DataTable({
@@ -34,9 +32,9 @@ document.addEventListener("DOMContentLoaded", function () {
     ],
   });
 
-  tblUserEliminados = $("#tblUserEliminados").DataTable({
+  tblUsuariosEliminados = $("#tblUsuariosEliminados").DataTable({
     ajax: {
-      url: base_url + "UserEliminado/listar",
+      url: base_url + "UsuariosEliminados/listar",
       dataSrc: "",
     },
     columns: [
@@ -63,81 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
       },
     ],
   });
-
-  tblInventario = $("#tblInventario").DataTable({
-    ajax: {
-      url: base_url + "Inventario/listar",
-      dataSrc: "",
-    },
-    columns: [
-      {
-        data: "id",
-      },
-      {
-        data: "codigo",
-      },
-      {
-        data: "producto",
-      },
-      {
-        data: "tipo",
-      },
-      {
-        data: "especificaciones",
-      },
-      {
-        data: "fecha",
-      },
-      {
-        data: "unidades",
-      },
-      {
-        data: "estado",
-      },
-      {
-        data: "acciones",
-      },
-    ],
-  });
-
-  tblProductosEliminados = $("#tblProductosEliminados").DataTable({
-    ajax: {
-      url: base_url + "ProductosEliminados/listar",
-      dataSrc: "",
-    },
-    columns: [
-      {
-        data: "id",
-      },
-      {
-        data: "codigo",
-      },
-      {
-        data: "producto",
-      },
-      {
-        data: "tipo",
-      },
-      {
-        data: "especificaciones",
-      },
-      {
-        data: "fecha",
-      },
-      {
-        data: "unidades",
-      },
-      {
-        data: "estado",
-      },
-      {
-        data: "acciones",
-      },
-    ],
-  });
-
 });
-
 
 function frmLogin(event) {
   event.preventDefault();
@@ -169,13 +93,6 @@ function frmLogin(event) {
   }
 }
 
-function frmInventario() {
-  document.getElementById("title").innerHTML = "Nuevo Producto";
-  document.getElementById("btnId").innerHTML = "Registrar";
-  document.getElementById("frmProductos").reset();
-  document.getElementById("id").value = "";
-  $("#nuevo_producto").modal("show");
-}
 function frmUsuario() {
   document.getElementById("title").innerHTML = "Nuevo Usuario";
   document.getElementById("btnId").innerHTML = "Registrar";
@@ -192,13 +109,6 @@ function registrarUser(event) {
   const txtPassword = document.getElementById("txtPassword");
   const txtConfirmar = document.getElementById("txtConfirmar");
 
-  if (
-    txtNombre.value == "" ||
-    txtApellido.value == "" ||
-    txtUsuario.value == ""
-  ) {
-    Swal.fire("Error", "No puedes dejar campos vacios", "error");
-  } else {
     const url = base_url + "Usuarios/registrar";
     const frm = document.getElementById("frmUsuarios");
     const http = new XMLHttpRequest();
@@ -221,10 +131,9 @@ function registrarUser(event) {
         }
       }
     };
-  }
 }
 
-function btnEditarUser(id) {
+function btnEditarUsuario(id) {
   document.getElementById("title").innerHTML = "Actualizar Usuario";
   document.getElementById("btnId").innerHTML = "Modificar Usuario";
   const url = base_url + "Usuarios/editar/" + id;
@@ -246,7 +155,7 @@ function btnEditarUser(id) {
   };
 }
 
-function btnEliminarUser(id) {
+function btnEliminarUsuario(id) {
   Swal.fire({
     title: "Esta seguro de eliminar?",
     text: "El usuario no se eliminara de forma permanente, solo cambiará el estado a inactivo!",
@@ -254,7 +163,7 @@ function btnEliminarUser(id) {
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "Si!",
+    confirmButtonText: "Si",
     cancelButtonText: "No",
   }).then((result) => {
     if (result.isConfirmed) {
@@ -277,18 +186,18 @@ function btnEliminarUser(id) {
   });
 }
 
-function btnReingresarUser(id) {
+function btnReingresarUsuario(id) {
   Swal.fire({
     title: "Esta seguro de reingresar?",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "Si!",
+    confirmButtonText: "Si",
     cancelButtonText: "No",
   }).then((result) => {
     if (result.isConfirmed) {
-      const url = base_url + "UserEliminado/reingresar/" + id;
+      const url = base_url + "UsuariosEliminados/reingresar/" + id;
       const http = new XMLHttpRequest();
       http.open("GET", url, true);
       http.send();
@@ -297,128 +206,7 @@ function btnReingresarUser(id) {
           const res = JSON.parse(this.responseText);
           if (res == "ok") {
             Swal.fire("Mensaje", "Usuario Reingresado Éxitosamente", "success");
-            tblUserEliminados.ajax.reload();
-          } else {
-            Swal.fire("Mensaje", res, "error");
-          }
-        }
-      };
-    }
-  });
-}
-
-function registrarProducto(event) {
-  event.preventDefault();
-  const txtCodigo = document.getElementById("txtCodigo");
-  const txtProducto = document.getElementById("txtProducto");
-  const slcTipo = document.getElementById("slcTipo");
-  const txtEspecificaciones = document.getElementById("txtEspecificaciones");
-  const txtUnidades = document.getElementById("txtUnidades");
-
-  if (
-    txtUnidades.value < 0
-  ) {
-    Swal.fire("Error", "No puedes poner unidades negativas", "error");
-  } else {
-    const url = base_url + "Inventario/registrar";
-    const frm = document.getElementById("frmProductos");
-    const http = new XMLHttpRequest();
-    http.open("POST", url, true);
-    http.send(new FormData(frm));
-    http.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        const res = JSON.parse(this.responseText);
-        if (res == "si") {
-          Swal.fire("Listo", "Producto registrado con exito", "success");
-          frm.reset();
-          $("#nuevo_producto").modal("hide");
-          tblInventario.ajax.reload();
-        } else if (res == "modificado") {
-          Swal.fire("Listo", "Producto modificado con exito", "success");
-          $("#nuevo_producto").modal("hide");
-          tblInventario.ajax.reload();
-        } else {
-          Swal.fire("Error", res, "error");
-        }
-      }
-    };
-  }
-}
-
-function btnEditarProducto(id) {
-  document.getElementById("title").innerHTML = "Actualizar Producto";
-  document.getElementById("btnId").innerHTML = "Modificar Producto";
-  const url = base_url + "Inventario/editar/" + id;
-  const http = new XMLHttpRequest();
-  http.open("GET", url, true);
-  http.send();
-  http.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-      const res = JSON.parse(this.responseText);
-      document.getElementById("id").value = res.id;
-      document.getElementById("txtCodigo").value = res.codigo;
-      document.getElementById("txtProducto").value = res.producto;
-      document.getElementById("slcTipo").value = res.tipo;
-      document.getElementById("txtEspecificaciones").value = res.especificaciones;
-      document.getElementById("txtUnidades").value = res.unidades;
-      $("#nuevo_producto").modal("show");
-    }
-  };
-}
-
-function btnEliminarProducto(id) {
-  Swal.fire({
-    title: "Esta seguro de eliminar?",
-    text: "El producto se eliminara de forma permanente",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Si!",
-    cancelButtonText: "No",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      const url = base_url + "Inventario/eliminar/" + id;
-      console.log(url)
-      const http = new XMLHttpRequest();
-      http.open("GET", url, true);
-      http.send();
-      http.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          const res = JSON.parse(this.responseText);
-          if (res == "ok") {
-            Swal.fire("Mensaje", "Producto Borrado Éxitosamente", "success");
-            tblInventario.ajax.reload();
-          } else {
-            Swal.fire("Mensaje", res, "error");
-          }
-        }
-      };
-    }
-  });
-}
-
-function btnReingresarProducto(id) {
-  Swal.fire({
-    title: "Esta seguro de reingresar?",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Si!",
-    cancelButtonText: "No",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      const url = base_url + "ProductosEliminados/reingresar/" + id;
-      const http = new XMLHttpRequest();
-      http.open("GET", url, true);
-      http.send();
-      http.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          const res = JSON.parse(this.responseText);
-          if (res == "ok") {
-            Swal.fire("Mensaje", "Producto Reingresado Éxitosamente", "success");
-            tblProductosEliminados.ajax.reload();
+            tblUsuariosEliminados.ajax.reload();
           } else {
             Swal.fire("Mensaje", res, "error");
           }
