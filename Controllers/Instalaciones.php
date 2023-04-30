@@ -13,7 +13,7 @@ class Instalaciones extends Controller
     }
     public function registrar()
     {
-        if (empty($_POST['nombre']) || empty($_POST['apellido']) || empty($_POST['dui']) || empty($_POST['telefono']) || empty($_POST['direccion']) || empty($_POST['fecha']) || empty($_POST['color'])) {
+        if (empty($_POST['nombre']) || empty($_POST['apellido']) || empty($_POST['dui']) || empty($_POST['telefono']) || empty($_POST['direccion']) || empty($_POST['tipo']) || empty($_POST['fecha'])) {
             $msg = array('msg' => 'todos los campos son requeridos', 'estado' => false);
         } else {
             $nombre = $_POST['nombre'];
@@ -21,18 +21,18 @@ class Instalaciones extends Controller
             $dui = $_POST['dui'];
             $telefono = $_POST['telefono'];
             $direccion = $_POST['direccion'];
+            $tipo = $_POST['tipo'];
             $fecha = $_POST['fecha'];
-            $color = $_POST['color'];
             $id = $_POST['id'];
             if($id==''){
-                $data = $this->model->registrarCita($nombre, $apellido, $dui, $telefono, $direccion, $fecha, $color);
+                $data = $this->model->registrarCita($nombre, $apellido, $dui, $telefono, $direccion, $tipo, $fecha);
             if ($data == 'ok') {
                 $msg = array('msg' => 'Cita Registrada', 'estado' => true, 'tipo' => 'success');
             } else {
                 $msg = array('msg' => 'Error al Registrar', 'estado' => false, 'tipo' => 'danger');
             }
             }else{
-                $data = $this->model->modificarCita($nombre, $apellido, $dui, $telefono, $direccion, $fecha, $color, $id);
+                $data = $this->model->modificarCita($nombre, $apellido, $dui, $telefono, $direccion, $tipo, $fecha, $id);
             if ($data == 'ok') {
                 $msg = array('msg' => 'Cita Modificada', 'estado' => true, 'tipo' => 'success');
             } else {

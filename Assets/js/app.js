@@ -30,8 +30,8 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById("dui").value = info.event.extendedProps.dui;
             document.getElementById("telefono").value = info.event.extendedProps.telefono;
             document.getElementById("direccion").value = info.event.extendedProps.direccion;
+            document.getElementById("tipo").value = info.event.extendedProps.tipo;
             document.getElementById("fecha").value = info.event.startStr;
-            document.getElementById("color").value = info.event.backgroundColor;
             document.getElementById("btnAccion").textContent = "Modificar";
             document.getElementById("titulo").textContent = "Actualizar Cita";
             eliminar.classList.remove("d-none");
@@ -69,14 +69,15 @@ document.addEventListener('DOMContentLoaded', function () {
         const dui = document.getElementById("dui").value;
         const telefono = document.getElementById("telefono").value;
         const direccion = document.getElementById("direccion").value;
+        const tipo = document.getElementById("tipo").value;
         const fecha = document.getElementById("fecha").value;
-        const color = document.getElementById("color").value;
         if (
             (nombre == "" ||
                 apellido == "" ||
                 dui == "" ||
                 telefono == "" ||
-                direccion == "",
+                direccion == "" ||
+                tipo == "" ||
                 fecha == "")
         ) {
             Swal.fire("Avisos", "Todo los campos son obligatorios", "warning");

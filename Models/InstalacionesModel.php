@@ -6,10 +6,15 @@ class InstalacionesModel extends Query
     parent::__construct();
   }
 
-  public function registrarCita($nombre, $apellido, $dui, $telefono, $direccion, $fecha, $color)
+  public function registrarCita($nombre, $apellido, $dui, $telefono, $direccion, $tipo, $fecha)
   {
-      $sql = "INSERT INTO instalaciones(nombre, apellido, dui, telefono, direccion, fecha, color) VALUES (?,?,?,?,?,?,?)";
-      $datos = array($nombre, $apellido, $dui, $telefono, $direccion, $fecha, $color);
+    if($tipo == "Instalacion"){
+        $color = "#E34234";
+    }else{
+        $color = "#006400";
+    }
+      $sql = "INSERT INTO citas(nombre, apellido, dui, telefono, direccion, tipo, fecha, color) VALUES (?,?,?,?,?,?,?,?)";
+      $datos = array($nombre, $apellido, $dui, $telefono, $direccion, $tipo, $fecha, $color);
       $data = $this->save($sql, $datos);
       if ($data == 1) {
           $msg = 'ok';
@@ -19,10 +24,15 @@ class InstalacionesModel extends Query
       return $msg;
   }
 
-  public function modificarCita($nombre, $apellido, $dui, $telefono, $direccion, $fecha, $color, $id)
+  public function modificarCita($nombre, $apellido, $dui, $telefono, $direccion, $tipo, $fecha, $id)
   {
-      $sql = "UPDATE instalaciones SET nombre = ?,apellido = ?,dui = ?,telefono = ?,direccion = ?,fecha = ?,color = ? WHERE id = ?";
-      $datos = array($nombre, $apellido, $dui, $telefono, $direccion, $fecha, $color, $id);
+    if($tipo == "Instalacion"){
+        $color = "#E34234";
+    }else{
+        $color = "#006400";
+    }
+      $sql = "UPDATE citas SET nombre = ?,apellido = ?,dui = ?,telefono = ?,direccion = ?, tipo = ?, fecha = ?,color = ? WHERE id = ?";
+      $datos = array($nombre, $apellido, $dui, $telefono, $direccion, $tipo, $fecha, $color, $id);
       $data = $this->save($sql, $datos);
       if ($data == 1) {
           $msg = 'ok';
@@ -34,13 +44,13 @@ class InstalacionesModel extends Query
 
   public function getCitas()
   {
-      $sql = "SELECT id, nombre as title, apellido, dui, telefono, direccion, fecha as start, color FROM instalaciones";
+      $sql = "SELECT id, nombre as title, apellido, dui, telefono, direccion, tipo, fecha as start, color FROM citas";
       return $this->selectAll($sql);
   }
 
   public function eliminar($id)
   {
-      $sql = "DELETE FROM instalaciones WHERE id=?";
+      $sql = "DELETE FROM citas WHERE id=?";
       $array = array($id);
       $data = $this->save($sql, $array);
       if ($data == 1) {
@@ -53,7 +63,7 @@ class InstalacionesModel extends Query
 
   public function dragUpdate($start, $id)
     {
-        $sql = "UPDATE instalaciones SET fecha=? WHERE id=?";
+        $sql = "UPDATE citas SET fecha=? WHERE id=?";
         $array = array($start, $id);
         $data = $this->save($sql, $array);
         if ($data == 1) {
