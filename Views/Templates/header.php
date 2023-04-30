@@ -2,12 +2,15 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+
+    <!-- Bootstrap CSS -->
+    <link href="<?php echo base_url; ?>Assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo base_url; ?>Assets/css/main.min.css" rel="stylesheet">
 
     <title>Sistema</title>
 
@@ -120,7 +123,8 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="<?php echo base_url; ?>Usuarios/salir"> <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i> Salir</a>
+                        <a class="collapse-item" href="<?php echo base_url; ?>Usuarios/salir"> <i
+                                class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i> Salir</a>
                         <a class="collapse-item" href="Usuarios"> <i class="fas fa-user fa-sm fa-fw mr-2"></i>
                             Usarios</a>
                     </div>

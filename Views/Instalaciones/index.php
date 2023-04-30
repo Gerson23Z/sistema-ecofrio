@@ -1,20 +1,7 @@
 <?php include "Views/Templates/header.php"; ?>
-<!doctype html>
-<html lang="en">
-
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap CSS -->
-    <link href="<?php echo base_url; ?>Assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?php echo base_url; ?>Assets/css/main.min.css" rel="stylesheet">
-
-    <title>Hello, world!</title>
-</head>
-
-<body>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Instalaciones</h1>
+</div>
     <div class="container">
         <div id='calendar'></div>
     </div>
@@ -68,14 +55,4 @@
             </div>
         </div>
     </div>
-
-
-    <script src="<?php echo base_url; ?>Assets/js/bootstrap.bundle.min.js"></script>
-    <script src="<?php echo base_url; ?>Assets/js/app.js"></script>
-    <script src="<?php echo base_url; ?>Assets/js/main.min.js"></script>
-    <script src="<?php echo base_url; ?>Assets/js/es.js"></script>
-</body>
-
-</html>
-
 <?php include "Views/Templates/footer.php"; ?>

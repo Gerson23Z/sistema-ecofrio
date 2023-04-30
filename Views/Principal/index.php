@@ -6,7 +6,7 @@
 
 <!-- Content Row -->
 <div class="row">
-    <div class="col-xl-4 mb-4 offset-md-2">
+    <a href="URI" class="col-xl-4 mb-4 offset-md-2">
         <div class="card border-left-success shadow h-100 py-4">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -20,9 +20,9 @@
                 </div>
             </div>
         </div>
-    </div>
+    </a>
 
-    <div class="col-xl-4 mb-4">
+    <a href="URI" class="col-xl-4 mb-4">
         <div class="card border-left-success shadow h-100 py-4">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -35,10 +35,11 @@
                 </div>
             </div>
         </div>
-    </div>
+    </a>
 </div>
+
 <div class="row">
-    <div class="col-xl-4 mb-4 offset-md-2">
+    <a href="URI" class="col-xl-4 mb-4 offset-md-2">
         <div class="card border-left-success shadow h-100 py-4">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -51,9 +52,9 @@
                 </div>
             </div>
         </div>
-    </div>
+    </a>
 
-    <div class="col-xl-4 mb-4">
+    <a href="URI" class="col-xl-4 mb-4">
         <div class="card border-left-success shadow h-100 py-4">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -66,10 +67,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </a>
 </div>
 <div class="row">
-    <div class="col-xl-4 mb-4 offset-md-2">
+    <a href="Mantenimientos" class="col-xl-4 mb-4 offset-md-2">
         <div class="card border-left-success shadow h-100 py-4">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -82,9 +83,9 @@
                 </div>
             </div>
         </div>
-    </div>
+    </a>
 
-    <div class="col-xl-4 mb-4">
+    <a href="Instalaciones" class="col-xl-4 mb-4">
         <div class="card border-left-success shadow h-100 py-4">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -97,6 +98,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </a>
 </div>
 <?php include "Views/Templates/footer.php"; ?>
