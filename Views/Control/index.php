@@ -41,7 +41,7 @@
                         <label for="apellido" class="form-label">Apellido</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="dui" id="dui">
+                        <input type="hidden" class="form-control" name="dui" id="dui">
                         <label for="dui" class="form-label">DUI</label>
                     </div>
                     <div class="form-floating mb-3">
@@ -62,12 +62,6 @@
                     <div class="form-floating mb-3">
                         <input type="date" class="form-control" name="fecha" id="fecha">
                         <label for="fecha" class="form-label">Fecha</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="check" id="check">
-                        <label class="form-check-label" for="check" id="labelcheck">
-                            Marcar como completado
-                        </label>
                     </div>
                 </div>
                 <div class="moda-footer">

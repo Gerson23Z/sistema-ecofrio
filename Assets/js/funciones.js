@@ -249,6 +249,7 @@ function btnReingresarUsuario(id) {
   });
 }
 
+let tiposlct = document.getElementById("tipo");
 function registrarMan(event) {
   event.preventDefault();
   const nombre = document.getElementById("nombre");
@@ -297,7 +298,10 @@ function btnEditarMantenimiento(id) {
       document.getElementById("direccion").value = res.direccion;
       document.getElementById("tipo").value = res.tipo;
       document.getElementById("fecha").value = res.fecha;
+      tiposlct.classList.add("d-none");
       $("#nuevo_mantenimiento").modal("show");
     }
   };
 }
+
+

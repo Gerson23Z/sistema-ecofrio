@@ -13,7 +13,7 @@ class Citas extends Controller
     }
     public function registrar()
     {
-        if (empty($_POST['nombre']) || empty($_POST['apellido']) || empty($_POST['dui']) || empty($_POST['telefono']) || empty($_POST['direccion']) || empty($_POST['tipo']) || empty($_POST['fecha'])) {
+        if (empty($_POST['nombre']) || empty($_POST['apellido']) || empty($_POST['dui']) || empty($_POST['telefono']) || empty($_POST['direccion']) || empty($_POST['fecha'])) {
             $msg = array('msg' => 'todos los campos son requeridos', 'estado' => false);
         } else {
             $nombre = $_POST['nombre'];
