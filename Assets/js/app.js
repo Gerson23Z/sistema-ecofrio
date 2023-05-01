@@ -1,6 +1,8 @@
 var myModal = new bootstrap.Modal(document.getElementById('myModal'));
 let frm = document.getElementById("formulario");
 let eliminar = document.getElementById("btnEliminar");
+let checkbox = document.getElementById("check");
+let labelcheck = document.getElementById("labelcheck");
 document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -11,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
             center: "title",
             right: "dayGridMonth timeGridWeek listWeek",
         },
-        events: base_url + "Instalaciones/listar",
+        events: base_url + "Citas/listar",
         editable: true,
         dateClick: function (info) {
             frm.reset();
@@ -20,6 +22,8 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById("btnAccion").textContent = "Registrar";
             document.getElementById("titulo").textContent = "Registrar Cita";
             eliminar.classList.add("d-none");
+            checkbox.classList.add("d-none");
+            labelcheck.classList.add("d-none");
             myModal.show();
         },
         eventClick: function (info) {
@@ -35,13 +39,15 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById("btnAccion").textContent = "Modificar";
             document.getElementById("titulo").textContent = "Actualizar Cita";
             eliminar.classList.remove("d-none");
+            checkbox.classList.remove("d-none");
+            labelcheck.classList.remove("d-none");
             myModal.show();
         },
         eventDrop: function (info) {
             const fecha = info.event.startStr;
             const id = info.event.id;
 
-            const url = base_url + "Instalaciones/drag";
+            const url = base_url + "Citas/drag";
             const http = new XMLHttpRequest();
             const Data = new FormData();
             Data.append("fecha", fecha);
@@ -71,6 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const direccion = document.getElementById("direccion").value;
         const tipo = document.getElementById("tipo").value;
         const fecha = document.getElementById("fecha").value;
+        const check = document.getElementById("check").value;
         if (
             (nombre == "" ||
                 apellido == "" ||
@@ -82,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function () {
         ) {
             Swal.fire("Avisos", "Todo los campos son obligatorios", "warning");
         } else {
-            const url = base_url + "Instalaciones/registrar";
+            const url = base_url + "Citas/registrar";
             const http = new XMLHttpRequest();
             http.open("POST", url, true);
             http.send(new FormData(frm));
@@ -114,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }).then((result) => {
           if (result.isConfirmed) {
             const url =
-              base_url + "Instalaciones/eliminar/" + document.getElementById("id").value;
+              base_url + "Citas/eliminar/" + document.getElementById("id").value;
             const http = new XMLHttpRequest();
             http.open("GET", url, true);
             http.send();

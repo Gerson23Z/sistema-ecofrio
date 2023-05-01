@@ -72,27 +72,21 @@
             </div>
 
             <li class="nav-item">
-                <a class="nav-link" href="UserEliminado">
-                    <i class="fa-brands fa-instalod fa-2x"></i>
-                    <span>Instalacines</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fa-solid fa-screwdriver-wrench fa-2x"></i>
-                    <span>Mantenimientos</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="Clientes">
-                    <i class="fas fa-users fa-2x"></i>
-                    <span>Clientes</span></a>
+                <a class="nav-link" href="Citas">
+                <i class="fa-solid fa-screwdriver-wrench fa-2x"></i>
+                    <span>Citas</span></a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="charts.html">
                     <i class="fas fa-calendar-days fa-2x"></i>
                     <span>Control mantenimientos</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="Clientes">
+                    <i class="fas fa-users fa-2x"></i>
+                    <span>Clientes</span></a>
             </li>
 
             <li class="nav-item">

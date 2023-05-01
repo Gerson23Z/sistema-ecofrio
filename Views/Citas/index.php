@@ -48,6 +48,12 @@
                         <input type="date" class="form-control" name="fecha" id="fecha">
                         <label for="fecha" class="form-label">Fecha</label>
                     </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="check" id="check">
+                        <label class="form-check-label" for="check" id="labelcheck">
+                            Marcar como completado
+                        </label>
+                    </div>
                 </div>
                 <div class="moda-footer">
                     <button class="btn btn-warning" type="button" data-bs-dismiss="modal">Cancelar</button>
