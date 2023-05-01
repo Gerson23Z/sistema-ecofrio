@@ -16,11 +16,6 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
-        <tr>
-            <td></td>
-        </tr>
-    </tbody>
 </table>
 
 <?php include "Views/Templates/footer.php"; ?>

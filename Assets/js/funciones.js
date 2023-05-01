@@ -281,8 +281,6 @@ function registrarMan(event) {
 
 
 function btnEditarMantenimiento(id) {
-  document.getElementById("title").innerHTML = "Actualizar Usuario";
-  document.getElementById("btnId").innerHTML = "Modificar Usuario";
   const url = base_url + "Control/editar/" + id;
   const http = new XMLHttpRequest();
   http.open("GET", url, true);

@@ -23,8 +23,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-success">
-                <h5 class="modal-title text-white" id="title">Nuevo Usuario</h5>
-                <button class="close" data-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title text-white" id="title">Agendar Nueva Cita de Mantenimiento</h5>
+                <button class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -66,7 +66,6 @@
                 </div>
                 <div class="moda-footer">
                     <button class="btn btn-warning" type="button" data-bs-dismiss="modal">Cancelar</button>
-                    <button class="btn btn-danger" type="button" id="btnEliminar">Eliminar</button>
                     <button class="btn btn-info" type="button" id="btnId" onclick="registrarMan(event)">Registrar</button>
                 </div>
                 </form>
