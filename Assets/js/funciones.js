@@ -1,5 +1,6 @@
 let tblUsuarios;
 let tblUsuariosEliminados;
+let tblMantenimientos;
 
 document.addEventListener("DOMContentLoaded", function () {
   tblUsuarios = $("#tblUsuarios").DataTable({
@@ -55,6 +56,38 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       {
         data: "estado",
+      },
+      {
+        data: "acciones",
+      },
+    ],
+  });
+  tblMantenimientos = $("#tblMantenimientos").DataTable({
+    ajax: {
+      url: base_url + "Control/listar",
+      dataSrc: "",
+    },
+    columns: [
+      {
+        data: "id",
+      },
+      {
+        data: "nombre",
+      },
+      {
+        data: "apellido",
+      },
+      {
+        data: "direccion",
+      },
+      {
+        data: "tipo",
+      },
+      {
+        data: "fecha",
+      },
+      {
+        data: "prox",
       },
       {
         data: "acciones",
@@ -214,4 +247,57 @@ function btnReingresarUsuario(id) {
       };
     }
   });
+}
+
+function registrarMan(event) {
+  event.preventDefault();
+  const nombre = document.getElementById("nombre");
+  const apellido = document.getElementById("apellido");
+  const dui = document.getElementById("dui");
+  const telefono = document.getElementById("telefono");
+  const direccion = document.getElementById("direccion");
+  const tipo = document.getElementById("tipo");
+  const fecha = document.getElementById("fecha");
+
+    const url = base_url + "Citas/registrar";
+    const frm = document.getElementById("frmMan");
+    const http = new XMLHttpRequest();
+    http.open("POST", url, true);
+    http.send(new FormData(frm));
+    http.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+
+        console.log(this.responseText);
+        const res = JSON.parse(this.responseText);
+        Swal.fire("Aviso", res.msg, res.tipo);
+        if (res.estado) {
+          $("#nuevo_mantenimiento").modal("hide");
+          tblMantenimientos.ajax.reload();
+        }
+      }
+    };
+}
+
+
+function btnEditarMantenimiento(id) {
+  document.getElementById("title").innerHTML = "Actualizar Usuario";
+  document.getElementById("btnId").innerHTML = "Modificar Usuario";
+  const url = base_url + "Control/editar/" + id;
+  const http = new XMLHttpRequest();
+  http.open("GET", url, true);
+  http.send();
+  http.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      const res = JSON.parse(this.responseText);
+      document.getElementById("id").value = res.id;
+      document.getElementById("nombre").value = res.nombre;
+      document.getElementById("apellido").value = res.apellido;
+      document.getElementById("dui").value = res.dui;
+      document.getElementById("telefono").value = res.telefono;
+      document.getElementById("direccion").value = res.direccion;
+      document.getElementById("tipo").value = res.tipo;
+      document.getElementById("fecha").value = res.fecha;
+      $("#nuevo_mantenimiento").modal("show");
+    }
+  };
 }

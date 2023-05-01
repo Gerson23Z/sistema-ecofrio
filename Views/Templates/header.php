@@ -78,7 +78,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="Control">
                     <i class="fas fa-calendar-days fa-2x"></i>
                     <span>Control mantenimientos</span></a>
             </li>

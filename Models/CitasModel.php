@@ -44,7 +44,7 @@ class CitasModel extends Query
 
     public function getCitas()
     {
-        $sql = "SELECT id, nombre as title, apellido, dui, telefono, direccion, tipo, fecha as start, color FROM citas";
+        $sql = "SELECT id, nombre as title, apellido, dui, telefono, direccion, tipo, fecha as start, color FROM citas WHERE completado = 0";
         return $this->selectAll($sql);
     }
 
