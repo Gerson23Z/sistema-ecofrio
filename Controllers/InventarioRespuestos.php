@@ -38,11 +38,12 @@ class InventarioRespuestos extends Controller
     $producto = $_POST['txtProducto'];
     $especificaciones = $_POST['txtEspecificaciones'];
     $unidades = $_POST['txtUnidades'];
+    $precio = $_POST['txtPrecio'];
     if (empty($codigo) || empty($producto) || empty($especificaciones)) {
       $msg = "Todos los campos son obligatorios";
     } else {
       if ($id == "") {
-          $data = $this->model->registrarRespuesto($codigo, $producto, $especificaciones, $unidades);
+          $data = $this->model->registrarRespuesto($codigo, $producto, $especificaciones, $unidades, $precio);
           if ($data == "¡OK!") {
             $msg = "si";
           } else if ($data == "existe") {
@@ -51,7 +52,7 @@ class InventarioRespuestos extends Controller
             $msg = "Error al registrar el Producto";
           }
       } else {
-        $data = $this->model->modificarRespuesto($codigo, $producto, $especificaciones, $unidades, $id);
+        $data = $this->model->modificarRespuesto($codigo, $producto, $especificaciones, $unidades, $precio, $id);
         if ($data == "modificado") {
           $msg = "modificado";
         } else if ($data == "existe") {

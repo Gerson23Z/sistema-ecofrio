@@ -14,14 +14,10 @@
             <th>Fecha</th>
             <th>Unidades</th>
             <th>Estado</th>
+            <th>Precio</th>
             <th></th>
         </tr>
     </thead>
-    <tbody>
-        <tr>
-            <td></td>
-        </tr>
-    </tbody>
 </table>
 
 <?php include "Views/Templates/footer.php"; ?>

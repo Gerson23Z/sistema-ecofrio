@@ -64,8 +64,7 @@
 
 <script src="<?php echo base_url; ?>Assets/js/funcionesInventario.js"></script>
 <script src="<?php echo base_url; ?>Assets/js/sweetalert2.all.min.js"></script>
-<script src="<?php echo base_url; ?>Assets/js/bootstrap.bundle.min.js"></script>
-<script src="<?php echo base_url; ?>Assets/js/app.js"></script>
+
 <script src="<?php echo base_url; ?>Assets/js/main.min.js"></script>
 <script src="<?php echo base_url; ?>Assets/js/es.js"></script>
 

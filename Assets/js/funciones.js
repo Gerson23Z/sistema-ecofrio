@@ -1,6 +1,7 @@
 let tblUsuarios;
 let tblUsuariosEliminados;
 let tblMantenimientos;
+let tblDetalles;
 
 document.addEventListener("DOMContentLoaded", function () {
   tblUsuarios = $("#tblUsuarios").DataTable({
@@ -142,28 +143,28 @@ function registrarUser(event) {
   const txtPassword = document.getElementById("txtPassword");
   const txtConfirmar = document.getElementById("txtConfirmar");
 
-    const url = base_url + "Usuarios/registrar";
-    const frm = document.getElementById("frmUsuarios");
-    const http = new XMLHttpRequest();
-    http.open("POST", url, true);
-    http.send(new FormData(frm));
-    http.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        const res = JSON.parse(this.responseText);
-        if (res == "si") {
-          Swal.fire("Listo", "Usuario registrado con exito", "success");
-          frm.reset();
-          $("#nuevo_usuario").modal("hide");
-          tblUsuarios.ajax.reload();
-        } else if (res == "modificado") {
-          Swal.fire("Listo", "Usuario modificado con exito", "success");
-          $("#nuevo_usuario").modal("hide");
-          tblUsuarios.ajax.reload();
-        } else {
-          Swal.fire("Error", res, "error");
-        }
+  const url = base_url + "Usuarios/registrar";
+  const frm = document.getElementById("frmUsuarios");
+  const http = new XMLHttpRequest();
+  http.open("POST", url, true);
+  http.send(new FormData(frm));
+  http.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      const res = JSON.parse(this.responseText);
+      if (res == "si") {
+        Swal.fire("Listo", "Usuario registrado con exito", "success");
+        frm.reset();
+        $("#nuevo_usuario").modal("hide");
+        tblUsuarios.ajax.reload();
+      } else if (res == "modificado") {
+        Swal.fire("Listo", "Usuario modificado con exito", "success");
+        $("#nuevo_usuario").modal("hide");
+        tblUsuarios.ajax.reload();
+      } else {
+        Swal.fire("Error", res, "error");
       }
-    };
+    }
+  };
 }
 
 function btnEditarUsuario(id) {
@@ -175,6 +176,7 @@ function btnEditarUsuario(id) {
   http.send();
   http.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
+      console.log(this.responseText);
       const res = JSON.parse(this.responseText);
       document.getElementById("id").value = res.id;
       document.getElementById("txtNombre").value = res.nombre;
@@ -260,23 +262,23 @@ function registrarMan(event) {
   const tipo = document.getElementById("tipo");
   const fecha = document.getElementById("fecha");
 
-    const url = base_url + "Citas/registrar";
-    const frm = document.getElementById("frmMan");
-    const http = new XMLHttpRequest();
-    http.open("POST", url, true);
-    http.send(new FormData(frm));
-    http.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
+  const url = base_url + "Citas/registrar";
+  const frm = document.getElementById("frmMan");
+  const http = new XMLHttpRequest();
+  http.open("POST", url, true);
+  http.send(new FormData(frm));
+  http.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
 
-        console.log(this.responseText);
-        const res = JSON.parse(this.responseText);
-        Swal.fire("Aviso", res.msg, res.tipo);
-        if (res.estado) {
-          $("#nuevo_mantenimiento").modal("hide");
-          tblMantenimientos.ajax.reload();
-        }
+      console.log(this.responseText);
+      const res = JSON.parse(this.responseText);
+      Swal.fire("Aviso", res.msg, res.tipo);
+      if (res.estado) {
+        $("#nuevo_mantenimiento").modal("hide");
+        tblMantenimientos.ajax.reload();
       }
-    };
+    }
+  };
 }
 
 
@@ -302,4 +304,120 @@ function btnEditarMantenimiento(id) {
   };
 }
 
+function buscarCodigo(e) {
+  e.preventDefault();
+  if (e.which == 13) {
+    const cod = document.getElementById("txtCodigo").value;
+    const url = base_url + "Compras/buscarCodigo/" + cod;
+    const http = new XMLHttpRequest();
+    http.open("GET", url, true);
+    http.send();
+    http.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        const res = JSON.parse(this.responseText);
+        if (res == "") {
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'El producto no existe',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          document.getElementById("txtCodigo").value = "";
+          document.getElementById("txtCodigo").focus();
+        } else {
+          document.getElementById("txtNombre").value = res[0].producto;
+          document.getElementById("txtPrecio").value = res[0].precio;
+          document.getElementById("id").value = res[0].id;
+          document.getElementById("txtCantidad").focus();
+        }
+      }
+    }
+  }
+}
 
+function calcularPrecio(e) {
+  e.preventDefault();
+  const cantidad = document.getElementById("txtCantidad").value;
+  const precio = document.getElementById("txtPrecio").value;
+  document.getElementById("txtSubTotal").value = cantidad * precio;
+  if (e.which == 13) {
+    if (cantidad > 0) {
+      const url = base_url + "Compras/ingresarCompra";
+      const frm = document.getElementById("frmCompras");
+      const http = new XMLHttpRequest();
+      http.open("POST", url, true);
+      http.send(new FormData(frm));
+      http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          const res = JSON.parse(this.responseText);
+          if (res == "si") {
+            frm.reset();
+            cargarDetalles();
+          }
+        }
+      };
+    }
+  }
+}
+
+function cargarDetalles() {
+  const url = base_url + "Compras/listar";
+  const http = new XMLHttpRequest();
+  http.open("GET", url, true);
+  http.send();
+  http.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      const res = JSON.parse(this.responseText);
+      let html = '';
+      res['detalles'].forEach(row => {
+        html += `<tr>
+        <td>${row['codigo']}</td>
+        <td>${row['producto']}</td>
+        <td>${row['precio']}</td>
+        <td>${row['cantidad']}</td>
+        <td>${row['subtotal']}</td>
+        <td>
+        <button type="button" class="btn btn-success" type="button" onclick="eliminarDetalle('${row['id']}')"><i class="fas fa-calendar"></i></button>
+
+        </td>
+        </tr>`;
+      });
+
+      document.getElementById("tblDetalles").innerHTML = html;
+      document.getElementById("txtTotal").value = res['total_pagar'].total;
+
+    }
+  };
+}
+
+function eliminarDetalle(id) {
+  const url = base_url + "Compras/eliminar/" + id;
+  const http = new XMLHttpRequest();
+  http.open("GET", url, true);
+  http.send();
+  http.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      const res = JSON.parse(this.responseText);
+      if (res == "ok") {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Producto eliminado',
+          showConfirmButton: false,
+          timer: 2000
+        })
+        cargarDetalles();
+      } else {
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Error',
+          showConfirmButton: false,
+          timer: 2000
+        })
+        cargarDetalles();
+      }
+    }
+  };
+}

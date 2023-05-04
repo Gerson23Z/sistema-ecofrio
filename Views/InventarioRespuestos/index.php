@@ -19,6 +19,7 @@
             <th>Especificaciones</th>
             <th>Fecha</th>
             <th>Unidades</th>
+            <th>Precio</th>
             <th>Estado</th>
             <th></th>
         </tr>
@@ -60,6 +61,11 @@
                     <div class="form-group">
                         <label for="txtUnidades">Unidades</label>
                         <input id="txtUnidades" class="form-control" type="number" name="txtUnidades"
+                            placeholder="Unidades">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtPrecio">Precio</label>
+                        <input id="txtPrecio" class="form-control" type="text" name="txtPrecio"
                             placeholder="Unidades">
                     </div>
 

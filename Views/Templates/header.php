@@ -56,7 +56,7 @@
             </div>
 
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="Compras">
                     <i class="fas fa-cash-register fa-2x"></i>
                     <span>Ingresar Ventas Respuestos</span></a>
             </li>

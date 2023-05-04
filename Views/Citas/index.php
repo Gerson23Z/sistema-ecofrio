@@ -64,4 +64,7 @@
         </div>
     </div>
 </div>
+<script src="<?php echo base_url; ?>Assets/js/bootstrap.bundle.min.js"></script>
+<script src="<?php echo base_url; ?>Assets/js/app.js"></script>
+
 <?php include "Views/Templates/footer.php"; ?>

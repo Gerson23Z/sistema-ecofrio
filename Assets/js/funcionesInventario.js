@@ -29,6 +29,9 @@ document.addEventListener("DOMContentLoaded", function () {
         data: "unidades",
       },
       {
+        data: "precio",
+      },
+      {
         data: "estado",
       },
       {
@@ -60,6 +63,9 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       {
         data: "unidades",
+      },
+      {
+        data: "precio",
       },
       {
         data: "estado",
@@ -177,6 +183,7 @@ function registrarRespuesto(event) {
   const txtProducto = document.getElementById("txtProducto");
   const txtEspecificaciones = document.getElementById("txtEspecificaciones");
   const txtUnidades = document.getElementById("txtUnidades");
+  const txtPrecio = document.getElementById("txtPrecio");
   if (txtUnidades.value < 0) {
     Swal.fire("Error", "No puedes poner unidades negativas", "error");
   } else {
@@ -220,6 +227,7 @@ function btnEditarRespuesto(id) {
       document.getElementById("txtProducto").value = res.producto;
       document.getElementById("txtEspecificaciones").value = res.especificaciones;
       document.getElementById("txtUnidades").value = res.unidades;
+      document.getElementById("txtPrecio").value = res.precio;
       $("#nuevo_respuesto").modal("show");
     }
   };
