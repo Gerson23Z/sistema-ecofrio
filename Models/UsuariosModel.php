@@ -45,7 +45,7 @@ class UsuariosModel extends Query
     return $res;
   }
 
-  public function modificarUsuario(string $nombre, string $apellido, string $usuario, string $password,string $rol, int $id)
+  public function modificarUsuario(string $nombre, string $apellido, string $usuario, string $password, string $rol, int $id)
   {
     $this->id = $id;
     $this->nombre = $nombre;
@@ -63,20 +63,20 @@ class UsuariosModel extends Query
         $res = "modificado";
       } else {
         $res = "error";
-      }}
-    else {
-    $verificar = "SELECT * FROM usuarios WHERE id = '$this->id'";
-    $existe = $this->select($verificar);
-      if($existe['user']==$usuario){
-        $sql = "UPDATE usuarios SET nombre = ?,apellido = ?,user = ?,password = ?,rol = ? WHERE id = ?";
-      $datos = array($this->nombre, $this->apellido, $this->usuario, $this->password, $this->rol, $this->id);
-      $data = $this->save($sql, $datos);
-      if ($data == 1) {
-        $res = "modificado";
-      } else {
-        $res = "error";
       }
-      }else{
+    } else {
+      $verificar = "SELECT * FROM usuarios WHERE id = '$this->id'";
+      $existe = $this->select($verificar);
+      if ($existe['user'] == $usuario) {
+        $sql = "UPDATE usuarios SET nombre = ?,apellido = ?,user = ?,password = ?,rol = ? WHERE id = ?";
+        $datos = array($this->nombre, $this->apellido, $this->usuario, $this->password, $this->rol, $this->id);
+        $data = $this->save($sql, $datos);
+        if ($data == 1) {
+          $res = "modificado";
+        } else {
+          $res = "error";
+        }
+      } else {
         $res = "existe";
       }
     }

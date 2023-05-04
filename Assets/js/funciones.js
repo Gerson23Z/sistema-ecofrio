@@ -350,8 +350,12 @@ function calcularPrecio(e) {
       http.send(new FormData(frm));
       http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
+          console.log(this.responseText);
           const res = JSON.parse(this.responseText);
           if (res == "si") {
+            frm.reset();
+            cargarDetalles();
+          }else if(res=="modificado"){
             frm.reset();
             cargarDetalles();
           }
@@ -378,7 +382,7 @@ function cargarDetalles() {
         <td>${row['cantidad']}</td>
         <td>${row['subtotal']}</td>
         <td>
-        <button type="button" class="btn btn-success" type="button" onclick="eliminarDetalle('${row['id']}')"><i class="fas fa-calendar"></i></button>
+        <button type="button" class="btn btn-danger" type="button" onclick="eliminarDetalle('${row['id']}')"><i class="fas fa-trash"></i></button>
 
         </td>
         </tr>`;
@@ -420,4 +424,45 @@ function eliminarDetalle(id) {
       }
     }
   };
+}
+
+function registrarCompra(){
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const url = base_url + "Compras/registrarCompra";
+      const http = new XMLHttpRequest();
+      http.open("GET", url, true);
+      http.send();
+      http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          const res = JSON.parse(this.responseText);
+          if (res == "ok") {
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Venta registrada',
+              showConfirmButton: false,
+              timer: 2000
+            })
+          } else {
+            Swal.fire({
+              position: 'center',
+              icon: 'error',
+              title: 'Error',
+              showConfirmButton: false,
+              timer: 2000
+            })
+          }
+        }
+      };
+    }
+  })
 }

@@ -63,7 +63,7 @@
         <div class="form-group">
             <input id="txtTotal" class="form-control" type="text" name="txtTotal" placeholder="total" disabled>
         </div>
-        <button class="btn btn-info" type="button" id="btnId" onclick="(event)">Registrar</button>
+        <button class="btn btn-info" type="button" id="btnId" onclick="registrarCompra(event)">Registrar</button>
     </div>
 </div>
 
