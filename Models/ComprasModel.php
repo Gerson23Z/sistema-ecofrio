@@ -103,5 +103,12 @@ class ComprasModel extends Query
         return $res;
     }
 
+    public function vaciarDetalles()
+    {
+        $sql = "TRUNCATE detalles";
+        $this->select($sql);
+
+    }
+
 }
 ?>

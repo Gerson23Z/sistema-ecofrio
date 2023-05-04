@@ -176,7 +176,6 @@ function btnEditarUsuario(id) {
   http.send();
   http.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-      console.log(this.responseText);
       const res = JSON.parse(this.responseText);
       document.getElementById("id").value = res.id;
       document.getElementById("txtNombre").value = res.nombre;
@@ -269,8 +268,6 @@ function registrarMan(event) {
   http.send(new FormData(frm));
   http.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-
-      console.log(this.responseText);
       const res = JSON.parse(this.responseText);
       Swal.fire("Aviso", res.msg, res.tipo);
       if (res.estado) {
@@ -350,7 +347,6 @@ function calcularPrecio(e) {
       http.send(new FormData(frm));
       http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-          console.log(this.responseText);
           const res = JSON.parse(this.responseText);
           if (res == "si") {
             frm.reset();
@@ -452,6 +448,7 @@ function registrarCompra(){
               showConfirmButton: false,
               timer: 2000
             })
+            cargarDetalles();
           } else {
             Swal.fire({
               position: 'center',

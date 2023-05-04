@@ -85,6 +85,7 @@ class Compras extends Controller
                 $subtotal = $precio * $cantidad;
                 $this->model->registrarDetallesCompra($id_compra['id'], $producto, $precio, $cantidad, $subtotal);
             }
+            $this->model->vaciarDetalles();
             $msg = "ok";
         } else {
             $msg = "Error al registrar la compra";
