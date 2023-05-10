@@ -1,5 +1,4 @@
 <?php
-
 class Views
 {
     public function getView($controlador, $vista)
@@ -12,7 +11,5 @@ class Views
         }
         require $vista;
     }
-
 }
-
 ?>

@@ -60,12 +60,12 @@
                     <i class="fas fa-cash-register fa-2x"></i>
                     <span>Ingresar Ventas Respuestos</span></a>
             </li>
-
+<!--full calendar
             <li class="nav-item">
                 <a class="nav-link" href="tables.html">
                     <i class="fas fa-cash-register fa-2x"></i>
                     <span>Aire Acondicionado</span></a>
-            </li>
+            </li>  -->
 
             <div class="sidebar-heading">
                 Control
@@ -82,13 +82,13 @@
                     <i class="fas fa-calendar-days fa-2x"></i>
                     <span>Control mantenimientos</span></a>
             </li>
-
+<!--
             <li class="nav-item">
                 <a class="nav-link" href="Clientes">
                     <i class="fas fa-users fa-2x"></i>
                     <span>Clientes</span></a>
             </li>
-
+-->
             <li class="nav-item">
                 <a class="nav-link" href="InventarioRespuestos">
                     <i class="fas fa-box-open fa-2x"></i>

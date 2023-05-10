@@ -424,7 +424,7 @@ function eliminarDetalle(id) {
 
 function registrarCompra(){
   Swal.fire({
-    title: 'Are you sure?',
+    title: 'jfjh?',
     text: "You won't be able to revert this!",
     icon: 'warning',
     showCancelButton: true,
@@ -440,15 +440,18 @@ function registrarCompra(){
       http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
           const res = JSON.parse(this.responseText);
-          if (res == "ok") {
+          console.log(res);
+          if (res.msg == "ok") {
             Swal.fire({
               position: 'center',
               icon: 'success',
-              title: 'Venta registrada',
+              title: 'Venta 5t5t5',
               showConfirmButton: false,
               timer: 2000
             })
             cargarDetalles();
+            const ruta = base_url + "Compras/generarPDF/"+ res.id_compra;
+            window.open(ruta);
           } else {
             Swal.fire({
               position: 'center',

@@ -2,6 +2,7 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Administrar citas</h1>
 </div>
+<!--full calendar -->
 <div class="container">
     <div id='calendar'></div>
 </div>
@@ -11,7 +12,7 @@
         <div class="modal-content">
             <div class="modal-header bg-info">
                 <h5 class="modal-title" id="titulo"></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
                 </button>
             </div>
             <form id="formulario">
@@ -56,7 +57,7 @@
                     </div>
                 </div>
                 <div class="moda-footer">
-                    <button class="btn btn-warning" type="button" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-warning" type="button" data-dismiss="modal">Cancelar</button>
                     <button class="btn btn-danger" type="button" id="btnEliminar">Eliminar</button>
                     <button class="btn btn-info" type="submit" id="btnAccion">Registrar</button>
                 </div>

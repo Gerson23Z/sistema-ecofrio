@@ -109,6 +109,18 @@ class ComprasModel extends Query
         $this->select($sql);
 
     }
+    public function getEmpresa()
+    {
+        $sql = "SELECT * FROM empresa";
+        $data = $this->select($sql);
+        return $data;
+    }
+    public function getProCompras($id_compra)
+    {
+        $sql = "SELECT * FROM detalles_compras WHERE id_compra = $id_compra";
+        $data = $this->selectAll($sql);
+        return $data;
+    }
 
 }
 ?>

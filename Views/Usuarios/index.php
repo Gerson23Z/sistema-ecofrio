@@ -30,7 +30,7 @@
         <div class="modal-content">
             <div class="modal-header bg-success">
                 <h5 class="modal-title text-white" id="title">Nuevo Usuario</h5>
-                <button class="close" data-bs-dismiss="modal" aria-label="Close">
+                <button class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>

@@ -37,7 +37,7 @@
         <div class="modal-content">
             <div class="modal-header bg-success">
                 <h5 class="modal-title text-white" id="title">Añadir</h5>
-                <button class="close" data-bs-dismiss="modal" aria-label="Close">
+                <button class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -71,7 +71,7 @@
 
                     <button class="btn btn-primary" type="button" onclick="registrarRespuesto(event)"
                         id="btnId">Registrar</button>
-                    <button class="btn btn-danger" type="button" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-danger" type="button" data-dismiss="modal">Cancelar</button>
                 </form>
             </div>
         </div>
