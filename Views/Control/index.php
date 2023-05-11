@@ -1,9 +1,9 @@
 <?php include "Views/Templates/header.php"; ?>
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Control de Mantenimientos</h1>
+    <h1 class="h3 mb-0 text-gray-800">Control de Citas</h1>
 </div>
-<table class="table table-light" id="tblMantenimientos">
+<table class="table table-light" id="tblCitas">
     <thead class="table-success">
         <tr>
             <th>Id</th>
@@ -11,15 +11,15 @@
             <th>Apellido</th>
             <th>Direccion</th>
             <th>Tipo</th>
-            <th>Ultima fecha</th>
-            <th>Fecha proxima</th>
+            <th>Fecha</th>
+            <th>Tiempo Restante</th>
+            <th>Estado</th>
             <th></th>
         </tr>
     </thead>
 </table>
 
-<div id="nuevo_mantenimiento" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title"
-    aria-hidden="true">
+<div id="nuevo_cita" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-success">
@@ -29,8 +29,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" id="frmMan">
-                <div class="modal-body">
+            <form method="post" id="frmCita">
+            <div class="modal-body">
                     <div class="form-floating mb-3">
                         <input type="hidden" id="id" name="id">
                         <input type="text" class="form-control" name="nombre" id="nombre">
@@ -41,7 +41,7 @@
                         <label for="apellido" class="form-label">Apellido</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="hidden" class="form-control" name="dui" id="dui">
+                        <input type="text" class="form-control" name="dui" id="dui">
                         <label for="dui" class="form-label">DUI</label>
                     </div>
                     <div class="form-floating mb-3">
@@ -65,8 +65,9 @@
                     </div>
                 </div>
                 <div class="moda-footer">
-                    <button class="btn btn-warning" type="button" data-dismiss="modal">Cancelar</button>
-                    <button class="btn btn-info" type="button" id="btnId" onclick="registrarMan(event)">Registrar</button>
+                <button class="btn btn-warning" type="button" data-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-info" type="button" id="btnId" onclick="registrarCita(event)">Registrar</button>
+                    <button class="btn btn-info" type="button" id="btnId" onclick="marcarCom(event)">Marcar como completada</button>
                 </div>
                 </form>
             </div>

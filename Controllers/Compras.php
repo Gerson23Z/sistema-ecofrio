@@ -21,13 +21,13 @@ class Compras extends Controller
         $id = $_POST['id'];
         $datos = $this->model->GetProducto($id);
         $codigo = $datos[0]['codigo'];
-        $nombre = $datos[0]['producto'];
+        $producto = $datos[0]['producto'];
         $precio = $datos[0]['precio'];
         $cantidad = $_POST['txtCantidad'];
         $comprobar = $this->model->comprobarDetalle($datos[0]['codigo']);
         if (empty($comprobar)) {
             $subTotal = $precio * $cantidad;
-            $data = $this->model->RegistrarDetalle($codigo, $nombre, $precio, $cantidad, $subTotal);
+            $data = $this->model->RegistrarDetalle($codigo, $producto, $precio, $cantidad, $subTotal);
             if ($data == "¡OK!") {
                 $msg = "si";
             } else {
@@ -36,7 +36,7 @@ class Compras extends Controller
         } else {
             $total_cantidad = $comprobar['cantidad'] + $cantidad;
             $subTotal = $total_cantidad * $precio;
-            $data = $this->model->actualizarDetalle($codigo, $nombre, $precio, $total_cantidad, $subTotal, $comprobar['id']);
+            $data = $this->model->actualizarDetalle($codigo, $producto, $precio, $total_cantidad, $subTotal, $comprobar['id']);
             if ($data == "modificado") {
                 $msg = "modificado";
             } else {
@@ -93,55 +93,67 @@ class Compras extends Controller
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
         die();
     }
-    public function generarPDF($id_compra){
+    public function generarPDF($id_compra)
+    {
         $data = $this->model->getEmpresa();
         $productosCompras = $this->model->getProCompras($id_compra);
+        //se llama la libreria
         require('Libraries/fpdf/fpdf.php');
-
-        $pdf = new FPDF('P','mm', array(80, 200));
+        //ajustes
+        $pdf = new FPDF('P', 'mm', array(80, 200));
         $pdf->AddPage();
-        $pdf->SetMargins(5,0,0);
+        $pdf->SetMargins(5, 0, 0);
         $pdf->SetTitle('Comprobante de compra');
-        $pdf->SetFont('Arial','B',14);
-        $pdf->Cell(65,10,utf8_decode($data['nombre']),0,1,'C');
-        $pdf->SetFont('Arial','B',9);
-        $pdf->Cell(18,5,'Ruc: ',0,0,'L');
-        $pdf->SetFont('Arial','',9);
-        $pdf->Cell(20,5,utf8_decode($data['ruc']),0,1,'L');
-        $pdf->SetFont('Arial','B',9);
-        $pdf->Cell(18,5,'Telefono: ',0,0,'L');
-        $pdf->SetFont('Arial','',9);
-        $pdf->Cell(20,5,utf8_decode($data['telefono']),0,1,'L');
-        $pdf->SetFont('Arial','B',9);
-        $pdf->Cell(18,5,'Direccion: ',0,0,'L');
-        $pdf->SetFont('Arial','',9);
-        $pdf->Cell(20,5,utf8_decode($data['direccion']),0,1,'L');
+        //Nombre
+        $pdf->SetFont('Arial', 'B', 14);
+        $pdf->Cell(65, 10, utf8_decode($data['nombre']), 0, 1, 'C');
 
-        $pdf->SetFont('Arial','B',9);
-        $pdf->Cell(18,5,'Folio: ',0,0,'L');
-        $pdf->SetFont('Arial','',9);
-        $pdf->Cell(20,5,$id_compra,0,1,'L');
+        // Definir el tamaño de la fuente y el ancho de la celda
+        $font_size = 10;
+        $cell_width = 70;
+
+        // Definir el texto largo
+        $long_text = utf8_decode($data['direccion']);
+
+        // Calcular la altura de la celda necesaria para contener todo el texto
+        $cell_height = $font_size * 0.5;
+
+        // Imprimir el texto en una celda MultiCell
+        $pdf->SetFont('Arial', '', $font_size);
+        $pdf->MultiCell($cell_width, $cell_height, $long_text, 0, 'J', false);
+        //telefono
+        $pdf->SetFont('Arial', 'B', 9);
+        $pdf->Cell(18, 5, 'Telefono: ', 0, 0, 'L');
+        $pdf->SetFont('Arial', '', 9);
+        $pdf->Cell(20, 5, utf8_decode($data['telefono']), 0, 1, 'L');
+        //dueño
+        $pdf->Cell(20, 5, utf8_decode($data['dueno']), 0, 1, 'L');
+        //folio
+        $pdf->SetFont('Arial', 'B', 9);
+        $pdf->Cell(18, 5, 'Folio: ', 0, 0, 'L');
+        $pdf->SetFont('Arial', '', 9);
+        $pdf->Cell(20, 5, $id_compra, 0, 1, 'L');
         $pdf->Ln();
-        $pdf->SetFont('Arial','B',9);
-        $pdf->Cell(10,5,'Cant: ',0,0,'L');
-        $pdf->Cell(33,5,'Desc: ',0,0,'L');
-        $pdf->Cell(12,5,'Precio: ',0,0,'L');
-        $pdf->Cell(15,5,'Sub Total: ',0,1,'L');
+        $pdf->SetFont('Arial', 'B', 9);
+        $pdf->Cell(10, 5, 'Cant: ', 0, 0, 'L');
+        $pdf->Cell(33, 5, 'Desc: ', 0, 0, 'L');
+        $pdf->Cell(12, 5, 'Precio: ', 0, 0, 'L');
+        $pdf->Cell(15, 5, 'Sub Total: ', 0, 1, 'L');
         $total = 0.00;
-        $pdf->SetFont('Arial','',9);
+        $pdf->SetFont('Arial', '', 9);
         foreach ($productosCompras as $row) {
-            $pdf->Cell(10,5,$row['cantidad'],0,0,'L');
-            $pdf->Cell(33,5,$row['producto'],0,0,'L');
-            $pdf->Cell(12,5,$row['precio'],0,0,'L');
-            $pdf->Cell(15,5, number_format($row['subtotal'],2,'.',','),0,1,'L');
+            $pdf->Cell(10, 5, $row['cantidad'], 0, 0, 'L');
+            $pdf->Cell(33, 5, utf8_decode($row['producto']), 0, 0, 'L');
+            $pdf->Cell(12, 5, '$' . number_format($row['precio'], 2, '.', ','), 0, 0, 'L');
+            $pdf->Cell(15, 5, '$' . number_format($row['subtotal'], 2, '.', ','), 0, 1, 'L');
             $total = $total + $row['subtotal'];
         }
         $pdf->Ln();
-        $pdf->Cell(70,5,'Total a pagar:',0,1,'R');
-        $pdf->Cell(70,5,number_format($total,2,'.',','),0,1,'R');
+        $pdf->Cell(70, 5, 'Total a pagar:', 0, 1, 'R');
+        $pdf->Cell(70, 5, '$' . number_format($total, 2, '.', ','), 0, 1, 'R');
         $pdf->Ln();
-        $pdf->SetFont('Arial','',9);
-        $pdf->Cell(65,10,utf8_decode($data['mensaje']),0,1,'C');
+        $pdf->SetFont('Arial', '', 9);
+        $pdf->Cell(65, 10, utf8_decode($data['mensaje']), 0, 1, 'C');
         $pdf->Output();
     }
 }

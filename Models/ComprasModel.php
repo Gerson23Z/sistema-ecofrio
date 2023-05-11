@@ -18,10 +18,10 @@ class ComprasModel extends Query
         return $data;
     }
 
-    public function RegistrarDetalle(int $codigo, string $nombre, int $precio, int $cantidad, int $subTotal)
+    public function RegistrarDetalle(int $codigo, string $producto, string $precio, int $cantidad, string $subTotal)
     {
         $sql = "INSERT INTO detalles(codigo, producto, precio, cantidad, subtotal) VALUES (?,?,?,?,?)";
-        $datos = array($codigo, $nombre, $precio, $cantidad, $subTotal);
+        $datos = array($codigo, $producto, $precio, $cantidad, $subTotal);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
             $res = "¡OK!";
@@ -30,10 +30,10 @@ class ComprasModel extends Query
         }
         return $res;
     }
-    public function actualizarDetalle(int $codigo, string $nombre, int $precio, int $total_cantidad, int $subTotal, int $id)
+    public function actualizarDetalle(int $codigo, string $producto, string $precio, string $total_cantidad, string $subTotal, int $id)
     {
         $sql = "UPDATE detalles SET codigo = ?,producto = ?,precio = ?,cantidad = ?,subTotal = ? WHERE id = ?";
-        $datos = array($codigo, $nombre, $precio, $total_cantidad, $subTotal, $id);
+        $datos = array($codigo, $producto, $precio, $total_cantidad, $subTotal, $id);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
             $res = "modificado";
@@ -90,7 +90,7 @@ class ComprasModel extends Query
         $data = $this->select($sql);
         return $data;
     }
-    public function registrarDetallesCompra(int $id_compra, string $producto, int $precio, int $cantidad, int $subtotal)
+    public function registrarDetallesCompra(int $id_compra, string $producto, string $precio, int $cantidad, string $subtotal)
     {
         $sql = "INSERT INTO detalles_compras(id_compra, producto, precio, cantidad, subtotal) VALUES (?,?,?,?,?)";
         $datos = array($id_compra, $producto, $precio, $cantidad, $subtotal);

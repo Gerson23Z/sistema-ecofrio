@@ -9,38 +9,52 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
-                    <input type="hidden" id="id" name="id">
-                        <input id="txtCodigo" class="form-control" type="text" name="txtCodigo" placeholder="Codigo" onkeyup="buscarCodigo(event)">
+                        <input type="hidden" id="id" name="id">
+                        <label for="txtCodigo">Codigo</label>
+                        <input id="txtCodigo" class="form-control" type="text" name="txtCodigo"
+                            onkeyup="buscarCodigo(event)">
                     </div>
 
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <input id="txtNombre" class="form-control" type="text" name="txtNombre" placeholder="Nombre">
+                        <label for="txtProducto">Producto</label>
+                        <input id="txtProducto" class="form-control" type="text" name="txtProducto">
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
-                        <input id="txtCantidad" class="form-control" type="text" name="txtCantidad"
-                            placeholder="Cantidad" onkeyup="calcularPrecio(event)">
+                        <label for="txtCantidad">Cantidad</label>
+                        <input id="txtCantidad" class="form-control" type="number" name="txtCantidad"
+                            onkeyup="calcularPrecio(event)">
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
-                        <input id="txtPrecio" class="form-control" type="text" name="txtPrecio" placeholder="Precio"
-                            disabled>
+                        <label for="txtPrecio">Precio</label>
+                        <input id="txtPrecio" class="form-control" type="text" name="txtPrecio" disabled>
+                        <span class="simbolo">$</span>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
-                        <input id="txtSubTotal" class="form-control" type="text" name="txtSubTotal"
-                            placeholder="Subtotal" disabled>
+                        <label for="txtSubTotal">Sub total</label>
+                        <input id="txtSubTotal" class="form-control" type="text" name="txtSubTotal" disabled>
+                        <span class="simbolo">$</span>
                     </div>
                 </div>
             </div>
         </form>
     </div>
 </div>
+<style>
+    .simbolo {
+        position: absolute;
+        top: 60%;
+        left: 200px;
+        transform: translateY(-50%);
+    }
+</style>
 
 <table class="table table-light table-bordered table-hover">
     <thead class="table-success">
@@ -53,15 +67,16 @@
             <th></th>
         </tr>
     </thead>
-    <tbody  id="tblDetalles">
+    <tbody id="tblDetalles">
 
-</tbody>
+    </tbody>
 </table>
 
 <div class="row">
     <div class="col-md-4 ml-auto">
         <div class="form-group">
-            <input id="txtTotal" class="form-control" type="text" name="txtTotal" placeholder="total" disabled>
+            <label for="txtTotal">Total</label>
+            <input id="txtTotal" class="form-control" type="text" name="txtTotal" disabled>
         </div>
         <button class="btn btn-info" type="button" id="btnId" onclick="registrarCompra(event)">Registrar</button>
     </div>

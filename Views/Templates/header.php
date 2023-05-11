@@ -72,15 +72,19 @@
             </div>
 
             <li class="nav-item">
-                <a class="nav-link" href="Citas">
-                <i class="fa-solid fa-screwdriver-wrench fa-2x"></i>
-                    <span>Citas</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="Control">
-                    <i class="fas fa-calendar-days fa-2x"></i>
-                    <span>Control mantenimientos</span></a>
+                <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapseCitas"
+                    aria-expanded="true" aria-controls="collapseCitas">
+                    <i class="fa fa-calendar fa-2x"></i>
+                    <span>Citas</span>
+                </a>
+                <div id="collapseCitas" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="Citas"> <i
+                                class="fas fa-calendar-days fa-sm fa-fw mr-2"></i>Calendario</a>
+                        <a class="collapse-item" href="Control"> <i class="fas fa-list fa-sm fa-fw mr-2"></i>
+                            Control</a>
+                    </div>
+                </div>
             </li>
 <!--
             <li class="nav-item">
@@ -100,6 +104,11 @@
                     <i class="fas fa-file-contract fa-2x"></i>
                     <span>Reportes</span></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="Historial">
+                    <i class="fas fa-cart-shopping fa-2x"></i>
+                    <span>Entradas</span></a>
+            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -110,7 +119,7 @@
             </div>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Ajustes</span>

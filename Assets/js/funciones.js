@@ -1,7 +1,8 @@
 let tblUsuarios;
 let tblUsuariosEliminados;
-let tblMantenimientos;
+let tblCitas;
 let tblDetalles;
+let tblHistorialCompras;
 
 document.addEventListener("DOMContentLoaded", function () {
   tblUsuarios = $("#tblUsuarios").DataTable({
@@ -63,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
       },
     ],
   });
-  tblMantenimientos = $("#tblMantenimientos").DataTable({
+  tblCitas = $("#tblCitas").DataTable({
     ajax: {
       url: base_url + "Control/listar",
       dataSrc: "",
@@ -85,10 +86,33 @@ document.addEventListener("DOMContentLoaded", function () {
         data: "tipo",
       },
       {
-        data: "fecha",
+        data: "fecha_cita",
       },
       {
-        data: "prox",
+        data: "rest",
+      },
+      {
+        data: "estado",
+      },
+      {
+        data: "acciones",
+      },
+    ],
+  });
+  tblHistorialCompras = $("#tblHistorialCompras").DataTable({
+    ajax: {
+      url: base_url + "Historial/listar",
+      dataSrc: "",
+    },
+    columns: [
+      {
+        data: "id",
+      },
+      {
+        data: "total",
+      },
+      {
+        data: "fecha",
       },
       {
         data: "acciones",
@@ -251,7 +275,7 @@ function btnReingresarUsuario(id) {
 }
 
 let tiposlct = document.getElementById("tipo");
-function registrarMan(event) {
+function registrarCita(event) {
   event.preventDefault();
   const nombre = document.getElementById("nombre");
   const apellido = document.getElementById("apellido");
@@ -262,7 +286,7 @@ function registrarMan(event) {
   const fecha = document.getElementById("fecha");
 
   const url = base_url + "Citas/registrar";
-  const frm = document.getElementById("frmMan");
+  const frm = document.getElementById("frmCita");
   const http = new XMLHttpRequest();
   http.open("POST", url, true);
   http.send(new FormData(frm));
@@ -271,15 +295,46 @@ function registrarMan(event) {
       const res = JSON.parse(this.responseText);
       Swal.fire("Aviso", res.msg, res.tipo);
       if (res.estado) {
-        $("#nuevo_mantenimiento").modal("hide");
-        tblMantenimientos.ajax.reload();
+        $("#nuevo_cita").modal("hide");
+        tblCitas.ajax.reload();
       }
     }
   };
 }
+function marcarCom() {
+  const id = document.getElementById("id").value;
+  Swal.fire({
+    title: "Esta seguro de eliminar?",
+    text: "Una vez marcado no se puede deshacer",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Si",
+    cancelButtonText: "No",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const url = base_url + "Control/marcar/" + id;
+      const frm = document.getElementById("frmCita");
+      const http = new XMLHttpRequest();
+      http.open("POST", url, true);
+      http.send(new FormData(frm));
+      http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          const res = JSON.parse(this.responseText);
+          if (res == "ok") {
+            Swal.fire("Mensaje", "Completado", "success");
+            tblCitas.ajax.reload();
+          } else {
+            Swal.fire("Mensaje", res, "error");
+          }
+        }
+      };
+    }
+  });
+}
 
-
-function btnEditarMantenimiento(id) {
+function btnEditarCita(id) {
   const url = base_url + "Control/editar/" + id;
   const http = new XMLHttpRequest();
   http.open("GET", url, true);
@@ -296,9 +351,38 @@ function btnEditarMantenimiento(id) {
       document.getElementById("tipo").value = res.tipo;
       document.getElementById("fecha").value = res.fecha;
       tiposlct.classList.add("d-none");
-      $("#nuevo_mantenimiento").modal("show");
+      $("#nuevo_cita").modal("show");
     }
   };
+}
+
+function btnEliminarCita(id) {
+  Swal.fire({
+    title: "Advertencia",
+    text: "Esta seguro de eliminar?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Si, Eliminar",
+    cancelButtonText: "Cancelar",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const url =
+        base_url + "Citas/eliminar/" + id;
+      const http = new XMLHttpRequest();
+      http.open("GET", url, true);
+      http.send();
+      http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          console.log(this.responseText);
+          const res = JSON.parse(this.responseText);
+          Swal.fire("Avisos", res.msg, res.tipo);
+          tblCitas.ajax.reload();
+        }
+      };
+    }
+  });
 }
 
 function buscarCodigo(e) {
@@ -323,7 +407,7 @@ function buscarCodigo(e) {
           document.getElementById("txtCodigo").value = "";
           document.getElementById("txtCodigo").focus();
         } else {
-          document.getElementById("txtNombre").value = res[0].producto;
+          document.getElementById("txtProducto").value = res[0].producto;
           document.getElementById("txtPrecio").value = res[0].precio;
           document.getElementById("id").value = res[0].id;
           document.getElementById("txtCantidad").focus();
@@ -351,7 +435,7 @@ function calcularPrecio(e) {
           if (res == "si") {
             frm.reset();
             cargarDetalles();
-          }else if(res=="modificado"){
+          } else if (res == "modificado") {
             frm.reset();
             cargarDetalles();
           }
@@ -422,7 +506,7 @@ function eliminarDetalle(id) {
   };
 }
 
-function registrarCompra(){
+function registrarCompra() {
   Swal.fire({
     title: 'jfjh?',
     text: "You won't be able to revert this!",
@@ -450,7 +534,7 @@ function registrarCompra(){
               timer: 2000
             })
             cargarDetalles();
-            const ruta = base_url + "Compras/generarPDF/"+ res.id_compra;
+            const ruta = base_url + "Compras/generarPDF/" + res.id_compra;
             window.open(ruta);
           } else {
             Swal.fire({
@@ -465,4 +549,9 @@ function registrarCompra(){
       };
     }
   })
+}
+
+function mostrarPdf(id) {
+  const ruta = base_url + "Compras/generarPDF/" + id;
+  window.open(ruta);
 }
