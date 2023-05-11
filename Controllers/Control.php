@@ -27,8 +27,11 @@ class Control extends Controller
         $data[$i]['fecha_cita'] = date_format($fechaCita,"d-m-Y");
         if($data[$i]['completado'] == 1){
           $data[$i]['estado'] = '<span class="badge badge-primary">Completado</span>';
-        }elseif($data[$i]['completado'] == 0 && $diferencia_dias<$fechaActual){
+        }elseif($data[$i]['completado'] == 0 && $diferencia_dias<0){
           $data[$i]['estado'] = '<span class="badge badge-danger">Retrasado</span>';
+          $data[$i]['rest'] = "Vencido hace " .abs($diferencia_dias)." dias";
+        }elseif($data[$i]['completado'] == 0 && $diferencia_dias==0){
+          $data[$i]['estado'] = '<span class="badge badge-warning">Hoy</span>';
         }else{
           $data[$i]['estado'] = '<span class="badge badge-success">Pendiente</span>';
         }

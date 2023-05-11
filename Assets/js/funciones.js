@@ -274,7 +274,8 @@ function btnReingresarUsuario(id) {
   });
 }
 
-let tiposlct = document.getElementById("tipo");
+let btnMarc = document.getElementById("btnIdMarcar");
+let btnReg = document.getElementById("btnId");
 function registrarCita(event) {
   event.preventDefault();
   const nombre = document.getElementById("nombre");
@@ -324,7 +325,8 @@ function marcarCom() {
           const res = JSON.parse(this.responseText);
           if (res == "ok") {
             Swal.fire("Mensaje", "Completado", "success");
-            tblCitas.ajax.reload();
+            $("#nuevo_cita").modal("hide");
+          tblCitas.ajax.reload();
           } else {
             Swal.fire("Mensaje", res, "error");
           }
@@ -350,7 +352,18 @@ function btnEditarCita(id) {
       document.getElementById("direccion").value = res.direccion;
       document.getElementById("tipo").value = res.tipo;
       document.getElementById("fecha").value = res.fecha;
-      tiposlct.classList.add("d-none");
+      if (res.completado == 1) {
+        btnMarc.classList.add("d-none");
+        btnReg.classList.add("d-none");
+        document.getElementById("id").disabled = true;
+      document.getElementById("nombre").disabled = true;
+      document.getElementById("apellido").disabled = true;
+      document.getElementById("dui").disabled = true;
+      document.getElementById("telefono").disabled = true;
+      document.getElementById("direccion").disabled = true;
+      document.getElementById("tipo").disabled = true;
+      document.getElementById("fecha").disabled = true;
+      }
       $("#nuevo_cita").modal("show");
     }
   };
@@ -555,3 +568,68 @@ function mostrarPdf(id) {
   const ruta = base_url + "Compras/generarPDF/" + id;
   window.open(ruta);
 }
+
+document.addEventListener("DOMContentLoaded", function (){
+    const url = base_url + "EmpresaConfiguracion/mostrar/" + 1;
+    const http = new XMLHttpRequest();
+    http.open("GET", url, true);
+    http.send();
+    http.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        const res = JSON.parse(this.responseText);
+        document.getElementById("nombre").value = res.nombre;
+        document.getElementById("direccion").value = res.direccion;
+        document.getElementById("telefono").value = res.telefono;
+        document.getElementById("dueno").value = res.dueno;
+        document.getElementById("mensaje").value = res.mensaje;
+      }
+    };
+});
+
+function actualizar(event) {
+  event.preventDefault();
+  const nombre = document.getElementById("nombre");
+  const direccion = document.getElementById("direccion");
+  const telefono = document.getElementById("telefono");
+  const dueno = document.getElementById("dueno");
+  const mensaje = document.getElementById("mensaje");
+  Swal.fire({
+    title: "Esta seguro de actualizar la informacion?",
+    text: "",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Si",
+    cancelButtonText: "No",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const url = base_url + "EmpresaConfiguracion/editar/" + 1;
+      const frm = document.getElementById("frmInfo");
+      const http = new XMLHttpRequest();
+      http.open("POST", url, true);
+      http.send(new FormData(frm));
+      http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          const res = JSON.parse(this.responseText);
+          console.log(res);
+          if (res == "modificado") {
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Modificado con exito',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            setTimeout(function() {
+              location.reload();
+            }, 2000);
+          } else {
+            Swal.fire("Error", res, "error");
+          }
+        }
+      };
+    }
+  });
+}
+

@@ -65,9 +65,9 @@
                     </div>
                 </div>
                 <div class="moda-footer">
-                <button class="btn btn-warning" type="button" data-dismiss="modal">Cancelar</button>
+                <button class="btn btn-warning" type="button" data-dismiss="modal">Salir</button>
                     <button class="btn btn-info" type="button" id="btnId" onclick="registrarCita(event)">Registrar</button>
-                    <button class="btn btn-info" type="button" id="btnId" onclick="marcarCom(event)">Marcar como completada</button>
+                    <button class="btn btn-info" type="button" id="btnIdMarcar" onclick="marcarCom(event)">Marcar como completada</button>
                 </div>
                 </form>
             </div>

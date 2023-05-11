@@ -130,6 +130,8 @@
                                 class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i> Salir</a>
                         <a class="collapse-item" href="Usuarios"> <i class="fas fa-user fa-sm fa-fw mr-2"></i>
                             Usarios</a>
+                            <a class="collapse-item" href="EmpresaConfiguracion"> <i class="fas fa-building fa-sm fa-fw mr-2"></i>
+                            Info. de la empresa</a>
                     </div>
                 </div>
             </li>
