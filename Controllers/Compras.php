@@ -84,6 +84,10 @@ class Compras extends Controller
                 $cantidad = $row['cantidad'];
                 $subtotal = $precio * $cantidad;
                 $this->model->registrarDetallesCompra($id_compra['id'], $producto, $precio, $cantidad, $subtotal);
+                $codigoProducto = $row['codigo'];
+                $stockActual = $this->model->GetProductos($codigoProducto);
+                $stock = $stockActual[0]['unidades'] + $cantidad;
+                $this->model->actualizarStock($stock, $codigoProducto);
             }
             $this->model->vaciarDetalles();
             $msg = array('msg' => 'ok', 'id_compra' => $id_compra['id']);

@@ -17,6 +17,12 @@ class ComprasModel extends Query
         $data = $this->selectAll($sql);
         return $data;
     }
+    function GetProductos($codigoProducto)
+    {
+        $sql = "SELECT * FROM inventariorespuestos WHERE codigo = $codigoProducto";
+        $data = $this->selectAll($sql);
+        return $data;
+    }
 
     public function RegistrarDetalle(int $codigo, string $producto, string $precio, int $cantidad, string $subTotal)
     {
@@ -41,6 +47,13 @@ class ComprasModel extends Query
             $res = "error";
         }
         return $res;
+    }
+    public function actualizarStock(int $stock, int $codigoProducto)
+    {
+        $sql = "UPDATE inventariorespuestos SET unidades = ? WHERE codigo = ?";
+        $datos = array($stock, $codigoProducto);
+        $data = $this->save($sql, $datos);
+        return $data;
     }
     public function getDetalles()
     {

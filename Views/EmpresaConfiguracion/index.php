@@ -27,5 +27,6 @@
   <button class="btn btn-info center" type="button" onclick="actualizar(event)" id="btnInfo">Guardar</button>
 </div>
 </form>
+<script src="<?php echo base_url; ?>Assets/js/funcionesInfo.js"></script>
 
 <?php include "Views/Templates/footer.php"; ?>
