@@ -12,7 +12,7 @@
                         <input type="hidden" id="id" name="id">
                         <label for="txtCodigo">Codigo</label>
                         <input id="txtCodigo" class="form-control" type="text" name="txtCodigo"
-                            onkeyup="buscarCodigo(event)">
+                            onkeyup="buscarCodigoCompra(event)">
                     </div>
 
                 </div>
@@ -26,7 +26,7 @@
                     <div class="form-group">
                         <label for="txtCantidad">Cantidad</label>
                         <input id="txtCantidad" class="form-control" type="number" name="txtCantidad"
-                            onkeyup="calcularPrecio(event)">
+                            onkeyup="calcularPrecioCompra(event)">
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -67,7 +67,7 @@
             <th></th>
         </tr>
     </thead>
-    <tbody id="tblDetalles">
+    <tbody id="tblDetallesCmp">
 
     </tbody>
 </table>

@@ -16,12 +16,15 @@ class RespuestosEliminados extends Controller
   {
     $data = $this->model->getRespuestosEliminados();
     for ($i = 0; $i < count($data); $i++) {
-        if ($data[$i]['estado'] == 0) {
+      $fechaCita = $data[$i]['fecha'];
+      $fechaCita = date_create($fechaCita);
+      $data[$i]['fecha_cita'] = date_format($fechaCita, "d-m-Y");
+      if ($data[$i]['estado'] == 0) {
         $data[$i]['estado'] = '<span class="badge badge-danger">Eliminado</span>';
-        $data[$i]['acciones'] = ' <div>
+      }
+      $data[$i]['acciones'] = ' <div>
         <button type="button" class="btn btn-success" type="button" onclick="btnReingresarRespuesto(' . $data[$i]['id'] . ')"><i class="fas fa-rotate-left"></i></button>
         </div> ';
-        }
     }
     echo json_encode($data, JSON_UNESCAPED_UNICODE);
     die();

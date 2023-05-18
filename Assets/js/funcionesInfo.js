@@ -43,18 +43,12 @@ function actualizar(event) {
           const res = JSON.parse(this.responseText);
           console.log(res);
           if (res == "modificado") {
-            Swal.fire({
-              position: 'center',
-              icon: 'success',
-              title: 'Modificado con exito',
-              showConfirmButton: false,
-              timer: 1500
-            })
+            alerttime("informacion editada","success");
             setTimeout(function() {
               location.reload();
             }, 2000);
           } else {
-            Swal.fire("Error", res, "error");
+            alerttime("error","error");
           }
         }
       };

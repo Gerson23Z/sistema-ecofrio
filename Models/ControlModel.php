@@ -7,9 +7,9 @@ class ControlModel extends Query
     parent::__construct();
   }
 
-  public function GetCitasCompletadas()
+  public function GetCitas()
   {
-    $sql = "SELECT * FROM citas";
+    $sql = "SELECT * FROM citas WHERE completado = 0";
     $data = $this->selectAll($sql);
     return $data;
   }

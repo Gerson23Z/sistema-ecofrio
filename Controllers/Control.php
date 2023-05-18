@@ -14,7 +14,7 @@ class Control extends Controller
 
   public function listar()
   {
-    $data = $this->model->GetCitasCompletadas();
+    $data = $this->model->GetCitas();
     for ($i = 0; $i < count($data); $i++) {
         $fechaActual = date("Y-m-d");
         $fechaCita=$data[$i]['fecha'];
@@ -25,12 +25,10 @@ class Control extends Controller
         $data[$i]['rest'] = "Cita en ".$diferencia_dias." dias";
         $fechaCita = date_create($fechaCita);
         $data[$i]['fecha_cita'] = date_format($fechaCita,"d-m-Y");
-        if($data[$i]['completado'] == 1){
-          $data[$i]['estado'] = '<span class="badge badge-primary">Completado</span>';
-        }elseif($data[$i]['completado'] == 0 && $diferencia_dias<0){
+        if($diferencia_dias<0){
           $data[$i]['estado'] = '<span class="badge badge-danger">Retrasado</span>';
           $data[$i]['rest'] = "Vencido hace " .abs($diferencia_dias)." dias";
-        }elseif($data[$i]['completado'] == 0 && $diferencia_dias==0){
+        }elseif($diferencia_dias==0){
           $data[$i]['estado'] = '<span class="badge badge-warning">Hoy</span>';
         }else{
           $data[$i]['estado'] = '<span class="badge badge-success">Pendiente</span>';

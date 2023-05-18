@@ -17,6 +17,8 @@
     <!-- Custom fonts for this template-->
     <link href="<?php echo base_url; ?>Assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="<?php echo base_url; ?>Assets/css.css" rel="stylesheet">
+    <link href="<?php echo base_url; ?>Assets/DataTables/datatables.min.css" rel="stylesheet">
+    <link href="<?php echo base_url; ?>Assets/css/select2.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="<?php echo base_url; ?>Assets/css/sb-admin-2.min.css" rel="stylesheet">
@@ -25,7 +27,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
-<body id="page-top">
+<body id="page-top" onload="obtenerClientes()">
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -56,10 +58,21 @@
             </div>
 
             <li class="nav-item">
-                <a class="nav-link" href="Compras">
-                    <i class="fas fa-cash-register fa-2x"></i>
-                    <span>Ingresar Ventas Respuestos</span></a>
+                <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapseVentas"
+                    aria-expanded="true" aria-controls="collapseVentas">
+                    <i class="fa fa-cash-register fa-2x"></i>
+                    <span>Ventas</span>
+                </a>
+                <div id="collapseVentas" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="Ventas"> <i
+                                class="fas fa-cash-register fa-sm fa-fw mr-2"></i>Ventas</a>
+                        <a class="collapse-item" href="HistorialVentas"> <i class="fas fa-list fa-sm fa-fw mr-2"></i>
+                        Historial</a>
+                    </div>
+                </div>
             </li>
+
 <!--full calendar
             <li class="nav-item">
                 <a class="nav-link" href="tables.html">
@@ -104,10 +117,21 @@
                     <i class="fas fa-file-contract fa-2x"></i>
                     <span>Reportes</span></a>
             </li>
+
             <li class="nav-item">
-                <a class="nav-link" href="Historial">
-                    <i class="fas fa-cart-shopping fa-2x"></i>
-                    <span>Entradas</span></a>
+                <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapseEntradas"
+                    aria-expanded="true" aria-controls="collapseEntradas">
+                    <i class="fa fa-cart-shopping fa-2x"></i>
+                    <span>Entradas</span>
+                </a>
+                <div id="collapseEntradas" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="Compras"> <i
+                                class="fas fa-cart-shopping fa-sm fa-fw mr-2"></i>Compras</a>
+                        <a class="collapse-item" href="HistorialCompras"> <i class="fas fa-list fa-sm fa-fw mr-2"></i>
+                        Historial</a>
+                    </div>
+                </div>
             </li>
 
             <!-- Divider -->

@@ -51,6 +51,7 @@
 <!-- Custom scripts for all pages-->
 <script src="<?php echo base_url; ?>Assets/js/sb-admin-2.min.js"></script>
 <script src="<?php echo base_url; ?>Assets/DataTables/datatables.min.js"></script>
+<script src="<?php echo base_url; ?>Assets/js/select2.min.js"></script>
 
 <script src="<?php echo base_url; ?>Assets/vendor/chart.js/Chart.min.js"></script>
 

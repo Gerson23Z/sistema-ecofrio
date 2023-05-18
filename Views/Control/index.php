@@ -3,6 +3,8 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Control de Citas</h1>
 </div>
+<button class="btn btn-light mb-2 text-light" type="button" disabled>Agregar</button>
+<a href="ControlCompletados" class="btn btn-primary mb-2 float-right">Completados</a>
 <table class="table table-light" id="tblCitas">
     <thead class="table-success">
         <tr>

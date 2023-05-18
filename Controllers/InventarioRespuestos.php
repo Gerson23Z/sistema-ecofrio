@@ -16,17 +16,17 @@ class InventarioRespuestos extends Controller
   {
     $data = $this->model->getInventarioRespuestos();
     for ($i = 0; $i < count($data); $i++) {
+      $fechaCita=$data[$i]['fecha'];
+      $fechaCita = date_create($fechaCita);
+      $data[$i]['fecha_cita'] = date_format($fechaCita,"d-m-Y");
       if ($data[$i]['unidades'] > 0) {
         $data[$i]['estado'] = '<span class="badge badge-success">Disponible</span>';
-        $data[$i]['acciones'] = '<div><button type="button" class="btn btn-primary" onclick="btnEditarRespuesto(' . $data[$i]['id'] . ')"><i class="fas fa-pen-to-square"></i></button>
-            <button type="button" class="btn btn-danger"onclick="btnEliminarRespuesto(' . $data[$i]['id'] . ')"><i class="fas fa-trash"></i></button>
-            </div>';
       }else{
         $data[$i]['estado'] = '<span class="badge badge-danger">No Disponible</span>';
-        $data[$i]['acciones'] = '<div><button type="button" class="btn btn-primary" onclick="btnEditarRespuesto(' . $data[$i]['id'] . ')"><i class="fas fa-pen-to-square"></i></button>
+      }
+      $data[$i]['acciones'] = '<div><button type="button" class="btn btn-primary" onclick="btnEditarRespuesto(' . $data[$i]['id'] . ')"><i class="fas fa-pen-to-square"></i></button>
             <button type="button" class="btn btn-danger"onclick="btnEliminarRespuesto(' . $data[$i]['id'] . ')"><i class="fas fa-trash"></i></button>
             </div>';
-      }
     }
     echo json_encode($data, JSON_UNESCAPED_UNICODE);
     die();
@@ -36,14 +36,15 @@ class InventarioRespuestos extends Controller
     $id = $_POST['id'];
     $codigo = $_POST['txtCodigo'];
     $producto = $_POST['txtProducto'];
-    $especificaciones = $_POST['txtEspecificaciones'];
+    $marca = $_POST['txtMarca'];
     $unidades = $_POST['txtUnidades'];
     $precio = $_POST['txtPrecio'];
-    if (empty($codigo) || empty($producto) || empty($especificaciones)) {
+    $precio = str_replace("$", "", $precio);
+    if (empty($codigo) || empty($producto) || empty($marca)) {
       $msg = "Todos los campos son obligatorios";
     } else {
       if ($id == "") {
-          $data = $this->model->registrarRespuesto($codigo, $producto, $especificaciones, $unidades, $precio);
+          $data = $this->model->registrarRespuesto($codigo, $producto, $marca, $unidades, $precio);
           if ($data == "¡OK!") {
             $msg = "si";
           } else if ($data == "existe") {
@@ -52,7 +53,7 @@ class InventarioRespuestos extends Controller
             $msg = "Error al registrar el Producto";
           }
       } else {
-        $data = $this->model->modificarRespuesto($codigo, $producto, $especificaciones, $unidades, $precio, $id);
+        $data = $this->model->modificarRespuesto($codigo, $producto, $marca, $unidades, $precio, $id);
         if ($data == "modificado") {
           $msg = "modificado";
         } else if ($data == "existe") {

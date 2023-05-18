@@ -1,5 +1,5 @@
 <?php
-class HistorialModel extends Query
+class HistorialComprasModel extends Query
 {
   public function __construct()
   {

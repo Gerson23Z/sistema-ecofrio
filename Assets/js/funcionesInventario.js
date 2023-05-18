@@ -20,10 +20,10 @@ document.addEventListener("DOMContentLoaded", function () {
         data: "producto",
       },
       {
-        data: "especificaciones",
+        data: "marca",
       },
       {
-        data: "fecha",
+        data: "fecha_cita",
       },
       {
         data: "unidades",
@@ -38,6 +38,65 @@ document.addEventListener("DOMContentLoaded", function () {
         data: "acciones",
       },
     ],
+    language: {
+      "url": "//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json"
+    },
+    dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>" +
+      "<'row'<'col-sm-12'tr>>" +
+      "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+    buttons: [{
+      //Botón para Excel
+      extend: 'excelHtml5',
+      footer: true,
+      title: 'Archivo',
+      filename: 'Export_File',
+
+      //Aquí es donde generas el botón personalizado
+      text: '<span class="badge badge-success"><i class="fas fa-file-excel"></i></span>'
+    },
+    //Botón para PDF
+    {
+      extend: 'pdfHtml5',
+      download: 'open',
+      footer: true,
+      title: 'Reporte de inventario',
+      filename: 'Reporte de inventario',
+      text: '<span class="badge  badge-danger"><i class="fas fa-file-pdf"></i></span>',
+      exportOptions: {
+        columns: [0, ':visible']
+      }
+    },
+    //Botón para copiar
+    {
+      extend: 'copyHtml5',
+      footer: true,
+      title: 'Reporte de inventario',
+      filename: 'Reporte de inventario',
+      text: '<span class="badge  badge-primary"><i class="fas fa-copy"></i></span>',
+      exportOptions: {
+        columns: [0, ':visible']
+      }
+    },
+    //Botón para print
+    {
+      extend: 'print',
+      footer: true,
+      filename: 'Export_File_print',
+      text: '<span class="badge badge-light"><i class="fas fa-print"></i></span>'
+    },
+    //Botón para cvs
+    {
+      extend: 'csvHtml5',
+      footer: true,
+      filename: 'Export_File_csv',
+      text: '<span class="badge  badge-success"><i class="fas fa-file-csv"></i></span>'
+    },
+    {
+      extend: 'colvis',
+      text: '<span class="badge  badge-info"><i class="fas fa-columns"></i></span>',
+      postfixButtons: ['colvisRestore']
+    }
+    ]
   });
 
   tblRespuestosEliminados = $("#tblRespuestosEliminados").DataTable({
@@ -56,10 +115,10 @@ document.addEventListener("DOMContentLoaded", function () {
         data: "producto",
       },
       {
-        data: "especificaciones",
+        data: "marca",
       },
       {
-        data: "fecha",
+        data: "fecha_cita",
       },
       {
         data: "unidades",
@@ -74,6 +133,12 @@ document.addEventListener("DOMContentLoaded", function () {
         data: "acciones",
       },
     ],
+    language: {
+      "url": "//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json"
+    },
+    dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'><'col-sm-4'f>>" +
+      "<'row'<'col-sm-12'tr>>" +
+      "<'row'<'col-sm-5'i><'col-sm-7'p>>"
   });
 
   tblInventarioAires = $("#tblInventarioAires").DataTable({
@@ -181,7 +246,7 @@ function registrarRespuesto(event) {
   event.preventDefault();
   const txtCodigo = document.getElementById("txtCodigo");
   const txtProducto = document.getElementById("txtProducto");
-  const txtEspecificaciones = document.getElementById("txtEspecificaciones");
+  const txtMarca = document.getElementById("txtMarca");
   const txtUnidades = document.getElementById("txtUnidades");
   const txtPrecio = document.getElementById("txtPrecio");
   if (txtUnidades.value < 0) {
@@ -195,13 +260,14 @@ function registrarRespuesto(event) {
     http.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
         const res = JSON.parse(this.responseText);
+        console.log(res);
         if (res == "si") {
-          Swal.fire("Listo", "Producto registrado con exito", "success");
+          alert("Producto","registrado");
           frm.reset();
           $("#nuevo_respuesto").modal("hide");
           tblInventarioRespuestos.ajax.reload();
         } else if (res == "modificado") {
-          Swal.fire("Listo", "Producto modificado con exito", "success");
+          alert("Producto","modificado");
           $("#nuevo_respuesto").modal("hide");
           tblInventarioRespuestos.ajax.reload();
         } else {
@@ -225,7 +291,7 @@ function btnEditarRespuesto(id) {
       document.getElementById("id").value = res.id;
       document.getElementById("txtCodigo").value = res.codigo;
       document.getElementById("txtProducto").value = res.producto;
-      document.getElementById("txtEspecificaciones").value = res.especificaciones;
+      document.getElementById("txtMarca").value = res.marca;
       document.getElementById("txtUnidades").value = res.unidades;
       document.getElementById("txtPrecio").value = res.precio;
       $("#nuevo_respuesto").modal("show");
@@ -254,7 +320,7 @@ function btnEliminarRespuesto(id) {
         if (this.readyState == 4 && this.status == 200) {
           const res = JSON.parse(this.responseText);
           if (res == "ok") {
-            Swal.fire("Mensaje", "Producto Borrado Éxitosamente", "success");
+            alert("Producto","borrado");
             tblInventarioRespuestos.ajax.reload();
           } else {
             Swal.fire("Mensaje", res, "error");
@@ -284,11 +350,7 @@ function btnReingresarRespuesto(id) {
         if (this.readyState == 4 && this.status == 200) {
           const res = JSON.parse(this.responseText);
           if (res == "ok") {
-            Swal.fire(
-              "Mensaje",
-              "Producto Reingresado Éxitosamente",
-              "success"
-            );
+            alert("Producto","reingrsado");
             tblRespuestosEliminados.ajax.reload();
           } else {
             Swal.fire("Mensaje", res, "error");
@@ -321,12 +383,12 @@ function registrarAire(event) {
       if (this.readyState == 4 && this.status == 200) {
         const res = JSON.parse(this.responseText);
         if (res == "si") {
-          Swal.fire("Listo", "Producto registrado con exito", "success");
+          alert("Producto","registrado");
           frm.reset();
           $("#nuevo_aire").modal("hide");
           tblInventarioAires.ajax.reload();
         } else if (res == "modificado") {
-          Swal.fire("Listo", "Producto modificado con exito", "success");
+          alert("Producto","modificado");
           $("#nuevo_aire").modal("hide");
           tblInventarioAires.ajax.reload();
         } else {
@@ -394,35 +456,35 @@ function btnEliminarAire(id) {
 }
 
 function btnReingresarAire(id) {
-    Swal.fire({
-      title: "Esta seguro de reingresar?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Si",
-      cancelButtonText: "No",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const url = base_url + "AiresEliminados/reingresar/" + id;
-        const http = new XMLHttpRequest();
-        http.open("GET", url, true);
-        http.send();
-        http.onreadystatechange = function () {
-          if (this.readyState == 4 && this.status == 200) {
-            const res = JSON.parse(this.responseText);
-            if (res == "ok") {
-              Swal.fire(
-                "Mensaje",
-                "Producto Reingresado Éxitosamente",
-                "success"
-              );
-              tblAiresEliminados.ajax.reload();
-            } else {
-              Swal.fire("Mensaje", res, "error");
-            }
+  Swal.fire({
+    title: "Esta seguro de reingresar?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Si",
+    cancelButtonText: "No",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const url = base_url + "AiresEliminados/reingresar/" + id;
+      const http = new XMLHttpRequest();
+      http.open("GET", url, true);
+      http.send();
+      http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          const res = JSON.parse(this.responseText);
+          if (res == "ok") {
+            Swal.fire(
+              "Mensaje",
+              "Producto Reingresado Éxitosamente",
+              "success"
+            );
+            tblAiresEliminados.ajax.reload();
+          } else {
+            Swal.fire("Mensaje", res, "error");
           }
-        };
-      }
-    });
-  }
+        }
+      };
+    }
+  });
+}

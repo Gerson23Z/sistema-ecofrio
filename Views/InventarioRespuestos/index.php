@@ -16,7 +16,7 @@
             <th>Id</th>
             <th>Codigo</th>
             <th>Producto</th>
-            <th>Especificaciones</th>
+            <th>Marca</th>
             <th>Fecha</th>
             <th>Unidades</th>
             <th>Precio</th>
@@ -46,27 +46,23 @@
                     <div class="form-group">
                         <label for="txtCodigo">Codigo</label>
                         <input type="hidden" id="id" name="id">
-                        <input id="txtCodigo" class="form-control" type="text" name="txtCodigo" placeholder="Codigo">
+                        <input id="txtCodigo" class="form-control" type="text" name="txtCodigo">
                     </div>
                     <div class="form-group">
                         <label for="txtProducto">Producto</label>
-                        <input id="txtProducto" class="form-control" type="text" name="txtProducto"
-                            placeholder="Producto">
+                        <input id="txtProducto" class="form-control" type="text" name="txtProducto">
                     </div>
                     <div class="form-group">
-                        <label for="txtEspecificaciones">Especificaciones</label>
-                        <input id="txtEspecificaciones" class="form-control" type="text" name="txtEspecificaciones"
-                            placeholder="Especificaciones">
+                        <label for="txtMarca">Marca</label>
+                        <input id="txtMarca" class="form-control" type="text" name="txtMarca">
                     </div>
                     <div class="form-group">
                         <label for="txtUnidades">Unidades</label>
-                        <input id="txtUnidades" class="form-control" type="number" name="txtUnidades"
-                            placeholder="Unidades">
+                        <input id="txtUnidades" class="form-control" type="number" name="txtUnidades">
                     </div>
                     <div class="form-group">
                         <label for="txtPrecio">Precio</label>
-                        <input id="txtPrecio" class="form-control" type="text" name="txtPrecio"
-                            placeholder="Unidades">
+                        <input id="txtPrecio" class="form-control" type="text" name="txtPrecio">
                     </div>
 
                     <button class="btn btn-primary" type="button" onclick="registrarRespuesto(event)"

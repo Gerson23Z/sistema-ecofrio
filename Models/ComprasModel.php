@@ -26,7 +26,7 @@ class ComprasModel extends Query
 
     public function RegistrarDetalle(int $codigo, string $producto, string $precio, int $cantidad, string $subTotal)
     {
-        $sql = "INSERT INTO detalles(codigo, producto, precio, cantidad, subtotal) VALUES (?,?,?,?,?)";
+        $sql = "INSERT INTO detallescmp(codigo, producto, precio, cantidad, subtotal) VALUES (?,?,?,?,?)";
         $datos = array($codigo, $producto, $precio, $cantidad, $subTotal);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
@@ -38,7 +38,7 @@ class ComprasModel extends Query
     }
     public function actualizarDetalle(int $codigo, string $producto, string $precio, string $total_cantidad, string $subTotal, int $id)
     {
-        $sql = "UPDATE detalles SET codigo = ?,producto = ?,precio = ?,cantidad = ?,subTotal = ? WHERE id = ?";
+        $sql = "UPDATE detallescmp SET codigo = ?,producto = ?,precio = ?,cantidad = ?,subTotal = ? WHERE id = ?";
         $datos = array($codigo, $producto, $precio, $total_cantidad, $subTotal, $id);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
@@ -57,19 +57,19 @@ class ComprasModel extends Query
     }
     public function getDetalles()
     {
-        $sql = "SELECT * FROM detalles";
+        $sql = "SELECT * FROM detallescmp";
         $data = $this->selectAll($sql);
         return $data;
     }
     public function calcularCompra()
     {
-        $sql = "SELECT subtotal, SUM(subtotal) AS total FROM detalles";
+        $sql = "SELECT subtotal, SUM(subtotal) AS total FROM detallescmp";
         $data = $this->select($sql);
         return $data;
     }
     public function eliminarDetalle(int $id)
     {
-        $sql = "DELETE FROM detalles WHERE id = ?";
+        $sql = "DELETE FROM detallescmp WHERE id = ?";
         $datos = array($id);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
@@ -81,7 +81,7 @@ class ComprasModel extends Query
     }
     public function comprobarDetalle(int $codigo)
     {
-        $sql = "SELECT * FROM detalles WHERE codigo = $codigo";
+        $sql = "SELECT * FROM detallescmp WHERE codigo = $codigo";
         $data = $this->select($sql);
         return $data;
     }
@@ -118,7 +118,7 @@ class ComprasModel extends Query
 
     public function vaciarDetalles()
     {
-        $sql = "TRUNCATE detalles";
+        $sql = "TRUNCATE detallescmp";
         $this->select($sql);
 
     }
@@ -133,6 +133,12 @@ class ComprasModel extends Query
         $sql = "SELECT * FROM detalles_compras WHERE id_compra = $id_compra";
         $data = $this->selectAll($sql);
         return $data;
+    }
+    public function getInfoCompras($id_compra)
+    {
+      $sql = "SELECT fecha FROM compras WHERE id = $id_compra";
+      $data = $this->selectAll($sql);
+      return $data;
     }
 
 }

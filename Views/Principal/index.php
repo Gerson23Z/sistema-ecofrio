@@ -22,7 +22,7 @@
         </div>
     </a>
 
-    <a href="Inventario" class="col-xl-4 mb-4">
+    <a href="InventarioRespuestos" class="col-xl-4 mb-4">
         <div class="card border-left-success shadow h-100 py-4">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">

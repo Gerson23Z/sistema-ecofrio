@@ -101,6 +101,9 @@ class Compras extends Controller
     {
         $data = $this->model->getEmpresa();
         $productosCompras = $this->model->getProCompras($id_compra);
+        $infoCompra = $this->model->getInfoCompras($id_compra);
+        $fecha = date_create($infoCompra[0]['fecha']);
+        $fecha = date_format($fecha,"d-m-Y H:i:s");
         //se llama la libreria
         require('Libraries/fpdf/fpdf.php');
         //ajustes
@@ -157,7 +160,7 @@ class Compras extends Controller
         $pdf->Cell(70, 5, '$' . number_format($total, 2, '.', ','), 0, 1, 'R');
         $pdf->Ln();
         $pdf->SetFont('Arial', '', 9);
-        $pdf->Cell(65, 10, utf8_decode($data['mensaje']), 0, 1, 'C');
+        $pdf->Cell(65, 10, $fecha, 0, 1, 'C');
         $pdf->Output();
     }
 }
