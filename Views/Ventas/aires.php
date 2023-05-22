@@ -5,16 +5,15 @@
         <h4>Nueva Venta</h4>
     </div>
     <div class="card-body">
-        <form id="frmVentas">
+        <form id="frmAires">
             <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
                         <input type="hidden" id="id" name="id">
                         <label for="txtCodigo">Codigo</label>
                         <input id="txtCodigo" class="form-control" type="text" name="txtCodigo"
-                            onkeyup="buscarCodigoVenta(event)">
+                            onkeyup="buscarCodigoAires(event)">
                     </div>
-
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
@@ -26,7 +25,7 @@
                     <div class="form-group">
                         <label for="txtCantidad">Cantidad</label>
                         <input id="txtCantidad" class="form-control" type="number" name="txtCantidad"
-                            onkeyup="calcularPrecioVenta(event)">
+                            onkeyup="calcularPrecioAire(event)">
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -44,7 +43,6 @@
                     </div>
                 </div>
             </div>
-        </form>
     </div>
 </div>
 <style>
@@ -60,25 +58,49 @@
     <thead class="table-success">
         <tr>
             <th>Codigo</th>
-            <th>Nombre</th>
+            <th>Marca</th>
+            <th>Capacidad</th>
+            <th>Seer</th>
             <th>Precio</th>
             <th>Cantidad</th>
             <th>Sub total</th>
             <th></th>
         </tr>
     </thead>
-    <tbody id="tblDetallesVnt">
+    <tbody id="tblDetallesVntAire">
     </tbody>
 </table>
 
-<div class="row">
-    <div class="col-md-3">
-        <div class="form-group">
-            <label for="txtTotal">Total</label>
-            <input id="txtTotal" class="form-control" type="text" name="txtTotal" disabled>
-        </div>
-        <button class="btn btn-info" type="button" id="btnId" onclick="registrarVenta(event)">Registrar</button>
+<label for="">Datos Cliente</label>
+<div class="form-row">
+    <div class="form-group col-md-2">
+        <label for="dui">DUI <i class="fas fa-id-card"></i></label>
+        <input type="text" class="form-control" id="dui" name="dui" onkeyup="clienteClck(event)">
+    </div>
+    <div class="form-group col-md-4">
+        <label for="nombreCliente">Nombre <i class="fas fa-user"></i></label>
+        <input type="text" class="form-control" id="nombreCliente" name="nombreCliente"
+            onkeyup="sig(event, 'telefonoCliente')">
+    </div>
+    <div class="form-group col-md-2">
+        <label for="telefonoCliente">Telefono <i class="fas fa-phone"></i></label>
+        <input type="text" class="form-control" id="telefonoCliente" name="telefonoCliente"
+            onkeyup="sig(event, 'direccionCliente')">
+    </div>
+    <div class="form-group col-md-4">
+        <label for="direccionCliente">Direccion <i class="fas fa-address-book"></i></label>
+        <input type="text" class="form-control" id="direccionCliente" name="direccionCliente">
     </div>
 </div>
+</form>
+
+<div class="col-md-3 ml-auto">
+    <div class="form-group">
+        <label for="txtTotal">Total</label>
+        <input id="txtTotal" class="form-control" type="text" name="txtTotal" disabled>
+    </div>
+    <button class="btn btn-info" type="button" id="btnId" onclick="registrarVentaAire(event)">Registrar</button>
+</div>
+
 
 <?php include "Views/Templates/footer.php"; ?>

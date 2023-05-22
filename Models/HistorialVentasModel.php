@@ -12,5 +12,11 @@ class HistorialVentasModel extends Query
     $data = $this->selectAll($sql);
     return $data;
   }
+  public function getHistorialVentasAires()
+  {
+    $sql = "SELECT * FROM ventasaires";
+    $data = $this->selectAll($sql);
+    return $data;
+  }
 }
 ?>

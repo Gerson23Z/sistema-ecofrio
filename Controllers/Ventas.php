@@ -10,15 +10,25 @@ class Ventas extends Controller
     {
         $this->Views->getView($this, "index");
     }
+    public function aires()
+    {
+        $this->Views->getView($this, "aires");
+    }
     public function buscarCodigo($cod)
     {
         $data = $this->model->GetCodPro($cod);
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();
     }
-    public function clientes()
+    public function buscarAire($cod)
     {
-        $data = $this->model->getClientes();
+        $data = $this->model->GetCodAir($cod);
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        die();
+    }
+    public function clientes($numDui)
+    {
+        $data = $this->model->getClientes($numDui);
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();
     }
@@ -52,6 +62,38 @@ class Ventas extends Controller
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
         die();
     }
+    public function ingresarAire()
+    {
+        $id = $_POST['id'];
+        $datos = $this->model->GetAire($id);
+        $codigo = $datos[0]['codigo'];
+        $marca = $datos[0]['marca'];
+        $capacidad = $datos[0]['capacidad'];
+        $seer = $datos[0]['seer'];
+        $precio = $datos[0]['precio'];
+        $cantidad = $_POST['txtCantidad'];
+        $comprobar = $this->model->comprobarDetalleAire($datos[0]['codigo']);
+        if (empty($comprobar)) {
+            $subTotal = $precio * $cantidad;
+            $data = $this->model->RegistrarDetalleAire($codigo, $marca, $capacidad, $seer, $precio, $cantidad, $subTotal);
+            if ($data == "¡OK!") {
+                $msg = "si";
+            } else {
+                $msg = "Error al registrar";
+            }
+        } else {
+            $total_cantidad = $comprobar['cantidad'] + $cantidad;
+            $subTotal = $total_cantidad * $precio;
+            $data = $this->model->actualizarDetalleAire($codigo, $marca, $capacidad, $seer, $precio, $total_cantidad, $subTotal, $comprobar['id']);
+            if ($data == "modificado") {
+                $msg = "modificado";
+            } else {
+                $msg = "Error al actualizar";
+            }
+        }
+        echo json_encode($msg, JSON_UNESCAPED_UNICODE);
+        die();
+    }
     public function listar()
     {
         $data['detalles'] = $this->model->getDetalles();
@@ -61,6 +103,18 @@ class Ventas extends Controller
 
         $data['detalles'] = $this->model->getDetalles();
         $data['total_pagar'] = $this->model->calcularVenta()['total'];
+        echo json_encode($data);
+        die();
+    }
+    public function listaraire()
+    {
+        $data['detalles'] = $this->model->getDetallesAire();
+        $data['total_pagar'] = $this->model->calcularVentaAire();
+        echo json_encode($data);
+        die();
+
+        $data['detalles'] = $this->model->getDetallesAire();
+        $data['total_pagar'] = $this->model->calcularVentaAire()['total'];
         echo json_encode($data);
         die();
     }
@@ -75,7 +129,18 @@ class Ventas extends Controller
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
         die();
     }
-    public function registrarVenta($id_cliente)
+    public function eliminarAire($id)
+    {
+        $data = $this->model->eliminarDetalleAire($id);
+        if ($data == "¡OK!") {
+            $msg = "ok";
+        } else {
+            $msg = "Error al eliminar el detalle";
+        }
+        echo json_encode($msg, JSON_UNESCAPED_UNICODE);
+        die();
+    }
+    public function registrarVenta()
     {
         $datos = $this->model->calcularVenta()['total'];
         $data = $this->model->guardarVenta($datos);
@@ -101,13 +166,56 @@ class Ventas extends Controller
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
         die();
     }
+    public function registrarVentaAire()
+    {
+        $dui = $_POST['dui'];
+        $nombre = $_POST['nombreCliente'];
+        $telefono = $_POST['telefonoCliente'];
+        $direccion = $_POST['direccionCliente'];
+        if (empty($dui) || empty($nombre) || empty($telefono) || empty($direccion)) {
+            $msg = 'vacio';
+        } else {
+            $data = $this->model->RegistrarInfoCliente($dui, $nombre, $telefono, $direccion);
+            if ($data == "¡OK!") {
+                $msg = "si";
+            } else {
+                $msg = "Error al registrar";
+            }
+            $datos = $this->model->calcularVentaAire()['total'];
+            $data = $this->model->guardarVentaAire($datos);
+            if ($data == "¡OK!") {
+                $id_venta = $this->model->getIdVentaAire();
+                $detalles = $this->model->getDetallesAire();
+                foreach ($detalles as $row) {
+                    $marca = $row['marca'];
+                    $capacidad = $row['capacidad'];
+                    $seer = $row['seer'];
+                    $precio = $row['precio'];
+                    $cantidad = $row['cantidad'];
+                    $subtotal = $precio * $cantidad;
+                    $this->model->registrarDetallesVentaAire($id_venta['id'], $marca, $capacidad, $seer, $precio, $cantidad, $subtotal);
+                    $codigoProducto = $row['codigo'];
+                    $stockActual = $this->model->GetAires($codigoProducto);
+                    $stock = $stockActual[0]['cantidad'] + $cantidad;
+                    $this->model->actualizarStockAires($stock, $codigoProducto);
+                }
+                $this->model->vaciarDetallesAir();
+                $msg = array('msg' => 'ok', 'id_venta' => $id_venta['id']);
+            } else {
+                $msg = "Error al registrar la venta";
+            }
+        }
+        echo json_encode($msg, JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
     public function generarPDF($id_venta)
     {
         $data = $this->model->getEmpresa();
         $productosCompras = $this->model->getProVentas($id_venta);
         $infoCompra = $this->model->getInfoVentas($id_venta);
         $fecha = date_create($infoCompra[0]['fecha']);
-        $fecha = date_format($fecha,"d-m-Y H:i:s");
+        $fecha = date_format($fecha, "d-m-Y H:i:s");
         //se llama la libreria
         require('Libraries/fpdf/fpdf.php');
         //ajustes

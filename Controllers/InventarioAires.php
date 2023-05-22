@@ -35,29 +35,30 @@ class InventarioAires extends Controller
   public function registrar()
   {
     $id = $_POST['id'];
+    $codigo = $_POST['codigo'];
     $marca = $_POST['slctMarca'];
     $capacidad = $_POST['slctCapacidad'];
     $seer = $_POST['slctSeer'];
     $voltaje = $_POST['slctVoltaje'];
     $modelo = $_POST['slctModelo'];
     $caracteristica = $_POST['slctCaracteristica'];
-    $tipo = $_POST['slctTipo'];
+    $precio = $_POST['precio'];
     $cantidad = $_POST['txtCantidad'];
     if(empty($cantidad)){
       $cantidad=0;
     }
-    if (empty($marca) || empty($capacidad) || empty($seer) || empty($voltaje) || empty($modelo) || empty($caracteristica) || empty($tipo)) {
+    if (empty($codigo) || empty($marca) || empty($capacidad) || empty($seer) || empty($voltaje) || empty($modelo) || empty($caracteristica) || empty($precio)) {
       $msg = "Todos los campos son obligatorios";
     } else {
       if ($id == "") {
-          $data = $this->model->registrarAire($marca, $capacidad, $seer, $voltaje, $modelo, $caracteristica, $tipo, $cantidad);
+          $data = $this->model->registrarAire($codigo, $marca, $capacidad, $seer, $voltaje, $modelo, $caracteristica, $precio, $cantidad);
           if ($data == "¡OK!") {
             $msg = "si";
           }else {
             $msg = "Error al registrar el producto";
           }
       } else {
-        $data = $this->model->modificarAire($marca, $capacidad, $seer, $voltaje, $modelo, $caracteristica, $tipo, $cantidad, $id);
+        $data = $this->model->modificarAire($codigo, $marca, $capacidad, $seer, $voltaje, $modelo, $caracteristica, $precio, $cantidad, $id);
         if ($data == "modificado") {
           $msg = "modificado";
         }else {

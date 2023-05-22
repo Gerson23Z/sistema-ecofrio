@@ -14,13 +14,14 @@
     <thead class="table-success">
         <tr>
             <th>Id</th>
+            <th>Codigo</th>
             <th>Marca</th>
             <th>Capacidad</th>
             <th>Seer</th>
             <th>Voltaje</th>
             <th>Modelo</th>
             <th>Caracteristica</th>
-            <th>Tipo</th>
+            <th>Precio</th>
             <th>Cantidad</th>
             <th>Estado</th>
             <th></th>
@@ -44,6 +45,10 @@
             </div>
             <div class="modal-body">
                 <form method="post" id="frmAires">
+                <div class="form-group">
+                        <label for="codigo">Codigo</label>
+                        <input id="codigo" class="form-control" type="text" name="codigo" placeholder="Codigo">
+                    </div>
                     <div class="form-group">
                         <label for="slctMarca">Marca</label>
                         <input type="hidden" id="id" name="id">
@@ -100,10 +105,8 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="slctTipo">Tipo</label>
-                        <select id="slctTipo" class="form-control" name="slctTipo">
-                            <option>Mini Split</option>
-                        </select>
+                        <label for="precio">Precio</label>
+                        <input id="precio" class="form-control" type="number" name="precio" placeholder="Precio">
                     </div>
                     <div class="form-group">
                         <label for="txtCantidad">Cantidad</label>
