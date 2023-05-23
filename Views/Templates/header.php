@@ -36,7 +36,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="Principal">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo base_url."Principal"?>">
                 <div class="sidebar-brand-text mx-3">Ecofrio</div>
             </a>
 
@@ -47,7 +47,7 @@
             <hr class="sidebar-divider">
 
             <li class="nav-item">
-                <a class="nav-link" href="Principal">
+                <a class="nav-link" href="">
                     <i class="fas fa-cash-register fa-2x"></i>
                     <span>Inicio</span></a>
             </li>
