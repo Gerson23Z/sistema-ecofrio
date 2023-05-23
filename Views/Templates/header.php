@@ -71,6 +71,8 @@
                                 class="fas fa-cash-register fa-sm fa-fw mr-2"></i>Ventas Aires</a>
                         <a class="collapse-item" href="<?php echo base_url."HistorialVentas"?>"> <i class="fas fa-list fa-sm fa-fw mr-2"></i>
                         Historial</a>
+                        <a class="collapse-item" href="<?php echo base_url."HistorialVentas/aires"?>"> <i class="fas fa-list fa-sm fa-fw mr-2"></i>
+                        Historial Aires</a>
                     </div>
                 </div>
             </li>

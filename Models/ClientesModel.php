@@ -1,7 +1,7 @@
 <?php
 class ClientesModel extends Query
 {
-    private $id, $nombre,$telefono,$direccion;
+    private $id, $dui, $nombre, $telefono, $direccion;
     public function __construct()
     {
         parent::__construct();
@@ -25,13 +25,19 @@ class ClientesModel extends Query
         $this->nombre = $nombre;
         $this->telefono = $telefono;
         $this->direccion = $direccion;
-        $sql = "UPDATE clientes SET dui = ?,nombre = ?,telefono = ?,direccion = ? WHERE id = ?";
-        $datos = array($this->dui, $this->nombre, $this->telefono, $this->direccion, $this->id);
-        $data = $this->save($sql, $datos);
-        if ($data == 1) {
-            $res = "modificado";
-        } else {
-            $res = "error";
+        $verificar = "SELECT * FROM clientes WHERE dui = '$this->dui'";
+        $existe = $this->select($verificar);
+        if (empty($existe)) {
+            $sql = "UPDATE clientes SET dui = ?,nombre = ?,telefono = ?,direccion = ? WHERE id = ?";
+            $datos = array($this->dui, $this->nombre, $this->telefono, $this->direccion, $this->id);
+            $data = $this->save($sql, $datos);
+            if ($data == 1) {
+                $res = "modificado";
+            } else {
+                $res = "error";
+            }
+        }else{
+            $res = "existe";
         }
         return $res;
     }

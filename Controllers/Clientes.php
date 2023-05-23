@@ -35,7 +35,10 @@ class Clientes extends Controller
         $data = $this->model->modificarCliente($dui, $nombre, $telefono, $direccion, $id);
         if ($data == "modificado") {
           $msg = "modificado";
-        }else {
+        }else if($data=="existe"){
+            $msg = "existe";
+        }
+        else {
           $msg = "Error al Modificar el cliente";
         }
     }

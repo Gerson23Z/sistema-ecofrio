@@ -26,7 +26,6 @@ let tblHistorialVentas;
 let tblHistorialVentasAire;
 
 document.addEventListener("DOMContentLoaded", function () {
-  $('#idCliente').select2();
   tblUsuarios = $("#tblUsuarios").DataTable({
     ajax: {
       url: base_url + "Usuarios/listar",
@@ -654,7 +653,6 @@ function mostrarPdfCmp(id) {
   window.open(ruta);
 }
 
-
 function buscarCodigoVenta(e) {
   e.preventDefault();
   if (e.which == 13) {
@@ -927,11 +925,14 @@ function registrarVentaAire() {
             document.getElementById("nombreCliente").value = "";
             document.getElementById("telefonoCliente").value = "";
             document.getElementById("direccionCliente").value = "";
-            //const ruta = base_url + "Ventas/generarPDF/" + res.id_venta;
-            //window.open(ruta);
+            const ruta = base_url + "Ventas/generarPDFAire/" + res.id_venta;
+            window.open(ruta);
           } else if (res == "vacio") {
             alerttime("No puede dejar campos vacios", "error");
-          } else {
+          } else if(res == "existe"){
+            alerttime("El cliente ya existe","error");
+          }
+          else {
             alerttime("error", "error");
           }
         }
@@ -970,7 +971,6 @@ function sig(event, idSig) {
   }
 }
 
-
 function mostrarPdfVntAire(id) {
   const ruta = base_url + "Ventas/generarPDFAire/" + id;
   window.open(ruta);
@@ -1008,7 +1008,10 @@ function modificarCliente(event) {
         alerta("Cliente", "modificado");
         $("#editar_cliente").modal("hide");
         tblClientes.ajax.reload();
-      } else {
+      }else if(res == "existe"){
+        alerttime("El cliente ya existe","error");
+      }
+       else {
         alerterror();
       }
     }

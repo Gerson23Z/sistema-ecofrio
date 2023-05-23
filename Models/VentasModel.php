@@ -251,6 +251,12 @@ class VentasModel extends Query
         $data = $this->selectAll($sql);
         return $data;
     }
+    public function getInfoVentasAire($id_venta)
+    {
+        $sql = "SELECT fecha FROM ventasaires WHERE id = $id_venta";
+        $data = $this->selectAll($sql);
+        return $data;
+    }
     public function RegistrarInfoCliente(int $dui, string $nombre, string $telefono, string $direccion)
     {
         $sql = "INSERT INTO clientes(dui, nombre, telefono, direccion) VALUES (?,?,?,?)";
@@ -262,12 +268,6 @@ class VentasModel extends Query
             $res = "error";
         }
         return $res;
-    }
-    public function getInfoVentasAire($id_venta)
-    {
-        $sql = "SELECT fecha FROM ventasaires WHERE id = $id_venta";
-        $data = $this->selectAll($sql);
-        return $data;
     }
     public function getEmpresa()
     {
