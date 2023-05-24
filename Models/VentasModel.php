@@ -125,10 +125,10 @@ class VentasModel extends Query
         }
         return $res;
     }
-    public function guardarVenta($total)
+    public function guardarVenta($total,$id_usuario)
     {
-        $sql = "INSERT INTO ventas(total) VALUES (?)";
-        $datos = array($total);
+        $sql = "INSERT INTO ventas(total, id_usuario) VALUES (?,?)";
+        $datos = array($total,$id_usuario);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
             $res = "¡OK!";
@@ -137,10 +137,10 @@ class VentasModel extends Query
         }
         return $res;
     }
-    public function guardarVentaAire($total)
+    public function guardarVentaAire($dui, $total, $id_usuario)
     {
-        $sql = "INSERT INTO ventasaires(total) VALUES (?)";
-        $datos = array($total);
+        $sql = "INSERT INTO ventasaires(dui, total, id_usuario) VALUES (?,?,?)";
+        $datos = array($dui, $total, $id_usuario);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
             $res = "¡OK!";
@@ -241,7 +241,13 @@ class VentasModel extends Query
     }
     public function getInfoVentas($id_venta)
     {
-        $sql = "SELECT fecha FROM ventas WHERE id = $id_venta";
+        $sql = "SELECT id_usuario, fecha FROM ventas WHERE id = $id_venta";
+        $data = $this->selectAll($sql);
+        return $data;
+    }
+    public function getUser($id_usuario)
+    {
+        $sql = "SELECT * FROM usuarios WHERE id = $id_usuario";
         $data = $this->selectAll($sql);
         return $data;
     }
@@ -253,7 +259,7 @@ class VentasModel extends Query
     }
     public function getInfoVentasAire($id_venta)
     {
-        $sql = "SELECT fecha FROM ventasaires WHERE id = $id_venta";
+        $sql = "SELECT dui, fecha FROM ventasaires WHERE id = $id_venta";
         $data = $this->selectAll($sql);
         return $data;
     }
@@ -261,13 +267,7 @@ class VentasModel extends Query
     {
         $sql = "INSERT INTO clientes(dui, nombre, telefono, direccion) VALUES (?,?,?,?)";
         $datos = array($dui, $nombre, $telefono, $direccion);
-        $data = $this->save($sql, $datos);
-        if ($data == 1) {
-            $res = "¡OK!";
-        } else {
-            $res = "error";
-        }
-        return $res;
+        $this->save($sql, $datos);
     }
     public function getEmpresa()
     {

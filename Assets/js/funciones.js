@@ -693,6 +693,7 @@ function calcularPrecioVenta(e) {
       http.send(new FormData(frm));
       http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
+          console.log(this.responseText);
           const res = JSON.parse(this.responseText);
           if (res == "si") {
             frm.reset();
@@ -700,6 +701,8 @@ function calcularPrecioVenta(e) {
           } else if (res == "modificado") {
             frm.reset();
             CargarDetallesVnt();
+          }else if(res=="sobredemanda"){
+            Swal.fire("Error","Cantidad Insuficiente en Stock", "error");
           }
         }
       };
@@ -781,6 +784,8 @@ function registrarVenta() {
             CargarDetallesVnt();
             const ruta = base_url + "Ventas/generarPDF/" + res.id_venta;
             window.open(ruta);
+          }else if (res == "vacioVenta") {
+            alerttime("No hay ventas a registrar", "error");
           } else {
             alerttime("error", "error");
           }
@@ -843,6 +848,8 @@ function calcularPrecioAire(e) {
           } else if (res == "modificado") {
             frm.reset();
             CargarDetallesVntAir();
+          }else if(res=="sobredemanda"){
+            Swal.fire("Error","Cantidad Insuficiente en Stock", "error");
           }
         }
       };
@@ -917,6 +924,7 @@ function registrarVentaAire() {
       http.send(new FormData(frm));
       http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
+          console.log(this.responseText);
           const res = JSON.parse(this.responseText);
           if (res.msg == "ok") {
             alerttime("Venta registrada", "success");
@@ -929,10 +937,9 @@ function registrarVentaAire() {
             window.open(ruta);
           } else if (res == "vacio") {
             alerttime("No puede dejar campos vacios", "error");
-          } else if(res == "existe"){
-            alerttime("El cliente ya existe","error");
-          }
-          else {
+          }else if (res == "vacioVenta") {
+            alerttime("No hay ventas a registrar", "error");
+          } else {
             alerttime("error", "error");
           }
         }
