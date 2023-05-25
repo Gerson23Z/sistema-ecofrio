@@ -122,9 +122,6 @@ document.addEventListener("DOMContentLoaded", function () {
         data: "nombre",
       },
       {
-        data: "apellido",
-      },
-      {
         data: "direccion",
       },
       {
@@ -155,9 +152,6 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       {
         data: "nombre",
-      },
-      {
-        data: "apellido",
       },
       {
         data: "direccion",
@@ -480,7 +474,6 @@ function btnEditarCita(id) {
       const res = JSON.parse(this.responseText);
       document.getElementById("id").value = res.id;
       document.getElementById("nombre").value = res.nombre;
-      document.getElementById("apellido").value = res.apellido;
       document.getElementById("dui").value = res.dui;
       document.getElementById("telefono").value = res.telefono;
       document.getElementById("direccion").value = res.direccion;
@@ -491,7 +484,6 @@ function btnEditarCita(id) {
         btnReg.classList.add("d-none");
         document.getElementById("id").disabled = true;
         document.getElementById("nombre").disabled = true;
-        document.getElementById("apellido").disabled = true;
         document.getElementById("dui").disabled = true;
         document.getElementById("telefono").disabled = true;
         document.getElementById("direccion").disabled = true;
@@ -522,7 +514,6 @@ function btnEliminarCita(id) {
       http.send();
       http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-          console.log(this.responseText);
           const res = JSON.parse(this.responseText);
           Swal.fire("Avisos", res.msg, res.tipo);
           tblCitas.ajax.reload();
@@ -593,7 +584,6 @@ function btnEliminarCliente(id) {
       http.send();
       http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-          console.log(this.responseText);
           const res = JSON.parse(this.responseText);
           Swal.fire("Avisos", res.msg, res.tipo);
           tblClientes.ajax.reload();

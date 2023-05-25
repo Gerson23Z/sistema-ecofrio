@@ -25,7 +25,6 @@ function getCodigosComprasAires(event) {
           document.getElementById("txtCodigo").focus();
         } else {
           document.getElementById("txtProducto").value = res[0].marca + " " + res[0].capacidad + " " + res[0].seer;
-          document.getElementById("txtPrecio").value = res[0].precio;
           document.getElementById("id").value = res[0].id;
           document.getElementById("txtCantidad").focus();
         }
@@ -41,7 +40,6 @@ function getCodigosComprasAires(event) {
     http.send();
     http.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
-        console.log(this.responseText);
         const res = JSON.parse(this.responseText);
 
         lista.innerHTML = "";
@@ -69,12 +67,8 @@ function getCodigosComprasAires(event) {
 
 function calcularPrecioCompraAire(event) {
   event.preventDefault();
-  const cantidad = document.getElementById("txtCantidad").value;
-  const precio = document.getElementById("txtPrecio").value;
-  document.getElementById("txtSubTotal").value = cantidad * precio;
   if (event.which == 13) {
     lista.style.display = "none";
-    if (cantidad > 0) {
       const url = base_url + "Compras/ingresarAire";
       const frm = document.getElementById("frmCompraAires");
       const http = new XMLHttpRequest();
@@ -82,7 +76,6 @@ function calcularPrecioCompraAire(event) {
       http.send(new FormData(frm));
       http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-          console.log(this.responseText);
           const res = JSON.parse(this.responseText);
           if (res == "si") {
             frm.reset();
@@ -93,7 +86,6 @@ function calcularPrecioCompraAire(event) {
           }
         }
       };
-    }
   }
 }
 
@@ -164,14 +156,13 @@ function registrarCompraAire() {
       http.send(new FormData(frm));
       http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-          console.log(this.responseText);
           const res = JSON.parse(this.responseText);
           if (res.msg == "ok") {
             alerttime("Venta registrada", "success");
             CargarDetallesCmpAir();
             const ruta = base_url + "Compras/generarPDFAire/" + res.id_compra;
-              window.open(ruta);
-          }else if (res == "vacioCompra") {
+            window.open(ruta);
+          } else if (res == "vacioCompra") {
             alerttime("No hay Compras a registrar", "error");
           } else {
             alerttime("error", "error");
@@ -185,4 +176,12 @@ function registrarCompraAire() {
 function mostrarPdfVntAire(id) {
   const ruta = base_url + "Compras/generarPDFAire/" + id;
   window.open(ruta);
+}
+
+function salto(e) {
+  e.preventDefault();
+  if (e.which == 13) {
+    lista.style.display = "none";
+    document.getElementById("txtPrecio").focus();
+  }
 }

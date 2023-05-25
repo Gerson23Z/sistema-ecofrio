@@ -262,14 +262,13 @@ function registrarRespuesto(event) {
     http.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
         const res = JSON.parse(this.responseText);
-        console.log(res);
         if (res == "si") {
-          alerta("Producto","registrado");
+          alerta("Producto", "registrado");
           frm.reset();
           $("#nuevo_respuesto").modal("hide");
           tblInventarioRespuestos.ajax.reload();
         } else if (res == "modificado") {
-          alerta("Producto","modificado");
+          alerta("Producto", "modificado");
           $("#nuevo_respuesto").modal("hide");
           tblInventarioRespuestos.ajax.reload();
         } else {
@@ -314,7 +313,6 @@ function btnEliminarRespuesto(id) {
   }).then((result) => {
     if (result.isConfirmed) {
       const url = base_url + "InventarioRespuestos/eliminar/" + id;
-      console.log(url);
       const http = new XMLHttpRequest();
       http.open("GET", url, true);
       http.send();
@@ -322,7 +320,7 @@ function btnEliminarRespuesto(id) {
         if (this.readyState == 4 && this.status == 200) {
           const res = JSON.parse(this.responseText);
           if (res == "ok") {
-            alerta("Producto","borrado");
+            alerta("Producto", "borrado");
             tblInventarioRespuestos.ajax.reload();
           } else {
             Swal.fire("Mensaje", res, "error");
@@ -352,7 +350,7 @@ function btnReingresarRespuesto(id) {
         if (this.readyState == 4 && this.status == 200) {
           const res = JSON.parse(this.responseText);
           if (res == "ok") {
-            alerta("Producto","reingrsado");
+            alerta("Producto", "reingrsado");
             tblRespuestosEliminados.ajax.reload();
           } else {
             Swal.fire("Mensaje", res, "error");
@@ -376,15 +374,14 @@ function registrarAire(event) {
     http.send(new FormData(frm));
     http.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
-console.log(this.responseText);
         const res = JSON.parse(this.responseText);
         if (res == "si") {
-          alerta("Producto","registrado");
+          alerta("Producto", "registrado");
           frm.reset();
           $("#nuevo_aire").modal("hide");
           tblInventarioAires.ajax.reload();
         } else if (res == "modificado") {
-          alerta("Producto","modificado");
+          alerta("Producto", "modificado");
           $("#nuevo_aire").modal("hide");
           tblInventarioAires.ajax.reload();
         } else {
@@ -433,7 +430,6 @@ function btnEliminarAire(id) {
   }).then((result) => {
     if (result.isConfirmed) {
       const url = base_url + "InventarioAires/eliminar/" + id;
-      console.log(url);
       const http = new XMLHttpRequest();
       http.open("GET", url, true);
       http.send();

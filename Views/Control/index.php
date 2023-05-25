@@ -10,7 +10,6 @@
         <tr>
             <th>Id</th>
             <th>Nombre</th>
-            <th>Apellido</th>
             <th>Direccion</th>
             <th>Tipo</th>
             <th>Fecha</th>
@@ -37,10 +36,6 @@
                         <input type="hidden" id="id" name="id">
                         <input type="text" class="form-control" name="nombre" id="nombre">
                         <label for="nombre" class="form-label">Nombre</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="apellido" id="apellido">
-                        <label for="apellido" class="form-label">Apellido</label>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" name="dui" id="dui">

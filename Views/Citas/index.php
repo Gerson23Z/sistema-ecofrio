@@ -18,18 +18,15 @@
             </div>
             <form id="formulario">
                 <div class="modal-body">
+                <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="dui" id="dui"
+                        onkeyup="clienteClck(event)">
+                        <label for="dui" class="form-label">DUI</label>
+                    </div>
                     <div class="form-floating mb-3">
                         <input type="hidden" id="id" name="id">
                         <input type="text" class="form-control" name="nombre" id="nombre">
                         <label for="nombre" class="form-label">Nombre</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="apellido" id="apellido">
-                        <label for="apellido" class="form-label">Apellido</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="dui" id="dui">
-                        <label for="dui" class="form-label">DUI</label>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" name="telefono" id="telefono">

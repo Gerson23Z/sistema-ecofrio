@@ -43,21 +43,13 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="txtCantidad">Cantidad</label>
-                        <input id="txtCantidad" class="form-control" type="number" name="txtCantidad"
-                            onkeyup="calcularPrecioCompra(event)">
+                        <input id="txtCantidad" class="form-control" type="number" name="txtCantidad" onkeyup="salto(event)">
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="txtPrecio">Precio</label>
-                        <input id="txtPrecio" class="form-control" type="text" name="txtPrecio" disabled>
-                        <span class="simbolo">$</span>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label for="txtSubTotal">Sub total</label>
-                        <input id="txtSubTotal" class="form-control" type="text" name="txtSubTotal" disabled>
+                        <input id="txtPrecio" class="form-control" type="text" name="txtPrecio" onkeyup="calcularPrecioCompra(event)">
                         <span class="simbolo">$</span>
                     </div>
                 </div>

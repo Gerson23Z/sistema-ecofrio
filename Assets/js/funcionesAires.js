@@ -41,7 +41,6 @@ function getCodigosAires(event) {
     http.send();
     http.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
-        console.log(this.responseText);
         const res = JSON.parse(this.responseText);
 
         lista.innerHTML = "";
@@ -82,7 +81,6 @@ function calcularPrecioAire(event) {
       http.send(new FormData(frm));
       http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-          console.log(this.responseText);
           const res = JSON.parse(this.responseText);
           if (res == "si") {
             frm.reset();
@@ -166,7 +164,6 @@ function registrarVentaAire() {
       http.send(new FormData(frm));
       http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-          console.log(this.responseText);
           const res = JSON.parse(this.responseText);
           if (res.msg == "ok") {
             alerttime("Venta registrada", "success");

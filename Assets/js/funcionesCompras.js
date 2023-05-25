@@ -25,7 +25,6 @@ function getCodigosCompras(event) {
           document.getElementById("txtCodigo").focus();
         } else {
           document.getElementById("txtProducto").value = res[0].producto;
-          document.getElementById("txtPrecio").value = res[0].precio;
           document.getElementById("id").value = res[0].id;
           document.getElementById("txtCantidad").focus();
         }
@@ -41,7 +40,6 @@ function getCodigosCompras(event) {
     http.send();
     http.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
-        console.log(this.responseText);
         const res = JSON.parse(this.responseText);
 
         lista.innerHTML = "";
@@ -67,46 +65,41 @@ function getCodigosCompras(event) {
   }
 }
 
-  function calcularPrecioCompra(event) {
-    event.preventDefault();
-    const cantidad = document.getElementById("txtCantidad").value;
-    const precio = document.getElementById("txtPrecio").value;
-    document.getElementById("txtSubTotal").value = cantidad * precio;
-    if (event.which == 13) {
-      lista.style.display = "none";
-      if (cantidad > 0) {
-        const url = base_url + "Compras/ingresarCompra";
-        const frm = document.getElementById("frmCompras");
-        const http = new XMLHttpRequest();
-        http.open("POST", url, true);
-        http.send(new FormData(frm));
-        http.onreadystatechange = function () {
-          if (this.readyState == 4 && this.status == 200) {
-            const res = JSON.parse(this.responseText);
-            if (res == "si") {
-              frm.reset();
-              CargarDetallesCmp();
-            } else if (res == "modificado") {
-              frm.reset();
-              CargarDetallesCmp();
-            }
-          }
-        };
-      }
-    }
-  }
-
-  function CargarDetallesCmp() {
-    const url = base_url + "Compras/listar";
+function calcularPrecioCompra(event) {
+  event.preventDefault();
+  if (event.which == 13) {
+    lista.style.display = "none";
+    const url = base_url + "Compras/ingresarCompra";
+    const frm = document.getElementById("frmCompras");
     const http = new XMLHttpRequest();
-    http.open("GET", url, true);
-    http.send();
+    http.open("POST", url, true);
+    http.send(new FormData(frm));
     http.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
         const res = JSON.parse(this.responseText);
-        let html = '';
-        res['detalles'].forEach(row => {
-          html += `<tr>
+        if (res == "si") {
+          frm.reset();
+          CargarDetallesCmp();
+        } else if (res == "modificado") {
+          frm.reset();
+          CargarDetallesCmp();
+        }
+      }
+    };
+  }
+}
+
+function CargarDetallesCmp() {
+  const url = base_url + "Compras/listar";
+  const http = new XMLHttpRequest();
+  http.open("GET", url, true);
+  http.send();
+  http.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      const res = JSON.parse(this.responseText);
+      let html = '';
+      res['detalles'].forEach(row => {
+        html += `<tr>
           <td>${row['codigo']}</td>
           <td>${row['producto']}</td>
           <td>${row['precio']}</td>
@@ -117,69 +110,77 @@ function getCodigosCompras(event) {
 
           </td>
           </tr>`;
-        });
+      });
 
-        document.getElementById("tblDetallesCmp").innerHTML = html;
-        document.getElementById("txtTotal").value = res['total_pagar'].total;
+      document.getElementById("tblDetallesCmp").innerHTML = html;
+      document.getElementById("txtTotal").value = res['total_pagar'].total;
 
+    }
+  };
+}
+
+function eliminarDetalleCmp(id) {
+  const url = base_url + "Compras/eliminar/" + id;
+  const http = new XMLHttpRequest();
+  http.open("GET", url, true);
+  http.send();
+  http.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      const res = JSON.parse(this.responseText);
+      if (res == "ok") {
+        alerttime("Producto eliminado", "success");
+        CargarDetallesCmp();
+      } else {
+        alerttime("error", "error");
+        CargarDetallesCmp();
       }
-    };
-  }
+    }
+  };
+}
 
-  function eliminarDetalleCmp(id) {
-    const url = base_url + "Compras/eliminar/" + id;
-    const http = new XMLHttpRequest();
-    http.open("GET", url, true);
-    http.send();
-    http.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        const res = JSON.parse(this.responseText);
-        if (res == "ok") {
-          alerttime("Producto eliminado", "success");
-          CargarDetallesCmp();
-        } else {
-          alerttime("error", "error");
-          CargarDetallesCmp();
-        }
-      }
-    };
-  }
-
-  function registrarCompra() {
-    Swal.fire({
-      title: 'Registrar Compra?',
-      text: "Quieres registrar la compra?",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const url = base_url + "Compras/registrarCompra";
-        const frm = document.getElementById("frmCompras");
-        const http = new XMLHttpRequest();
-        http.open("POST", url, true);
-        http.send(new FormData(frm));
-        http.onreadystatechange = function () {
-          if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
-            const res = JSON.parse(this.responseText);
-            if (res.msg == "ok") {
-              alerttime("Compra registrada", "success");
-              CargarDetallesCmp();
-              const ruta = base_url + "Compras/generarPDF/" + res.id_compra;
-              window.open(ruta);
-            } else {
-              alerttime("error", "error");
-            }
+function registrarCompra() {
+  Swal.fire({
+    title: 'Registrar Compra?',
+    text: "Quieres registrar la compra?",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const url = base_url + "Compras/registrarCompra";
+      const frm = document.getElementById("frmCompras");
+      const http = new XMLHttpRequest();
+      http.open("POST", url, true);
+      http.send(new FormData(frm));
+      http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          const res = JSON.parse(this.responseText);
+          if (res.msg == "ok") {
+            alerttime("Compra registrada", "success");
+            CargarDetallesCmp();
+            const ruta = base_url + "Compras/generarPDF/" + res.id_compra;
+            window.open(ruta);
+          } else {
+            alerttime("error", "error");
           }
-        };
-      }
-    })
+        }
+      };
+    }
+  })
+}
+
+function mostrarPdfCmp(id) {
+  const ruta = base_url + "Compras/generarPDF/" + id;
+  window.open(ruta);
+}
+
+function salto(e) {
+  e.preventDefault();
+  if (e.which == 13) {
+    lista.style.display = "none";
+    document.getElementById("txtPrecio").focus();
   }
 
-  function mostrarPdfCmp(id) {
-    const ruta = base_url + "Compras/generarPDF/" + id;
-    window.open(ruta);
-  }
+}

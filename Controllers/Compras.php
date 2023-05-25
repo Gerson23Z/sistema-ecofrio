@@ -32,11 +32,11 @@ class Compras extends Controller
         $datos = $this->model->GetProducto($id);
         $codigo = $datos[0]['codigo'];
         $producto = $datos[0]['producto'];
-        $precio = $datos[0]['precio'];
+        $precio = $_POST['txtPrecio'];
         $cantidad = $_POST['txtCantidad'];
         $comprobar = $this->model->comprobarDetalle($datos[0]['codigo']);
         if (empty($comprobar)) {
-            $subTotal = $precio * $cantidad;
+            $subTotal = $precio;
             $data = $this->model->RegistrarDetalle($codigo, $producto, $precio, $cantidad, $subTotal);
             if ($data == "¡OK!") {
                 $msg = "si";
@@ -45,7 +45,7 @@ class Compras extends Controller
             }
         } else {
             $total_cantidad = $comprobar['cantidad'] + $cantidad;
-            $subTotal = $total_cantidad * $precio;
+            $subTotal = $precio;
             $data = $this->model->actualizarDetalle($codigo, $producto, $precio, $total_cantidad, $subTotal, $comprobar['id']);
             if ($data == "modificado") {
                 $msg = "modificado";
@@ -64,11 +64,11 @@ class Compras extends Controller
         $marca = $datos[0]['marca'];
         $capacidad = $datos[0]['capacidad'];
         $seer = $datos[0]['seer'];
-        $precio = $datos[0]['precio'];
+        $precio = $_POST['txtPrecio'];
         $cantidad = $_POST['txtCantidad'];
         $comprobar = $this->model->comprobarDetalleAire($datos[0]['codigo']);
         if (empty($comprobar)) {
-            $subTotal = $precio * $cantidad;
+            $subTotal = $precio;
             $data = $this->model->RegistrarDetalleAire($codigo, $marca, $capacidad, $seer, $precio, $cantidad, $subTotal);
             if ($data == "¡OK!") {
                 $msg = "si";
@@ -155,27 +155,33 @@ class Compras extends Controller
 
     public function registrarCompra()
     {
-        $datos = $this->model->calcularCompra()['total'];
-        $data = $this->model->guardarCompra($datos);
-        if ($data == "¡OK!") {
-            $id_compra = $this->model->getIdCompra();
-            $detalles = $this->model->getDetalles();
-            foreach ($detalles as $row) {
-                $producto = $row['producto'];
-                $precio = $row['precio'];
-                $cantidad = $row['cantidad'];
-                $subtotal = $precio * $cantidad;
-                $this->model->registrarDetallesCompra($id_compra['id'], $producto, $precio, $cantidad, $subtotal);
-                $codigoProducto = $row['codigo'];
-                $stockActual = $this->model->GetProductos($codigoProducto);
-                $stock = $stockActual[0]['unidades'] + $cantidad;
-                $this->model->actualizarStock($stock, $codigoProducto);
-            }
-            $this->model->vaciarDetalles();
-            $msg = array('msg' => 'ok', 'id_compra' => $id_compra['id']);
+        $cmpCompra = $this->model->getDetallesAire();
+        if (empty($cmpCompra)) {
+            $msg = 'vacioCompra';
         } else {
-            $msg = "Error al registrar la compra";
+            $datos = $this->model->calcularCompra()['total'];
+            $data = $this->model->guardarCompra($datos);
+            if ($data == "¡OK!") {
+                $id_compra = $this->model->getIdCompra();
+                $detalles = $this->model->getDetalles();
+                foreach ($detalles as $row) {
+                    $producto = $row['producto'];
+                    $precio = $row['precio'];
+                    $cantidad = $row['cantidad'];
+                    $subtotal = $precio;
+                    $this->model->registrarDetallesCompra($id_compra['id'], $producto, $precio, $cantidad, $subtotal);
+                    $codigoProducto = $row['codigo'];
+                    $stockActual = $this->model->GetProductos($codigoProducto);
+                    $stock = $stockActual[0]['unidades'] + $cantidad;
+                    $this->model->actualizarStock($stock, $codigoProducto);
+                }
+                $this->model->vaciarDetalles();
+                $msg = array('msg' => 'ok', 'id_compra' => $id_compra['id']);
+            } else {
+                $msg = "Error al registrar la compra";
+            }
         }
+
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
         die();
     }
@@ -196,7 +202,7 @@ class Compras extends Controller
                     $seer = $row['seer'];
                     $precio = $row['precio'];
                     $cantidad = $row['cantidad'];
-                    $subtotal = $precio * $cantidad;
+                    $subtotal = $precio;
                     $this->model->registrarDetallesCompraAire($id_compra['id'], $marca, $capacidad, $seer, $precio, $cantidad, $subtotal);
                     $codigoProducto = $row['codigo'];
                     $stockActual = $this->model->GetAires($codigoProducto);

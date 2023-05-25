@@ -6,15 +6,15 @@ class CitasModel extends Query
         parent::__construct();
     }
 
-    public function registrarCita($nombre, $apellido, $dui, $telefono, $direccion, $tipo, $fecha)
+    public function registrarCita($nombre, $dui, $telefono, $direccion, $tipo, $fecha)
     {
         if ($tipo == "Instalacion") {
             $color = "#E34234";
         } else {
             $color = "#006400";
         }
-        $sql = "INSERT INTO citas(nombre, apellido, dui, telefono, direccion, tipo, fecha, color, completado) VALUES (?,?,?,?,?,?,?,?,?)";
-        $datos = array($nombre, $apellido, $dui, $telefono, $direccion, $tipo, $fecha, $color, 0);
+        $sql = "INSERT INTO citas(nombre, dui, telefono, direccion, tipo, fecha, color, completado) VALUES (?,?,?,?,?,?,?,?)";
+        $datos = array($nombre, $dui, $telefono, $direccion, $tipo, $fecha, $color, 0);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
             $msg = 'ok';
@@ -24,15 +24,15 @@ class CitasModel extends Query
         return $msg;
     }
 
-    public function modificarCita($nombre, $apellido, $dui, $telefono, $direccion, $tipo, $fecha, $id, $check)
+    public function modificarCita($nombre, $dui, $telefono, $direccion, $tipo, $fecha, $id, $check)
     {
         if ($tipo == "Instalacion") {
             $color = "#E34234";
         } else {
             $color = "#006400";
         }
-        $sql = "UPDATE citas SET nombre = ?,apellido = ?,dui = ?,telefono = ?,direccion = ?, tipo = ?, fecha = ?,color = ?,completado = ? WHERE id = ?";
-        $datos = array($nombre, $apellido, $dui, $telefono, $direccion, $tipo, $fecha, $color, $check, $id);
+        $sql = "UPDATE citas SET nombre = ?,dui = ?,telefono = ?,direccion = ?, tipo = ?, fecha = ?,color = ?,completado = ? WHERE id = ?";
+        $datos = array($nombre, $dui, $telefono, $direccion, $tipo, $fecha, $color, $check, $id);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
             $msg = 'ok';
@@ -44,7 +44,7 @@ class CitasModel extends Query
 
     public function getCitas()
     {
-        $sql = "SELECT id, nombre as title, apellido, dui, telefono, direccion, tipo, fecha as start, color FROM citas WHERE completado = 0";
+        $sql = "SELECT id, nombre as title, dui, telefono, direccion, tipo, fecha as start, color FROM citas WHERE completado = 0";
         return $this->selectAll($sql);
     }
 
@@ -72,6 +72,12 @@ class CitasModel extends Query
             $res = 'error';
         }
         return $res;
+    }
+    public function getClientes($numDui)
+    {
+        $sql = "SELECT * FROM clientes WHERE dui = $numDui";
+        $data = $this->selectAll($sql);
+        return $data;
     }
 }
 ?>
