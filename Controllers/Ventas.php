@@ -32,9 +32,21 @@ class Ventas extends Controller
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();
     }
-    public function getCodigos($codigo)
+    public function getCodigosVentas($codigo)
     {
-        $stmt = $this->model->getCodigo($codigo);
+        $stmt = $this->model->getCodigoVenta($codigo);
+        $response = array();
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $response[] = $row["codigo"];
+        }
+
+        echo json_encode($response);
+        die();
+    }
+    public function getCodigosAires($codigo)
+    {
+        $stmt = $this->model->getCodigoAire($codigo);
         $response = array();
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {

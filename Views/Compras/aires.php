@@ -5,33 +5,34 @@
         <h4>Nueva Venta</h4>
     </div>
 
-<style>
-.item-lista {
-  /* Estilos personalizados */
-  background-color: #f2f2f2;
-  color: #333;
-  padding: 5px 10px;
-  cursor: pointer;
-  list-style-type: none; /* Quitar las viñetas */
-  margin: 0;
-}
+    <style>
+        .item-lista {
+            /* Estilos personalizados */
+            background-color: #f2f2f2;
+            color: #333;
+            padding: 5px 10px;
+            cursor: pointer;
+            list-style-type: none;
+            /* Quitar las viñetas */
+            margin: 0;
+        }
 
-.item-lista:hover {
-  /* Estilos al pasar el cursor por encima */
-  background-color: #ddd;
-}
-</style>
+        .item-lista:hover {
+            /* Estilos al pasar el cursor por encima */
+            background-color: #ddd;
+        }
+    </style>
 
     <div class="card-body">
-        <form id="frmAires">
+        <form id="frmCompraAires">
             <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
                         <input type="hidden" id="id" name="id">
                         <label for="txtCodigo">Codigo</label>
                         <input id="txtCodigo" class="form-control" type="text" name="txtCodigo" autocomplete="off"
-                            onkeyup="getCodigosAires(event)">
-                            <ul id="lista"></ul>
+                            onkeyup="getCodigosComprasAires(event)">
+                        <ul id="lista"></ul>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -44,7 +45,7 @@
                     <div class="form-group">
                         <label for="txtCantidad">Cantidad</label>
                         <input id="txtCantidad" class="form-control" type="number" name="txtCantidad"
-                            onkeyup="calcularPrecioAire(event)">
+                            onkeyup="calcularPrecioCompraAire(event)">
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -62,6 +63,7 @@
                     </div>
                 </div>
             </div>
+        </form>
     </div>
 </div>
 <style>
@@ -86,40 +88,17 @@
             <th></th>
         </tr>
     </thead>
-    <tbody id="tblDetallesVntAire">
+    <tbody id="tblDetallesCmpAire">
     </tbody>
 </table>
-
-<label for="">Datos Cliente</label>
-<div class="form-row">
-    <div class="form-group col-md-2">
-        <label for="dui">DUI <i class="fas fa-id-card"></i></label>
-        <input type="text" class="form-control" id="dui" name="dui" onkeyup="clienteClck(event)">
-    </div>
-    <div class="form-group col-md-4">
-        <label for="nombreCliente">Nombre <i class="fas fa-user"></i></label>
-        <input type="text" class="form-control" id="nombreCliente" name="nombreCliente"
-            onkeyup="sig(event, 'telefonoCliente')">
-    </div>
-    <div class="form-group col-md-2">
-        <label for="telefonoCliente">Telefono <i class="fas fa-phone"></i></label>
-        <input type="text" class="form-control" id="telefonoCliente" name="telefonoCliente"
-            onkeyup="sig(event, 'direccionCliente')">
-    </div>
-    <div class="form-group col-md-4">
-        <label for="direccionCliente">Direccion <i class="fas fa-address-book"></i></label>
-        <input type="text" class="form-control" id="direccionCliente" name="direccionCliente">
-    </div>
-</div>
-</form>
 
 <div class="col-md-3 ml-auto">
     <div class="form-group">
         <label for="txtTotal">Total</label>
         <input id="txtTotal" class="form-control" type="text" name="txtTotal" disabled>
     </div>
-    <button class="btn btn-info" type="button" id="btnId" onclick="registrarVentaAire(event)">Registrar</button>
+    <button class="btn btn-info" type="button" id="btnId" onclick="registrarCompraAire(event)">Registrar</button>
 </div>
 
-<script src="<?php echo base_url; ?>Assets/js/funcionesAires.js"></script>
+<script src="<?php echo base_url; ?>Assets/js/funcionesComprasAires.js"></script>
 <?php include "Views/Templates/footer.php"; ?>

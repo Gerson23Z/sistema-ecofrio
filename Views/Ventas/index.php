@@ -31,7 +31,7 @@
                         <input type="hidden" id="id" name="id">
                         <label for="txtCodigo">Codigo</label>
                         <input id="txtCodigo" class="form-control" type="text" name="txtCodigo" autocomplete="off"
-                            onkeyup="getCodigos(e)">
+                            onkeyup="getCodigosVentas(event)">
                             <ul id="lista"></ul>
                     </div>
                 </div>
@@ -100,4 +100,5 @@
     </div>
 </div>
 
+<script src="<?php echo base_url; ?>Assets/js/funcionesVentas.js"></script>
 <?php include "Views/Templates/footer.php"; ?>

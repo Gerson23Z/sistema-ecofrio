@@ -17,10 +17,17 @@ class VentasModel extends Query
         $data = $this->selectAll($sql);
         return $data;
     }
-    public function getCodigo($codigo)
+    public function getCodigoVenta($codigo)
     {
         $variable = $codigo . '%';
         $sql = "SELECT codigo FROM inventariorespuestos WHERE codigo LIKE ? ORDER BY codigo ASC LIMIT 0, 10";
+        $stmt = $this->selectCo($sql, [$variable]);
+        return $stmt;
+    }
+    public function getCodigoAire($codigo)
+    {
+        $variable = $codigo . '%';
+        $sql = "SELECT codigo FROM inventarioaires WHERE codigo LIKE ? ORDER BY codigo ASC LIMIT 0, 10";
         $stmt = $this->selectCo($sql, [$variable]);
         return $stmt;
     }

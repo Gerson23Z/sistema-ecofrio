@@ -28,7 +28,7 @@
 
 </head>
 
-<body id="page-top" onload="CargarDetallesVnt()">
+<body id="page-top">
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -37,7 +37,8 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo base_url."Principal"?>">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center"
+                href="<?php echo base_url . "Principal" ?>">
                 <div class="sidebar-brand-text mx-3">Ecofrio</div>
             </a>
 
@@ -66,14 +67,16 @@
                 </a>
                 <div id="collapseVentas" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="<?php echo base_url."Ventas"?>"> <i
+                        <a class="collapse-item" href="<?php echo base_url . "Ventas" ?>"> <i
                                 class="fas fa-cash-register fa-sm fa-fw mr-2"></i>Ventas</a>
-                                <a class="collapse-item" href="<?php echo base_url."Ventas/aires"?>"> <i
+                        <a class="collapse-item" href="<?php echo base_url . "Ventas/aires" ?>"> <i
                                 class="fas fa-cash-register fa-sm fa-fw mr-2"></i>Ventas Aires</a>
-                        <a class="collapse-item" href="<?php echo base_url."HistorialVentas"?>"> <i class="fas fa-list fa-sm fa-fw mr-2"></i>
-                        Historial</a>
-                        <a class="collapse-item" href="<?php echo base_url."HistorialVentas/aires"?>"> <i class="fas fa-list fa-sm fa-fw mr-2"></i>
-                        Historial Aires</a>
+                        <a class="collapse-item" href="<?php echo base_url . "HistorialVentas" ?>"> <i
+                                class="fas fa-list fa-sm fa-fw mr-2"></i>
+                            Historial</a>
+                        <a class="collapse-item" href="<?php echo base_url . "HistorialVentas/aires" ?>"> <i
+                                class="fas fa-list fa-sm fa-fw mr-2"></i>
+                            Historial Aires</a>
                     </div>
                 </div>
             </li>
@@ -90,22 +93,23 @@
                 </a>
                 <div id="collapseCitas" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="<?php echo base_url."Citas"?>"> <i
+                        <a class="collapse-item" href="<?php echo base_url . "Citas" ?>"> <i
                                 class="fas fa-calendar-days fa-sm fa-fw mr-2"></i>Calendario</a>
-                        <a class="collapse-item" href="<?php echo base_url."Control"?>"> <i class="fas fa-list fa-sm fa-fw mr-2"></i>
+                        <a class="collapse-item" href="<?php echo base_url . "Control" ?>"> <i
+                                class="fas fa-list fa-sm fa-fw mr-2"></i>
                             Control</a>
                     </div>
                 </div>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url."Clientes"?>">
+                <a class="nav-link" href="<?php echo base_url . "Clientes" ?>">
                     <i class="fas fa-users fa-2x"></i>
                     <span>Clientes</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url."InventarioRespuestos"?>">
+                <a class="nav-link" href="<?php echo base_url . "InventarioRespuestos" ?>">
                     <i class="fas fa-box-open fa-2x"></i>
                     <span>Inventario</span></a>
             </li>
@@ -122,12 +126,19 @@
                     <i class="fa fa-cart-shopping fa-2x"></i>
                     <span>Entradas</span>
                 </a>
-                <div id="collapseEntradas" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseEntradas" class="collapse" aria-labelledby="headingTwo"
+                    data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="<?php echo base_url."Compras"?>"> <i
-                                class="fas fa-cart-shopping fa-sm fa-fw mr-2"></i>Compras</a>
-                        <a class="collapse-item" href="<?php echo base_url."HistorialCompras"?>"> <i class="fas fa-list fa-sm fa-fw mr-2"></i>
-                        Historial</a>
+                        <a class="collapse-item" href="<?php echo base_url . "Compras" ?>"> <i
+                                class="fas fa-cart-shopping fa-sm fa-fw mr-2"></i>Lotes respuestos</a>
+                        <a class="collapse-item" href="<?php echo base_url . "Compras/aires" ?>"> <i
+                                class="fas fa-cart-shopping fa-sm fa-fw mr-2"></i>Lotes Aires</a>
+                        <a class="collapse-item" href="<?php echo base_url . "HistorialCompras" ?>"> <i
+                                class="fas fa-list fa-sm fa-fw mr-2"></i>
+                            Historial Compras</a>
+                        <a class="collapse-item" href="<?php echo base_url . "HistorialCompras/aires" ?>"> <i
+                                class="fas fa-list fa-sm fa-fw mr-2"></i>
+                            Historial Aires</a>
                     </div>
                 </div>
             </li>
@@ -150,9 +161,11 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="<?php echo base_url; ?>Usuarios/salir"> <i
                                 class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i> Salir</a>
-                        <a class="collapse-item" href="<?php echo base_url."Usuarios"?>"> <i class="fas fa-user fa-sm fa-fw mr-2"></i>
+                        <a class="collapse-item" href="<?php echo base_url . "Usuarios" ?>"> <i
+                                class="fas fa-user fa-sm fa-fw mr-2"></i>
                             Usarios</a>
-                            <a class="collapse-item" href="<?php echo base_url."EmpresaConfiguracion"?>"> <i class="fas fa-building fa-sm fa-fw mr-2"></i>
+                        <a class="collapse-item" href="<?php echo base_url . "EmpresaConfiguracion" ?>"> <i
+                                class="fas fa-building fa-sm fa-fw mr-2"></i>
                             Info. de la empresa</a>
                     </div>
                 </div>
@@ -194,7 +207,10 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php $user = $_SESSION['usuario']; echo($user);?></span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                    <?php $user = $_SESSION['usuario'];
+                                    echo ($user); ?>
+                                </span>
                                 <img class="img-profile rounded-circle"
                                     src="<?php echo base_url; ?>Assets/img/undraw_profile.svg">
                             </a>

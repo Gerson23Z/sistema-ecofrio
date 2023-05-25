@@ -12,11 +12,29 @@ class HistorialCompras extends Controller
     $this->Views->getView($this, "index");
   }
 
+  public function aires()
+  {
+    $this->Views->getView($this, "aires");
+  }
+
   public function listar()
   {
     $data = $this->model->getHistorialCompras();
     for ($i=0; $i < count($data); $i++) {
       $data[$i]['acciones'] = '<div><button type="button" class="btn btn-danger" onclick="mostrarPdfCmp(' . $data[$i]['id'] . ')"><i class="fas fa-file-lines"></i></button>';
+      $fecha=$data[$i]['fecha'];
+      $fecha = date_create($fecha);
+      $data[$i]['total'] = '$'.$data[$i]['total'];
+      $data[$i]['fecha_compra'] = date_format($fecha,"d-m-Y H:i:s");
+    }
+    echo json_encode($data, JSON_UNESCAPED_UNICODE);
+    die();
+  }
+  public function listarAires()
+  {
+    $data = $this->model->getHistorialComprasAires();
+    for ($i=0; $i < count($data); $i++) {
+      $data[$i]['acciones'] = '<div><button type="button" class="btn btn-danger" onclick="mostrarPdfVntAire(' . $data[$i]['id'] . ')"><i class="fas fa-file-lines"></i></button>';
       $fecha=$data[$i]['fecha'];
       $fecha = date_create($fecha);
       $data[$i]['total'] = '$'.$data[$i]['total'];

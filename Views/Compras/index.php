@@ -4,6 +4,24 @@
     <div class="card-header bg-primary text-white">
         <h4>Nueva Compra</h4>
     </div>
+
+<style>
+.item-lista {
+  /* Estilos personalizados */
+  background-color: #f2f2f2;
+  color: #333;
+  padding: 5px 10px;
+  cursor: pointer;
+  list-style-type: none; /* Quitar las viñetas */
+  margin: 0;
+}
+
+.item-lista:hover {
+  /* Estilos al pasar el cursor por encima */
+  background-color: #ddd;
+}
+</style>
+
     <div class="card-body">
         <form id="frmCompras">
             <div class="row">
@@ -11,10 +29,10 @@
                     <div class="form-group">
                         <input type="hidden" id="id" name="id">
                         <label for="txtCodigo">Codigo</label>
-                        <input id="txtCodigo" class="form-control" type="text" name="txtCodigo"
-                            onkeyup="buscarCodigoCompra(event)">
+                        <input id="txtCodigo" class="form-control" type="text" name="txtCodigo" autocomplete="off"
+                            onkeyup="getCodigosCompras(event)">
+                            <ul id="lista"></ul>
                     </div>
-
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
@@ -82,4 +100,5 @@
     </div>
 </div>
 
+<script src="<?php echo base_url; ?>Assets/js/funcionesCompras.js"></script>
 <?php include "Views/Templates/footer.php"; ?>
