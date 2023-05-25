@@ -32,6 +32,18 @@ class Ventas extends Controller
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();
     }
+    public function getCodigos($codigo)
+    {
+        $stmt = $this->model->getCodigo($codigo);
+        $response = array();
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $response[] = $row["codigo"];
+        }
+
+        echo json_encode($response);
+        die();
+    }
     public function ingresarVenta()
     {
         $id = $_POST['id'];

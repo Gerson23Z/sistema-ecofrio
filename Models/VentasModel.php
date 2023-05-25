@@ -17,6 +17,13 @@ class VentasModel extends Query
         $data = $this->selectAll($sql);
         return $data;
     }
+    public function getCodigo($codigo)
+    {
+        $variable = $codigo . '%';
+        $sql = "SELECT codigo FROM inventariorespuestos WHERE codigo LIKE ? ORDER BY codigo ASC LIMIT 0, 10";
+        $stmt = $this->selectCo($sql, [$variable]);
+        return $stmt;
+    }
     function GetProducto($id)
     {
         $sql = "SELECT * FROM inventariorespuestos WHERE id = $id";
@@ -125,10 +132,10 @@ class VentasModel extends Query
         }
         return $res;
     }
-    public function guardarVenta($total,$id_usuario)
+    public function guardarVenta($total, $id_usuario)
     {
         $sql = "INSERT INTO ventas(total, id_usuario) VALUES (?,?)";
-        $datos = array($total,$id_usuario);
+        $datos = array($total, $id_usuario);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
             $res = "¡OK!";

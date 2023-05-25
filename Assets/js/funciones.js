@@ -653,9 +653,22 @@ function mostrarPdfCmp(id) {
   window.open(ruta);
 }
 
-function buscarCodigoVenta(e) {
-  e.preventDefault();
+
+
+
+const txtCodigo = document.getElementById("txtCodigo");
+const lista = document.getElementById("lista");
+
+// Agregar eventos de "keyup" y "input" al campo de entrada
+txtCodigo.addEventListener("keyup", getCodigos);
+txtCodigo.addEventListener("input", function () {
+  lista.style.display = "none"; // Ocultar la lista al borrar un dígito
+  getCodigos();
+});
+
+function getCodigos(e) {
   if (e.which == 13) {
+    e.preventDefault();
     const cod = document.getElementById("txtCodigo").value;
     const url = base_url + "Ventas/buscarCodigo/" + cod;
     const http = new XMLHttpRequest();
@@ -677,6 +690,48 @@ function buscarCodigoVenta(e) {
       }
     }
   }
+  const codigo = txtCodigo.value;
+  if (codigo.length > 0) {
+    const url = base_url + "Ventas/getCodigos/" + codigo;
+    const http = new XMLHttpRequest();
+    http.open("GET", url, true);
+    http.send();
+    http.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText);
+        const res = JSON.parse(this.responseText);
+        // Limpiar la lista antes de agregar nuevos elementos
+        lista.innerHTML = "";
+
+        // ... Código anterior ...
+
+        // Recorrer los elementos de la respuesta y crear los elementos de lista
+        res.forEach(function (item) {
+          const li = document.createElement("li");
+          li.textContent = item;
+          li.classList.add("item-lista"); // Agregar la clase CSS al elemento de lista
+          lista.appendChild(li);
+
+          // Agregar controlador de eventos para el clic en cada elemento de lista
+          li.addEventListener("click", function () {
+            // Asignar el valor del elemento de lista al campo de entrada
+            txtCodigo.value = item;
+            document.getElementById("txtCodigo").focus();
+            // Ocultar la lista
+            lista.style.display = "none";
+          });
+        });
+
+        // ... Código posterior ...
+
+        // Mostrar la lista
+        lista.style.display = "block";
+      }
+    }
+  } else {
+    // Ocultar la lista si el campo de entrada está vacío
+    lista.style.display = "none";
+  }
 }
 
 function calcularPrecioVenta(e) {
@@ -685,6 +740,7 @@ function calcularPrecioVenta(e) {
   const precio = document.getElementById("txtPrecio").value;
   document.getElementById("txtSubTotal").value = cantidad * precio;
   if (e.which == 13) {
+    lista.style.display = "none";
     if (cantidad > 0) {
       const url = base_url + "Ventas/ingresarVenta";
       const frm = document.getElementById("frmVentas");
@@ -701,8 +757,8 @@ function calcularPrecioVenta(e) {
           } else if (res == "modificado") {
             frm.reset();
             CargarDetallesVnt();
-          }else if(res=="sobredemanda"){
-            Swal.fire("Error","Cantidad Insuficiente en Stock", "error");
+          } else if (res == "sobredemanda") {
+            Swal.fire("Error", "Cantidad Insuficiente en Stock", "error");
           }
         }
       };
@@ -784,7 +840,7 @@ function registrarVenta() {
             CargarDetallesVnt();
             const ruta = base_url + "Ventas/generarPDF/" + res.id_venta;
             window.open(ruta);
-          }else if (res == "vacioVenta") {
+          } else if (res == "vacioVenta") {
             alerttime("No hay ventas a registrar", "error");
           } else {
             alerttime("error", "error");
@@ -848,8 +904,8 @@ function calcularPrecioAire(e) {
           } else if (res == "modificado") {
             frm.reset();
             CargarDetallesVntAir();
-          }else if(res=="sobredemanda"){
-            Swal.fire("Error","Cantidad Insuficiente en Stock", "error");
+          } else if (res == "sobredemanda") {
+            Swal.fire("Error", "Cantidad Insuficiente en Stock", "error");
           }
         }
       };
@@ -937,7 +993,7 @@ function registrarVentaAire() {
             window.open(ruta);
           } else if (res == "vacio") {
             alerttime("No puede dejar campos vacios", "error");
-          }else if (res == "vacioVenta") {
+          } else if (res == "vacioVenta") {
             alerttime("No hay ventas a registrar", "error");
           } else {
             alerttime("error", "error");
@@ -1015,10 +1071,10 @@ function modificarCliente(event) {
         alerta("Cliente", "modificado");
         $("#editar_cliente").modal("hide");
         tblClientes.ajax.reload();
-      }else if(res == "existe"){
-        alerttime("El cliente ya existe","error");
+      } else if (res == "existe") {
+        alerttime("El cliente ya existe", "error");
       }
-       else {
+      else {
         alerterror();
       }
     }

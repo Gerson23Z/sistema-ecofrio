@@ -26,6 +26,14 @@ class Query extends Conexion
     $data = $resul->fetchAll(PDO::FETCH_ASSOC);
     return $data;
   }
+
+  public function selectCo(string $sql, array $params = [])
+{
+    $stmt = $this->con->prepare($sql);
+    $stmt->execute($params);
+    return $stmt;
+}
+
   public function save(string $sql, array $datos){
     $this->sql = $sql;
     $this->datos = $datos;
