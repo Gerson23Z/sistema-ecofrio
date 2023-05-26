@@ -1,4 +1,5 @@
 <?php
+
 class Principal extends Controller
 {
     public function __construct()
@@ -6,9 +7,13 @@ class Principal extends Controller
         session_start();
         parent::__construct();
     }
+
     public function index()
     {
-        $this->Views->getView($this, "index");
+        $data['usuarios'] = $this->model->getDatos('usuarios');
+        $data['ventas'] = $this->model->getDatos('ventas');
+        $data['mantenimientos'] = $this->model->getDatos('citas');
+        $this->Views->getView($this, "index", $data); // Pasar los datos a la vista
     }
 }
 

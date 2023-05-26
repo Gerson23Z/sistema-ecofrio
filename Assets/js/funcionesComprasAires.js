@@ -164,6 +164,8 @@ function registrarCompraAire() {
             window.open(ruta);
           } else if (res == "vacioCompra") {
             alerttime("No hay Compras a registrar", "error");
+          } else if (res == "vacioCompras") {
+            alerttime("No hay compras a registrar", "error");
           } else {
             alerttime("error", "error");
           }

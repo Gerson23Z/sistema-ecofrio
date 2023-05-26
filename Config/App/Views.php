@@ -1,7 +1,7 @@
 <?php
 class Views
 {
-    public function getView($controlador, $vista)
+    public function getView($controlador, $vista, $data = null)
     {
         $controlador = get_class($controlador);
         if ($controlador == "Home") {
@@ -13,3 +13,5 @@ class Views
     }
 }
 ?>
+
+

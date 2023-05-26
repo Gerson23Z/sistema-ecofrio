@@ -146,7 +146,7 @@ function registrarCompra() {
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!'
+    confirmButtonText: 'Si'
   }).then((result) => {
     if (result.isConfirmed) {
       const url = base_url + "Compras/registrarCompra";
@@ -162,6 +162,8 @@ function registrarCompra() {
             CargarDetallesCmp();
             const ruta = base_url + "Compras/generarPDF/" + res.id_compra;
             window.open(ruta);
+          } else if (res == "vacioCompra") {
+            alerttime("No hay compras a registrar", "error");
           } else {
             alerttime("error", "error");
           }

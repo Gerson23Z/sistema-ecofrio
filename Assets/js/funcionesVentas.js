@@ -145,7 +145,6 @@ function eliminarDetalleVnt(id) {
     }
   };
 }
-
 function registrarVenta() {
   Swal.fire({
     title: 'Registrar venta?',
@@ -154,7 +153,7 @@ function registrarVenta() {
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!'
+    confirmButtonText: 'Si'
   }).then((result) => {
     if (result.isConfirmed) {
       const url = base_url + "Ventas/registrarVenta";

@@ -38,7 +38,7 @@
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center"
-                href="<?php echo base_url . "Principal" ?>">
+                href="<?php echo base_url . "Principal"?>">
                 <div class="sidebar-brand-text mx-3">Ecofrio</div>
             </a>
 
@@ -49,7 +49,7 @@
             <hr class="sidebar-divider">
 
             <li class="nav-item">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="<?php echo base_url . "Principal" ?>">
                     <i class="fas fa-cash-register fa-2x"></i>
                     <span>Inicio</span></a>
             </li>

@@ -16,23 +16,22 @@ class Control extends Controller
   {
     $data = $this->model->GetCitas();
     for ($i = 0; $i < count($data); $i++) {
-        $fechaActual = date("Y-m-d");
-        $fechaCita=$data[$i]['fecha'];
-        $fechaActual_ts = strtotime($fechaActual);
-        $fechaCita_ts = strtotime($fechaCita);
-        $diferencia_ts = $fechaCita_ts - $fechaActual_ts;
-        $diferencia_dias = round($diferencia_ts / 86400);
-        $data[$i]['rest'] = "Cita en ".$diferencia_dias." dias";
-        $fechaCita = date_create($fechaCita);
-        $data[$i]['fecha_cita'] = date_format($fechaCita,"d-m-Y");
-        if($diferencia_dias<0){
+      $fechaActual = strtotime("today");
+      $fechaCita = strtotime($data[$i]['fecha']);
+      $diferencia_ts = $fechaCita - $fechaActual;
+      $diferencia_dias = round($diferencia_ts / 86400);
+      $diferencia_dias = $diferencia_dias+1;
+      $data[$i]['rest'] = "Cita en ".$diferencia_dias." días";
+      $fechaCita = date_create($data[$i]['fecha']);
+      $data[$i]['fecha_cita'] = date_format($fechaCita, "d-m-Y");
+      if ($diferencia_dias < 0) {
           $data[$i]['estado'] = '<span class="badge badge-danger">Retrasado</span>';
-          $data[$i]['rest'] = "Vencido hace " .abs($diferencia_dias)." dias";
-        }elseif($diferencia_dias==0){
+          $data[$i]['rest'] = "Vencido hace " . abs($diferencia_dias) . " días";
+      } elseif ($diferencia_dias == 0) {
           $data[$i]['estado'] = '<span class="badge badge-warning">Hoy</span>';
-        }else{
+      } else {
           $data[$i]['estado'] = '<span class="badge badge-success">Pendiente</span>';
-        }
+      }
         $data[$i]['acciones'] = '<div><button type="button" class="btn btn-primary" onclick="btnEditarCita(' . $data[$i]['id'] . ')"><i class="fas fa-pen-to-square"></i></button>
             <button type="button" class="btn btn-danger"onclick="btnEliminarCita(' . $data[$i]['id'] . ')"><i class="fas fa-trash"></i></button>
             </div>';
