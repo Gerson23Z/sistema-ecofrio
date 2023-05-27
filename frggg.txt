@@ -1,33 +1,22 @@
-
-
-    <a href="URI" class="col-xl-4 mb-4">
-        <div class="card border-left-success shadow h-100 py-4">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">Reportes</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-file-contract fa-2x"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </a>
-
-<div class="row">
-    <a href="Citas" class="col-xl-4 mb-4 offset-md-2">
-        <div class="card border-left-success shadow h-100 py-4">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">Administrar Citas</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fa-solid fa-screwdriver-wrench fa-2x"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </a>
-</div>
+Swal.fire({
+    title: 'Cerrar Caja?',
+    text: "Quieres cerrar la caja?",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const url = base_url + "EmpresaConfiguracion/cerrar";
+      const http = new XMLHttpRequest();
+      http.open("GET", url, true);
+      http.send();
+      http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          const res = JSON.parse(this.responseText);
+          tblCaja.ajax.reload();
+        }
+      };
+    }
+  })

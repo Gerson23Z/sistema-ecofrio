@@ -2,7 +2,7 @@ function alerta(variable, accion) {
   Swal.fire("Listo", variable + " " + accion + " con exito", "success");
 }
 function alerterror() {
-  Swal.fire("Error", res, "error");
+  Swal.fire("Error", "error");
 }
 function alerttime(titulo, icon) {
   Swal.fire({
@@ -22,6 +22,7 @@ let tblHistorialCompras;
 let tblHistorialVentas;
 let tblHistorialVentasAire;
 let tblHistorialComprasAire;
+let tblCaja;
 
 document.addEventListener("DOMContentLoaded", function () {
   tblUsuarios = $("#tblUsuarios").DataTable({
@@ -256,6 +257,32 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       {
         data: "acciones",
+      },
+    ],
+    language: {
+      "url": "//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json"
+    }
+  });
+  tblCaja = $("#tblCaja").DataTable({
+    ajax: {
+      url: base_url + "EmpresaConfiguracion/listar",
+      dataSrc: "",
+    },
+    columns: [
+      {
+        data: "id",
+      },
+      {
+        data: "id_usuario",
+      },
+      {
+        data: "monto_inicial",
+      },
+      {
+        data: "fecha_apertura",
+      },
+      {
+        data: "estado",
       },
     ],
     language: {
@@ -591,4 +618,50 @@ function btnEliminarCliente(id) {
       };
     }
   });
+}
+
+function frmCaja() {
+  document.getElementById("montoInicial").value = "";
+  document.getElementById("ocultarInput").classList.add('d-none');
+  $("#nuevo_caja").modal("show");
+}
+function abrirCaja(e) {
+  e.preventDefault();
+  const monto_inicial = document.getElementById("montoInicial").value
+  if(monto_inicial == ""){
+    alerterror();
+  }else{
+    const frm = document.getElementById("frmAbrirCaja");
+    const url = base_url + "EmpresaConfiguracion/abrirCaja";
+    const http = new XMLHttpRequest();
+    http.open("POST", url, true);
+    http.send(new FormData(frm));
+    http.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        const res = JSON.parse(this.responseText);
+        Swal.fire("Avisos", res.msg, res.tipo);
+        $("#nuevo_caja").modal("hide");
+      }
+    }
+  }
+
+}
+
+function cerrarCaja(){
+  const url = base_url + "EmpresaConfiguracion/ventas";
+  const http = new XMLHttpRequest();
+  http.open("GET", url, true);
+  http.send();
+  http.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      const res = JSON.parse(this.responseText);
+      document.getElementById("montoInicial").value = res.inicial.monto_inicial;
+      document.getElementById("montoFinal").value = res.monto_total.total;
+      document.getElementById("totalVentas").value = res.total_ventas.total;
+      document.getElementById("montoTotal").value = res.monto_general;
+      document.getElementById("ocultarInput").classList.remove('d-none');
+      document.getElementById("btnId").innerHTML = "Cerrar Caja";
+      $("#nuevo_caja").modal("show");
+    }
+  }
 }
