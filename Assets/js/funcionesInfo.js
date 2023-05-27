@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function (){
-    const url = base_url + "EmpresaConfiguracion/mostrar/" + 1;
+    const url = base_url + "Configuracion/mostrar/" + 1;
     const http = new XMLHttpRequest();
     http.open("GET", url, true);
     http.send();
@@ -33,7 +33,7 @@ function actualizar(event) {
     cancelButtonText: "No",
   }).then((result) => {
     if (result.isConfirmed) {
-      const url = base_url + "EmpresaConfiguracion/editar/" + 1;
+      const url = base_url + "Configuracion/editar/" + 1;
       const frm = document.getElementById("frmInfo");
       const http = new XMLHttpRequest();
       http.open("POST", url, true);

@@ -11,7 +11,11 @@
             <th>Id</th>
             <th>Usuario</th>
             <th>Monto Inicial</th>
+            <th>Monto Final</th>
             <th>Fecha Apertura</th>
+            <th>Fecha Cierre</th>
+            <th>Total Ventas</th>
+            <th>Monto Total</th>
             <th>Estado</th>
         </tr>
     </thead>

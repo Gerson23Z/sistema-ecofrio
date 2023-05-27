@@ -178,6 +178,8 @@ function registrarVentaAire() {
             alerttime("No puede dejar campos vacios", "error");
           } else if (res == "vacioVenta") {
             alerttime("No hay ventas a registrar", "error");
+          } else if (res == "cajaCerrada") {
+            alerttime("Caja Cerrada", "error");
           } else {
             alerttime("error", "error");
           }

@@ -265,7 +265,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   tblCaja = $("#tblCaja").DataTable({
     ajax: {
-      url: base_url + "EmpresaConfiguracion/listar",
+      url: base_url + "Configuracion/listar",
       dataSrc: "",
     },
     columns: [
@@ -273,13 +273,25 @@ document.addEventListener("DOMContentLoaded", function () {
         data: "id",
       },
       {
-        data: "id_usuario",
+        data: "usuario",
       },
       {
         data: "monto_inicial",
       },
       {
+        data: "monto_final",
+      },
+      {
         data: "fecha_apertura",
+      },
+      {
+        data: "fecha_cierre",
+      },
+      {
+        data: "total_ventas",
+      },
+      {
+        data: "monto_total",
       },
       {
         data: "estado",
@@ -622,6 +634,7 @@ function btnEliminarCliente(id) {
 
 function frmCaja() {
   document.getElementById("montoInicial").value = "";
+  document.getElementById("id").value = "";
   document.getElementById("ocultarInput").classList.add('d-none');
   $("#nuevo_caja").modal("show");
 }
@@ -632,36 +645,41 @@ function abrirCaja(e) {
     alerterror();
   }else{
     const frm = document.getElementById("frmAbrirCaja");
-    const url = base_url + "EmpresaConfiguracion/abrirCaja";
+    const url = base_url + "Configuracion/abrirCaja";
     const http = new XMLHttpRequest();
     http.open("POST", url, true);
     http.send(new FormData(frm));
     http.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText);
         const res = JSON.parse(this.responseText);
         Swal.fire("Avisos", res.msg, res.tipo);
+        tblCaja.ajax.reload();
         $("#nuevo_caja").modal("hide");
       }
     }
   }
-
 }
 
 function cerrarCaja(){
-  const url = base_url + "EmpresaConfiguracion/ventas";
+  const url = base_url + "Configuracion/ventas";
   const http = new XMLHttpRequest();
   http.open("GET", url, true);
   http.send();
   http.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
+      console.log(this.responseText);
       const res = JSON.parse(this.responseText);
+      document.getElementById("id").value = res.inicial.id;
       document.getElementById("montoInicial").value = res.inicial.monto_inicial;
-      document.getElementById("montoFinal").value = res.monto_total.total;
-      document.getElementById("totalVentas").value = res.total_ventas.total;
+      document.getElementById("montoFinal").value = res.monto_total;
+      document.getElementById("totalVentas").value = res.total_ventas;
       document.getElementById("montoTotal").value = res.monto_general;
       document.getElementById("ocultarInput").classList.remove('d-none');
       document.getElementById("btnId").innerHTML = "Cerrar Caja";
+      tblCaja.ajax.reload();
       $("#nuevo_caja").modal("show");
     }
   }
 }
+

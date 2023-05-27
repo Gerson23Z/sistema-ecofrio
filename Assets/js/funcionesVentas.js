@@ -163,6 +163,7 @@ function registrarVenta() {
       http.send(new FormData(frm));
       http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
+          console.log(this.responseText);
           const res = JSON.parse(this.responseText);
           if (res.msg == "ok") {
             alerttime("Venta registrada", "success");
@@ -171,6 +172,9 @@ function registrarVenta() {
             window.open(ruta);
           } else if (res == "vacioVenta") {
             alerttime("No hay ventas a registrar", "error");
+          }
+          else if (res == "cajaCerrada") {
+            alerttime("Caja Cerrada", "error");
           } else {
             alerttime("error", "error");
           }

@@ -181,7 +181,7 @@ class Ventas extends Controller
                     $precio = $row['precio'];
                     $cantidad = $row['cantidad'];
                     $subtotal = $precio * $cantidad;
-                    $this->model->registrarDetallesVenta($id_venta['id'], $producto, $precio, $cantidad, $subtotal);
+                    $this->model->registrarDetallesVenta($id_venta['id'], $producto, $precio, $cantidad, $subtotal, $id_usuario);
                     $codigoProducto = $row['codigo'];
                     $stockActual = $this->model->GetProductos($codigoProducto);
                     $stock = $stockActual[0]['unidades'] - $cantidad;
@@ -189,6 +189,8 @@ class Ventas extends Controller
                 }
                 $this->model->vaciarDetalles();
                 $msg = array('msg' => 'ok', 'id_venta' => $id_venta['id']);
+            }elseif ($data == "vacio") {
+                $msg = "cajaCerrada";
             } else {
                 $msg = "Error al registrar la venta";
             }
@@ -209,7 +211,7 @@ class Ventas extends Controller
             if (empty($dui) || empty($nombre) || empty($telefono) || empty($direccion)) {
                 $msg = 'vacio';
             } else {
-                $data = $this->model->RegistrarInfoCliente($dui, $nombre, $telefono, $direccion);
+                $this->model->RegistrarInfoCliente($dui, $nombre, $telefono, $direccion);
                 $datos = $this->model->calcularVentaAire()['total'];
                 $id_usuario = $_SESSION['id'];
                 $data = $this->model->guardarVentaAire($dui, $datos, $id_usuario);
@@ -231,6 +233,8 @@ class Ventas extends Controller
                     }
                     $this->model->vaciarDetallesAir();
                     $msg = array('msg' => 'ok', 'id_venta' => $id_venta['id']);
+                } elseif ($data == "vacio") {
+                    $msg = "cajaCerrada";
                 } else {
                     $msg = "Error al registrar la venta";
                 }

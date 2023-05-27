@@ -115,6 +115,12 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link" href="<?php echo base_url . "Configuracion/caja" ?>">
+                    <i class="fas fa-box-open fa-2x"></i>
+                    <span>Caja</span></a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link" href="charts.html">
                     <i class="fas fa-file-contract fa-2x"></i>
                     <span>Reportes</span></a>
@@ -164,7 +170,7 @@
                         <a class="collapse-item" href="<?php echo base_url . "Usuarios" ?>"> <i
                                 class="fas fa-user fa-sm fa-fw mr-2"></i>
                             Usarios</a>
-                        <a class="collapse-item" href="<?php echo base_url . "EmpresaConfiguracion" ?>"> <i
+                        <a class="collapse-item" href="<?php echo base_url . "Configuracion" ?>"> <i
                                 class="fas fa-building fa-sm fa-fw mr-2"></i>
                             Info. de la empresa</a>
                     </div>

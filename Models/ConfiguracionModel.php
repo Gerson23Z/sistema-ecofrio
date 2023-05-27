@@ -1,5 +1,5 @@
 <?php
-class EmpresaConfiguracionModel extends Query
+class ConfiguracionModel extends Query
 {
     private $id, $nombre, $direccion, $telefono, $dueno, $mensaje;
 
@@ -58,27 +58,57 @@ class EmpresaConfiguracionModel extends Query
         }
         return $msg;
     }
+    public function actualizarArqueo($id_usuario, $montoFinal, $fechaCierre, $totalVentas, $general, $id)
+    {
+        $sql = "UPDATE cierre_caja SET id_usuario = ?,monto_final = ?,fecha_cierre = ?,total_ventas = ?,monto_total=?, estado = ? WHERE id = ?";
+        $datos = array($id_usuario, $montoFinal, $fechaCierre, $totalVentas, $general,0, $id);
+        $data = $this->save($sql, $datos);
+        $sql = "UPDATE ventas SET apertura = ? WHERE id_usuario = ? AND apertura = 1";
+        $datos = array(0, $id_usuario);
+        $this->save($sql, $datos);
+        $sql = "UPDATE ventasaires SET apertura = ? WHERE id_usuario = ? AND apertura = 1";
+        $datos = array(0, $id_usuario);
+        $this->save($sql, $datos);
+        if ($data == 1) {
+            $res = "ok";
+        } else {
+            $res = "error";
+        }
+        return $res;
+    }
     public function getCajas()
     {
-        $sql = "SELECT * FROM cierre_caja";
+        $sql = "SELECT c.*,c.id_usuario, u.user AS usuario FROM cierre_caja c JOIN usuarios u ON c.id_usuario = u.id";
         $data = $this->selectAll($sql);
         return $data;
     }
     public function getVentas($id_usuario)
     {
-        $sql = "SELECT total, SUM(total) AS total FROM ventas WHERE id_usuario = $id_usuario";
+        $sql = "SELECT total, SUM(total) AS total FROM ventas WHERE id_usuario = $id_usuario AND apertura =1";
+        $data = $this->select($sql);
+        return $data;
+    }
+    public function getVentasAires($id_usuario)
+    {
+        $sql = "SELECT total, SUM(total) AS total FROM ventasaires WHERE id_usuario = $id_usuario AND apertura =1";
         $data = $this->select($sql);
         return $data;
     }
     public function getTotalVentas($id_usuario)
     {
-        $sql = "SELECT COUNT(total) AS total FROM ventas WHERE id_usuario = $id_usuario";
+        $sql = "SELECT COUNT(total) AS total FROM ventas WHERE id_usuario = $id_usuario AND apertura =1";
+        $data = $this->select($sql);
+        return $data;
+    }
+    public function getTotalVentasAires($id_usuario)
+    {
+        $sql = "SELECT COUNT(total) AS total FROM ventasaires WHERE id_usuario = $id_usuario AND apertura =1";
         $data = $this->select($sql);
         return $data;
     }
     public function getMontoInicial($id_usuario)
     {
-        $sql = "SELECT id, monto_inicial FROM cierre_caja WHERE id_usuario = $id_usuario";
+        $sql = "SELECT id, monto_inicial FROM cierre_caja WHERE id_usuario = $id_usuario AND estado = 1";
         $data = $this->select($sql);
         return $data;
     }
