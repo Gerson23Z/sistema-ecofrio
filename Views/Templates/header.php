@@ -107,11 +107,21 @@
                     <i class="fas fa-users fa-2x"></i>
                     <span>Clientes</span></a>
             </li>
-
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url . "InventarioRespuestos" ?>">
+                <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapseInventario"
+                    aria-expanded="true" aria-controls="collapseInventario">
                     <i class="fas fa-box-open fa-2x"></i>
-                    <span>Inventario</span></a>
+                    <span>Inventario</span>
+                </a>
+                <div id="collapseInventario" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="<?php echo base_url . "InventarioRespuestos" ?>"> <i
+                                class="fas fa-box-open fa-sm fa-fw mr-2"></i> Respuestos</a>
+                        <a class="collapse-item" href="<?php echo base_url . "InventarioAires" ?>"> <i
+                                class="fas fa-box-open fa-sm fa-fw mr-2"></i>
+                            Aires</a>
+                    </div>
+                </div>
             </li>
 
             <li class="nav-item">
@@ -121,7 +131,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="<?php echo base_url . "Principal/reportes" ?>">
                     <i class="fas fa-file-contract fa-2x"></i>
                     <span>Reportes</span></a>
             </li>
@@ -169,7 +179,7 @@
                                 class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i> Salir</a>
                         <a class="collapse-item" href="<?php echo base_url . "Usuarios" ?>"> <i
                                 class="fas fa-user fa-sm fa-fw mr-2"></i>
-                            Usarios</a>
+                            Usuarios</a>
                         <a class="collapse-item" href="<?php echo base_url . "Configuracion" ?>"> <i
                                 class="fas fa-building fa-sm fa-fw mr-2"></i>
                             Info. de la empresa</a>

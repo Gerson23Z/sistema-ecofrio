@@ -44,15 +44,15 @@ document.addEventListener("DOMContentLoaded", function () {
         data: "user",
       },
       {
-        data: "rol",
-      },
-      {
         data: "estado",
       },
       {
         data: "acciones",
       },
     ],
+    language: {
+      "url": "//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json"
+    }
   });
 
   tblUsuariosEliminados = $("#tblUsuariosEliminados").DataTable({
@@ -74,15 +74,15 @@ document.addEventListener("DOMContentLoaded", function () {
         data: "user",
       },
       {
-        data: "rol",
-      },
-      {
         data: "estado",
       },
       {
         data: "acciones",
       },
     ],
+    language: {
+      "url": "//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json"
+    }
   });
   tblClientes = $("#tblClientes").DataTable({
     ajax: {
@@ -109,6 +109,9 @@ document.addEventListener("DOMContentLoaded", function () {
         data: "acciones",
       },
     ],
+    language: {
+      "url": "//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json"
+    }
   });
   tblCitas = $("#tblCitas").DataTable({
     ajax: {
@@ -141,6 +144,9 @@ document.addEventListener("DOMContentLoaded", function () {
         data: "acciones",
       },
     ],
+    language: {
+      "url": "//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json"
+    }
   });
   tblCitasCom = $("#tblCitasCom").DataTable({
     ajax: {
@@ -170,6 +176,9 @@ document.addEventListener("DOMContentLoaded", function () {
         data: "acciones",
       },
     ],
+    language: {
+      "url": "//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json"
+    }
   });
   tblHistorialCompras = $("#tblHistorialCompras").DataTable({
     ajax: {
@@ -210,6 +219,9 @@ document.addEventListener("DOMContentLoaded", function () {
         data: "fecha_venta",
       },
       {
+        data: "usuario",
+      },
+      {
         data: "acciones",
       },
     ],
@@ -231,6 +243,9 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       {
         data: "fecha_venta",
+      },
+      {
+        data: "usuario",
       },
       {
         data: "acciones",
@@ -349,6 +364,7 @@ function registrarUser(event) {
   http.send(new FormData(frm));
   http.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
+      console.log(this.responseText);
       const res = JSON.parse(this.responseText);
       if (res == "si") {
         alerta("Usuario", "registrado");
@@ -380,7 +396,6 @@ function btnEditarUsuario(id) {
       document.getElementById("txtNombre").value = res.nombre;
       document.getElementById("txtApellido").value = res.apellido;
       document.getElementById("txtUsuario").value = res.user;
-      document.getElementById("slctRol").value = res.rol;
       document.getElementById("txtPassword");
       document.getElementById("txtConfirmar");
       $("#nuevo_usuario").modal("show");
@@ -640,10 +655,10 @@ function frmCaja() {
 }
 function abrirCaja(e) {
   e.preventDefault();
-  const monto_inicial = document.getElementById("montoInicial").value
-  if(monto_inicial == ""){
+  const monto_inicial = document.getElementById("montoInicial").value;
+  if (monto_inicial == "") {
     alerterror();
-  }else{
+  } else {
     const frm = document.getElementById("frmAbrirCaja");
     const url = base_url + "Configuracion/abrirCaja";
     const http = new XMLHttpRequest();
@@ -651,17 +666,19 @@ function abrirCaja(e) {
     http.send(new FormData(frm));
     http.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
-        console.log(this.responseText);
         const res = JSON.parse(this.responseText);
         Swal.fire("Avisos", res.msg, res.tipo);
         tblCaja.ajax.reload();
         $("#nuevo_caja").modal("hide");
+        setTimeout(function () {
+          window.location.reload();
+        }, 2000);
       }
-    }
+    };
   }
 }
 
-function cerrarCaja(){
+function cerrarCaja() {
   const url = base_url + "Configuracion/ventas";
   const http = new XMLHttpRequest();
   http.open("GET", url, true);
@@ -683,3 +700,22 @@ function cerrarCaja(){
   }
 }
 
+function registrarPermisos(e) {
+  e.preventDefault();
+  const url = base_url + "Usuarios/registrarPermiso";
+  const frm = document.getElementById("formulario");
+  const http = new XMLHttpRequest();
+  http.open("POST", url, true);
+  http.send(new FormData(frm));
+  http.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      console.log(this.responseText);
+      const res = JSON.parse(this.responseText);
+      if (res.msg != "") {
+        alerttime(res.msg, res.icono);
+      } else {
+        alerterror();
+      }
+    }
+  }
+}

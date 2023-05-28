@@ -24,9 +24,11 @@ function getCodigosVentas(event) {
           document.getElementById("txtCodigo").value = "";
           document.getElementById("txtCodigo").focus();
         } else {
+          lista.style.display = "none";
           document.getElementById("txtProducto").value = res[0].producto;
           document.getElementById("txtPrecio").value = res[0].precio;
           document.getElementById("id").value = res[0].id;
+          document.getElementById("txtStock").value = res[0].unidades;
           document.getElementById("txtCantidad").focus();
         }
       }

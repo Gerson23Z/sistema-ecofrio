@@ -2,9 +2,6 @@
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Inventario Respuestos</h1>
-    <div class="d-grid gap-2 col-6 mx-auto">
-        <a href="InventarioAires" class="btn btn-secondary col-6">Ir a Aires</a>
-    </div>
 </div>
 
 <button class="btn btn-success mb-2" type="button" onclick="frmInventarioRespuestos()" ;>Agregar</button>
@@ -46,7 +43,7 @@
                     <div class="form-group">
                         <label for="txtCodigo">Codigo</label>
                         <input type="hidden" id="id" name="id">
-                        <input id="txtCodigo" class="form-control" type="text" name="txtCodigo">
+                        <input id="txtCodigo" class="form-control" type="number" name="txtCodigo">
                     </div>
                     <div class="form-group">
                         <label for="txtProducto">Producto</label>
@@ -61,8 +58,8 @@
                         <input id="txtUnidades" class="form-control" type="number" name="txtUnidades">
                     </div>
                     <div class="form-group">
-                        <label for="txtPrecio">Precio</label>
-                        <input id="txtPrecio" class="form-control" type="text" name="txtPrecio">
+                        <label for="txtPrecio">Precio Unitario</label>
+                        <input id="txtPrecio" class="form-control" type="number" name="txtPrecio">
                     </div>
 
                     <button class="btn btn-primary" type="button" onclick="registrarRespuesto(event)"

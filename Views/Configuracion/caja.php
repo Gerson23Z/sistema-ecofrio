@@ -3,8 +3,12 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Cierre de caja</h1>
 </div>
-<button class="btn btn-primary mb-2" type="button" onclick="frmCaja()" ;>+</button>
-<button class="btn btn-primary mb-2" type="button" onclick="cerrarCaja()" ;>Cerrar caja</button>
+<?php
+foreach($data as $row){
+}
+?>
+<button class="btn btn-primary mb-2" type="button" <?php if($row['estado']==1){echo 'disabled';} ?> onclick="frmCaja()" ;>+</button>
+<button class="btn btn-dark mb-2" type="button" <?php if($row['estado']==0){echo 'disabled';} ?> onclick="cerrarCaja()" ;>Cerrar caja</button>
 <table class="table table-light" id="tblCaja">
     <thead class="table-success">
         <tr>

@@ -2,7 +2,7 @@
 
 <div class="card">
     <div class="card-header bg-primary text-white">
-        <h4>Nueva Venta</h4>
+        <h4>Venta de Aire Acondicionado</h4>
     </div>
 
 <style>
@@ -25,7 +25,7 @@
     <div class="card-body">
         <form id="frmAires">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="form-group">
                         <input type="hidden" id="id" name="id">
                         <label for="txtCodigo">Codigo</label>
@@ -52,6 +52,12 @@
                         <label for="txtPrecio">Precio</label>
                         <input id="txtPrecio" class="form-control" type="text" name="txtPrecio" disabled>
                         <span class="simbolo">$</span>
+                    </div>
+                </div>
+                <div class="col-md-2 float-right">
+                    <div class="form-group">
+                        <label for="txtStock">En Existencia</label>
+                        <input id="txtStock" class="form-control" type="text" name="txtStock" disabled>
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -94,7 +100,7 @@
 <div class="form-row">
     <div class="form-group col-md-2">
         <label for="dui">DUI <i class="fas fa-id-card"></i></label>
-        <input type="text" class="form-control" id="dui" name="dui" onkeyup="clienteClck(event)">
+        <input type="number" class="form-control" id="dui" name="dui" onkeyup="clienteClck(event)">
     </div>
     <div class="form-group col-md-4">
         <label for="nombreCliente">Nombre <i class="fas fa-user"></i></label>
@@ -103,7 +109,7 @@
     </div>
     <div class="form-group col-md-2">
         <label for="telefonoCliente">Telefono <i class="fas fa-phone"></i></label>
-        <input type="text" class="form-control" id="telefonoCliente" name="telefonoCliente"
+        <input type="number" class="form-control" id="telefonoCliente" name="telefonoCliente"
             onkeyup="sig(event, 'direccionCliente')">
     </div>
     <div class="form-group col-md-4">

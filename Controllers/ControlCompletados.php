@@ -9,7 +9,16 @@ class ControlCompletados extends Controller
 
   public function index()
   {
-    $this->Views->getView($this, "index");
+    if (empty($_SESSION['activo'])) {
+      header("location:" . base_url);
+    }
+    $id_usuario = $_SESSION['id'];
+    $verificar = $this->model->verificarPermiso($id_usuario, 'ControlCompletados');
+    if (!empty($verificar) || $id_usuario == 1) {
+      $this->Views->getView($this, "index");
+    } else {
+      header("location:" . base_url . "Errors/permisos");
+    }
   }
 
   public function listar()

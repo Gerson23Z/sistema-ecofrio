@@ -10,8 +10,10 @@
             <th>#</th>
             <th>Total</th>
             <th>Fecha</th>
+            <th>Usuario</th>
             <th></th>
         </tr>
     </thead>
 </table>
+<script src="<?php echo base_url; ?>Assets/js/funcionesAires.js"></script>
 <?php include "Views/Templates/footer.php"; ?>

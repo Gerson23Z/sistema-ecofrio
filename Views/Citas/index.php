@@ -38,8 +38,9 @@
                     </div>
                     <div class="form-floating mb-3">
                         <select id="tipo" class="form-control" name="tipo">
-                            <option>Mantenimiento</option>
                             <option>Instalacion</option>
+                            <option>Mantenimiento Preventivo</option>
+                            <option>Mantenimiento Correctivo</option>
                         </select>
                         <label for="direccion" class="form-label">Tipo</label>
                     </div>

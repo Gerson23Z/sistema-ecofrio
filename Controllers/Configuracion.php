@@ -4,16 +4,32 @@ class Configuracion extends Controller
     public function __construct()
     {
         session_start();
+        if (empty($_SESSION['activo'])) {
+            header("location:" . base_url);
+        }
         parent::__construct();
     }
 
     public function index()
     {
-        $this->Views->getView($this, "index");
+        $id_usuario = $_SESSION['id'];
+        $verificar = $this->model->verificarPermiso($id_usuario, 'Empresa');
+        if (!empty($verificar) || $id_usuario == 1) {
+            $this->Views->getView($this, "index");
+        } else {
+            header("location:" . base_url . "Errors/permisos");
+        }
     }
     public function caja()
     {
-        $this->Views->getView($this, "caja");
+        $id_usuario = $_SESSION['id'];
+        $verificar = $this->model->verificarPermiso($id_usuario, 'Cierre de caja');
+        if (!empty($verificar) || $id_usuario == 1) {
+            $data = $this->model->getCajas();
+            $this->Views->getView($this, "caja", $data);
+        } else {
+          header("location:" . base_url . "Errors/permisos");
+        }
     }
 
 

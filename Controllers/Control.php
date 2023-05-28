@@ -4,12 +4,21 @@ class Control extends Controller
   public function __construct()
   {
     session_start();
+    if (empty($_SESSION['activo'])) {
+      header("location:" . base_url);
+    }
     parent::__construct();
   }
 
   public function index()
   {
-    $this->Views->getView($this, "index");
+    $id_usuario = $_SESSION['id'];
+    $verificar = $this->model->verificarPermiso($id_usuario, 'Control de citas');
+    if (!empty($verificar) || $id_usuario == 1) {
+      $this->Views->getView($this, "index");
+    } else {
+      header("location:" . base_url . "Errors/permisos");
+    }
   }
 
   public function listar()
@@ -20,7 +29,7 @@ class Control extends Controller
       $fechaCita = strtotime($data[$i]['fecha']);
       $diferencia_ts = $fechaCita - $fechaActual;
       $diferencia_dias = round($diferencia_ts / 86400);
-      $diferencia_dias = $diferencia_dias+1;
+      $diferencia_dias = $diferencia_dias;
       $data[$i]['rest'] = "Cita en ".$diferencia_dias." días";
       $fechaCita = date_create($data[$i]['fecha']);
       $data[$i]['fecha_cita'] = date_format($fechaCita, "d-m-Y");

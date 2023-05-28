@@ -27,7 +27,9 @@ function getCodigosAires(event) {
           document.getElementById("txtProducto").value = res[0].marca + " " + res[0].capacidad + " " + res[0].seer;
           document.getElementById("txtPrecio").value = res[0].precio;
           document.getElementById("id").value = res[0].id;
+          document.getElementById("txtStock").value = res[0].cantidad;
           document.getElementById("txtCantidad").focus();
+          lista.style.display = "none";
         }
       }
     }
@@ -147,46 +149,58 @@ function eliminarDetalleAire(id) {
 }
 
 function registrarVentaAire() {
-  Swal.fire({
-    title: 'Registrar venta?',
-    text: "",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Si'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      const url = base_url + "Ventas/registrarVentaAire";
-      const frm = document.getElementById("frmAires");
-      const http = new XMLHttpRequest();
-      http.open("POST", url, true);
-      http.send(new FormData(frm));
-      http.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          const res = JSON.parse(this.responseText);
-          if (res.msg == "ok") {
-            alerttime("Venta registrada", "success");
-            CargarDetallesVntAir();
-            document.getElementById("dui").value = "";
-            document.getElementById("nombreCliente").value = "";
-            document.getElementById("telefonoCliente").value = "";
-            document.getElementById("direccionCliente").value = "";
-            const ruta = base_url + "Ventas/generarPDFAire/" + res.id_venta;
-            window.open(ruta);
-          } else if (res == "vacio") {
-            alerttime("No puede dejar campos vacios", "error");
-          } else if (res == "vacioVenta") {
-            alerttime("No hay ventas a registrar", "error");
-          } else if (res == "cajaCerrada") {
-            alerttime("Caja Cerrada", "error");
-          } else {
-            alerttime("error", "error");
-          }
+  const dui = document.getElementById("dui").value;
+  const telefono = document.getElementById("telefonoCliente").value;
+  maxLength = 8;
+  minLength = 8;
+  if (dui.length < minLength || dui.length > maxLength) {
+    alerttime("Debe ingresar un numero de dui correcto", "error");
+  } else {
+    if (telefono.length < minLength || telefono.length > maxLength) {
+      alerttime("Debe ingresar un numero de telefono correcto", "error");
+    } else {
+      Swal.fire({
+        title: 'Registrar venta?',
+        text: "",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const url = base_url + "Ventas/registrarVentaAire";
+          const frm = document.getElementById("frmAires");
+          const http = new XMLHttpRequest();
+          http.open("POST", url, true);
+          http.send(new FormData(frm));
+          http.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+              const res = JSON.parse(this.responseText);
+              if (res.msg == "ok") {
+                alerttime("Venta registrada", "success");
+                CargarDetallesVntAir();
+                document.getElementById("dui").value = "";
+                document.getElementById("nombreCliente").value = "";
+                document.getElementById("telefonoCliente").value = "";
+                document.getElementById("direccionCliente").value = "";
+                const ruta = base_url + "Ventas/generarPDFAire/" + res.id_venta;
+                window.open(ruta);
+              } else if (res == "vacio") {
+                alerttime("No puede dejar campos vacios", "error");
+              } else if (res == "vacioVenta") {
+                alerttime("No hay ventas a registrar", "error");
+              } else if (res == "cajaCerrada") {
+                alerttime("Caja Cerrada", "error");
+              } else {
+                alerttime("error", "error");
+              }
+            }
+          };
         }
-      };
+      })
     }
-  })
+  }
 }
 
 function clienteClck(event) {

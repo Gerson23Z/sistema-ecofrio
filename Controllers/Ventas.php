@@ -4,15 +4,31 @@ class Ventas extends Controller
     public function __construct()
     {
         session_start();
+        if (empty($_SESSION['activo'])) {
+            header("location:" . base_url);
+        }
         parent::__construct();
     }
+
     public function index()
     {
-        $this->Views->getView($this, "index");
+        $id_usuario = $_SESSION['id'];
+        $verificar = $this->model->verificarPermiso($id_usuario, 'Ventas');
+        if (!empty($verificar) || $id_usuario == 1) {
+            $this->Views->getView($this, "index");
+        } else {
+            header("location:" . base_url . "Errors/permisos");
+        }
     }
     public function aires()
     {
-        $this->Views->getView($this, "aires");
+        $id_usuario = $_SESSION['id'];
+        $verificar = $this->model->verificarPermiso($id_usuario, 'Ventas');
+        if (!empty($verificar) || $id_usuario == 1) {
+            $this->Views->getView($this, "aires");
+        } else {
+            header("location:" . base_url . "Errors/permisos");
+        }
     }
     public function buscarCodigo($cod)
     {
@@ -189,7 +205,7 @@ class Ventas extends Controller
                 }
                 $this->model->vaciarDetalles();
                 $msg = array('msg' => 'ok', 'id_venta' => $id_venta['id']);
-            }elseif ($data == "vacio") {
+            } elseif ($data == "vacio") {
                 $msg = "cajaCerrada";
             } else {
                 $msg = "Error al registrar la venta";

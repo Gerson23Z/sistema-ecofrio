@@ -12,7 +12,6 @@
             <th>Nombre</th>
             <th>Apellido</th>
             <th>Usuario</th>
-            <th>Rol</th>
             <th>Estado</th>
             <th></th>
         </tr>
@@ -48,14 +47,6 @@
                     <div class="form-group">
                         <label for="txtUsuario">Usuario</label>
                         <input id="txtUsuario" class="form-control" type="text" name="txtUsuario" placeholder="Usuario">
-                    </div>
-                    <div class="form-group">
-                        <label for="slctRol">Rol</label>
-                        <select id="slctRol" class="form-control" name="slctRol">
-                            <option>Admin</option>
-                            <option>Secretaria</option>
-                            <option>Caja</option>
-                        </select>
                     </div>
                     <div class="row" id="idPass">
                         <div class="col-md-6">

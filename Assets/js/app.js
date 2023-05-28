@@ -19,6 +19,15 @@ document.addEventListener('DOMContentLoaded', function () {
       frm.reset();
       document.getElementById("id").value = "";
       document.getElementById("fecha").value = info.dateStr;
+      var fechaSeleccionada = new Date(info.dateStr);
+      var fechaActual = new Date();
+      if (fechaSeleccionada < fechaActual) {
+        document.getElementById("btnAccion").disabled = true;
+        document.getElementById("titulo").disabled = true;
+      } else {
+        document.getElementById("btnAccion").disabled = false;
+        document.getElementById("titulo").disabled = false;
+      }
       document.getElementById("btnAccion").textContent = "Registrar";
       document.getElementById("titulo").textContent = "Registrar Cita";
       eliminar.classList.add("d-none");
@@ -90,21 +99,34 @@ document.addEventListener('DOMContentLoaded', function () {
     ) {
       Swal.fire("Avisos", "Todo los campos son obligatorios", "warning");
     } else {
-      const url = base_url + "Citas/registrar";
-      const http = new XMLHttpRequest();
-      http.open("POST", url, true);
-      http.send(new FormData(frm));
-      http.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          const res = JSON.parse(this.responseText);
-          Swal.fire("Aviso", res.msg, res.tipo);
-          if (res.estado) {
-            calendar.refetchEvents();
-            myModal.hide();
-            calendar.refetchEvents();
-          }
+      const numDui = document.getElementById("dui").value;
+      const telefono = document.getElementById("telefono").value;
+      maxLength = 8;
+      minLength = 8;
+      if (numDui.length < minLength || numDui.length > maxLength) {
+        alerttime("Debe ingresar un numero de dui correcto", "error");
+      } else {
+        if (telefono.length < minLength || telefono.length > maxLength) {
+          alerttime("Debe ingresar un numero de telefono correcto", "error");
+        } else {
+          const url = base_url + "Citas/registrar";
+          const http = new XMLHttpRequest();
+          http.open("POST", url, true);
+          http.send(new FormData(frm));
+          http.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+              const res = JSON.parse(this.responseText);
+              Swal.fire("Aviso", res.msg, res.tipo);
+              if (res.estado) {
+                calendar.refetchEvents();
+                myModal.hide();
+                calendar.refetchEvents();
+              }
+            }
+          };
         }
-      };
+      }
+
     }
   })
   eliminar.addEventListener("click", function () {

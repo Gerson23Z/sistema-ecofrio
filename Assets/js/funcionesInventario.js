@@ -184,6 +184,9 @@ document.addEventListener("DOMContentLoaded", function () {
         data: "acciones",
       },
     ],
+    language: {
+      "url": "//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json"
+    }
   });
 
   tblAiresEliminados = $("#tblAiresEliminados").DataTable({
@@ -229,6 +232,9 @@ document.addEventListener("DOMContentLoaded", function () {
         data: "acciones",
       },
     ],
+    language: {
+      "url": "//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json"
+    }
   });
 });
 
@@ -250,32 +256,39 @@ function frmInventarioAires() {
 
 function registrarRespuesto(event) {
   event.preventDefault();
-  const txtUnidades = document.getElementById("txtUnidades");
-  if (txtUnidades.value < 0) {
-    Swal.fire("Error", "No puedes poner unidades negativas", "error");
+  const cod = document.getElementById("txtCodigo").value;
+  maxLength = 8;
+  minLength = 8;
+  if (cod.length < minLength || cod.length > maxLength) {
+    alerttime("Debe ingresar codigo de 8 digitos", "error");
   } else {
-    const url = base_url + "InventarioRespuestos/registrar";
-    const frm = document.getElementById("frmRespuestos");
-    const http = new XMLHttpRequest();
-    http.open("POST", url, true);
-    http.send(new FormData(frm));
-    http.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        const res = JSON.parse(this.responseText);
-        if (res == "si") {
-          alerta("Producto", "registrado");
-          frm.reset();
-          $("#nuevo_respuesto").modal("hide");
-          tblInventarioRespuestos.ajax.reload();
-        } else if (res == "modificado") {
-          alerta("Producto", "modificado");
-          $("#nuevo_respuesto").modal("hide");
-          tblInventarioRespuestos.ajax.reload();
-        } else {
-          Swal.fire("Error", res, "error");
+    const txtUnidades = document.getElementById("txtUnidades");
+    if (txtUnidades.value < 0) {
+      Swal.fire("Error", "No puedes poner unidades negativas", "error");
+    } else {
+      const url = base_url + "InventarioRespuestos/registrar";
+      const frm = document.getElementById("frmRespuestos");
+      const http = new XMLHttpRequest();
+      http.open("POST", url, true);
+      http.send(new FormData(frm));
+      http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          const res = JSON.parse(this.responseText);
+          if (res == "si") {
+            alerta("Producto", "registrado");
+            frm.reset();
+            $("#nuevo_respuesto").modal("hide");
+            tblInventarioRespuestos.ajax.reload();
+          } else if (res == "modificado") {
+            alerta("Producto", "modificado");
+            $("#nuevo_respuesto").modal("hide");
+            tblInventarioRespuestos.ajax.reload();
+          } else {
+            Swal.fire("Error", res, "error");
+          }
         }
-      }
-    };
+      };
+    }
   }
 }
 
@@ -363,33 +376,41 @@ function btnReingresarRespuesto(id) {
 
 function registrarAire(event) {
   event.preventDefault();
-  const txtCantidad = document.getElementById("txtCantidad");
-  if (txtCantidad.value < 0) {
-    Swal.fire("Error", "No puedes poner unidades negativas", "error");
+  const cod = document.getElementById("codigo").value;
+  maxLength = 8;
+  minLength = 8;
+  if (cod.length < minLength || cod.length > maxLength) {
+    alerttime("Debe ingresar codigo de 8 digitos", "error");
   } else {
-    const url = base_url + "InventarioAires/registrar";
-    const frm = document.getElementById("frmAires");
-    const http = new XMLHttpRequest();
-    http.open("POST", url, true);
-    http.send(new FormData(frm));
-    http.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        const res = JSON.parse(this.responseText);
-        if (res == "si") {
-          alerta("Producto", "registrado");
-          frm.reset();
-          $("#nuevo_aire").modal("hide");
-          tblInventarioAires.ajax.reload();
-        } else if (res == "modificado") {
-          alerta("Producto", "modificado");
-          $("#nuevo_aire").modal("hide");
-          tblInventarioAires.ajax.reload();
-        } else {
-          Swal.fire("Error", res, "error");
+    const txtCantidad = document.getElementById("txtCantidad");
+    if (txtCantidad.value < 0) {
+      Swal.fire("Error", "No puedes poner unidades negativas", "error");
+    } else {
+      const url = base_url + "InventarioAires/registrar";
+      const frm = document.getElementById("frmAires");
+      const http = new XMLHttpRequest();
+      http.open("POST", url, true);
+      http.send(new FormData(frm));
+      http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          const res = JSON.parse(this.responseText);
+          if (res == "si") {
+            alerta("Producto", "registrado");
+            frm.reset();
+            $("#nuevo_aire").modal("hide");
+            tblInventarioAires.ajax.reload();
+          } else if (res == "modificado") {
+            alerta("Producto", "modificado");
+            $("#nuevo_aire").modal("hide");
+            tblInventarioAires.ajax.reload();
+          } else {
+            Swal.fire("Error", res, "error");
+          }
         }
-      }
-    };
+      };
+    }
   }
+
 }
 
 function btnEditarAire(id) {

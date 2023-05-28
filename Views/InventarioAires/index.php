@@ -2,9 +2,6 @@
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Inventario Aires</h1>
-    <div class="d-grid gap-2 col-6 mx-auto">
-        <a href="InventarioRespuestos" class="btn btn-secondary col-6">Ir a Respuestos</a>
-    </div>
 </div>
 
 <button class="btn btn-success mb-2" type="button" onclick="frmInventarioAires()" ;>Agregar</button>
@@ -47,7 +44,7 @@
                 <form method="post" id="frmAires">
                 <div class="form-group">
                         <label for="codigo">Codigo</label>
-                        <input id="codigo" class="form-control" type="text" name="codigo" placeholder="Codigo">
+                        <input id="codigo" class="form-control" type="text" name="codigo">
                     </div>
                     <div class="form-group">
                         <label for="slctMarca">Marca</label>
@@ -106,7 +103,7 @@
                     </div>
                     <div class="form-group">
                         <label for="precio">Precio</label>
-                        <input id="precio" class="form-control" type="number" name="precio" placeholder="Precio">
+                        <input id="precio" class="form-control" type="number" name="precio">
                     </div>
                     <div class="form-group">
                         <label for="txtCantidad">Cantidad</label>
