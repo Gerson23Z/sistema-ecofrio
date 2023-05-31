@@ -8,13 +8,13 @@ class HistorialComprasModel extends Query
 
   public function getHistorialCompras()
   {
-    $sql = "SELECT * FROM compras";
+    $sql = "SELECT * FROM detalles_compras";
     $data = $this->selectAll($sql);
     return $data;
   }
   public function getHistorialComprasAires()
   {
-    $sql = "SELECT * FROM comprasaires";
+    $sql = "SELECT * FROM detalles_comprasaires";
     $data = $this->selectAll($sql);
     return $data;
   }

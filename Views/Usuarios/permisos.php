@@ -109,7 +109,7 @@ debemos poner definir este valor.
                     <input type="hidden" value="<?php echo $data['id_usuario']; ?>" name="id_usuario">
                 </div>
                 <button class="btn btn-primary" type="submit">Asignar permisos</button>
-                <a class="btn btn-danger" href="<?php echo base_url . 'Usuarios' ?>" type="button">Cancelar</a>
+                <a class="btn btn-danger" href="<?php echo base_url . 'Usuarios' ?>" type="button">Volver</a>
             </form>
         </div>
     </div>

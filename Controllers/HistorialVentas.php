@@ -30,6 +30,27 @@ class HistorialVentas extends Controller
       header("location:" . base_url . "Errors/permisos");
     }
   }
+  public function productos()
+  {
+    $id_usuario = $_SESSION['id'];
+    $verificar = $this->model->verificarPermiso($id_usuario, 'Historial de ventas');
+    if (!empty($verificar) || $id_usuario == 1) {
+      $this->Views->getView($this, "productos");
+    } else {
+      header("location:" . base_url . "Errors/permisos");
+    }
+  }
+
+  public function airesven()
+  {
+    $id_usuario = $_SESSION['id'];
+    $verificar = $this->model->verificarPermiso($id_usuario, 'Historial de ventas');
+    if (!empty($verificar) || $id_usuario == 1) {
+      $this->Views->getView($this, "airesven");
+    } else {
+      header("location:" . base_url . "Errors/permisos");
+    }
+  }
 
   public function listar()
   {
@@ -44,6 +65,20 @@ class HistorialVentas extends Controller
     echo json_encode($data, JSON_UNESCAPED_UNICODE);
     die();
   }
+  public function listarProductos()
+  {
+    $data = $this->model->getHistorialVentasProductos();
+    for ($i=0; $i < count($data); $i++) {
+      $data[$i]['precio'] = '$'.$data[$i]['precio'];
+      $data[$i]['subtotal'] = '$'.$data[$i]['subtotal'];
+      $fecha=$data[$i]['fecha'];
+      $fecha = date_create($fecha);
+      $data[$i]['fecha_venta'] = date_format($fecha,"d-m-Y H:i:s");
+
+    }
+    echo json_encode($data, JSON_UNESCAPED_UNICODE);
+    die();
+  }
   public function listarAires()
   {
     $data = $this->model->getHistorialVentasAires();
@@ -52,6 +87,19 @@ class HistorialVentas extends Controller
       $fecha=$data[$i]['fecha'];
       $fecha = date_create($fecha);
       $data[$i]['total'] = '$'.$data[$i]['total'];
+      $data[$i]['fecha_venta'] = date_format($fecha,"d-m-Y H:i:s");
+    }
+    echo json_encode($data, JSON_UNESCAPED_UNICODE);
+    die();
+  }
+  public function listarAiresPro()
+  {
+    $data = $this->model->getHistorialVentasAiresPro();
+    for ($i=0; $i < count($data); $i++) {
+      $data[$i]['precio'] = '$'.$data[$i]['precio'];
+      $data[$i]['subtotal'] = '$'.$data[$i]['subtotal'];
+      $fecha=$data[$i]['fecha'];
+      $fecha = date_create($fecha);
       $data[$i]['fecha_venta'] = date_format($fecha,"d-m-Y H:i:s");
     }
     echo json_encode($data, JSON_UNESCAPED_UNICODE);

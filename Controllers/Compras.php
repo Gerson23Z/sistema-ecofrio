@@ -3,31 +3,33 @@ class Compras extends Controller
 {
     public function __construct()
     {
-      session_start();
-      if (empty($_SESSION['activo'])) {
-        header("location:" . base_url);
-      }
-      parent::__construct();
+        session_start();
+        if (empty($_SESSION['activo'])) {
+            header("location:" . base_url);
+        }
+        parent::__construct();
     }
 
     public function index()
     {
-          $id_usuario = $_SESSION['id'];
-          $verificar = $this->model->verificarPermiso($id_usuario, 'Compras');
-          if (!empty($verificar) || $id_usuario == 1) {
-            $this->Views->getView($this, "index");
-          } else {
+        $id_usuario = $_SESSION['id'];
+        $verificar = $this->model->verificarPermiso($id_usuario, 'Compras');
+        if (!empty($verificar) || $id_usuario == 1) {
+            $data = $this->model->getProveedores();
+            $this->Views->getView($this, "index", $data);
+        } else {
             header("location:" . base_url . "Errors/permisos");
-          }
+        }
     }
     public function aires()
     {
         $id_usuario = $_SESSION['id'];
         $verificar = $this->model->verificarPermiso($id_usuario, 'Compras');
         if (!empty($verificar) || $id_usuario == 1) {
-          $this->Views->getView($this, "aires");
+            $data = $this->model->getProveedores();
+            $this->Views->getView($this, "aires", $data);
         } else {
-          header("location:" . base_url . "Errors/permisos");
+            header("location:" . base_url . "Errors/permisos");
         }
     }
     public function buscarCodigo($cod)
@@ -49,11 +51,13 @@ class Compras extends Controller
         $codigo = $datos[0]['codigo'];
         $producto = $datos[0]['producto'];
         $precio = $_POST['txtPrecio'];
+        $precio = str_replace("$", "", $precio);
         $cantidad = $_POST['txtCantidad'];
+        $proveedor = $_POST['slctProveedor'];
         $comprobar = $this->model->comprobarDetalle($datos[0]['codigo']);
         if (empty($comprobar)) {
             $subTotal = $precio;
-            $data = $this->model->RegistrarDetalle($codigo, $producto, $precio, $cantidad, $subTotal);
+            $data = $this->model->RegistrarDetalle($codigo, $producto, $precio, $cantidad, $subTotal, $proveedor);
             if ($data == "¡OK!") {
                 $msg = "si";
             } else {
@@ -62,7 +66,7 @@ class Compras extends Controller
         } else {
             $total_cantidad = $comprobar['cantidad'] + $cantidad;
             $subTotal = $precio;
-            $data = $this->model->actualizarDetalle($codigo, $producto, $precio, $total_cantidad, $subTotal, $comprobar['id']);
+            $data = $this->model->actualizarDetalle($codigo, $producto, $precio, $total_cantidad, $subTotal, $proveedor, $comprobar['id']);
             if ($data == "modificado") {
                 $msg = "modificado";
             } else {
@@ -81,11 +85,13 @@ class Compras extends Controller
         $capacidad = $datos[0]['capacidad'];
         $seer = $datos[0]['seer'];
         $precio = $_POST['txtPrecio'];
+        $precio = str_replace("$", "", $precio);
         $cantidad = $_POST['txtCantidad'];
+        $proveedor = $_POST['slctProveedor'];
         $comprobar = $this->model->comprobarDetalleAire($datos[0]['codigo']);
         if (empty($comprobar)) {
             $subTotal = $precio;
-            $data = $this->model->RegistrarDetalleAire($codigo, $marca, $capacidad, $seer, $precio, $cantidad, $subTotal);
+            $data = $this->model->RegistrarDetalleAire($codigo, $marca, $capacidad, $seer, $precio, $cantidad, $subTotal, $proveedor);
             if ($data == "¡OK!") {
                 $msg = "si";
             } else {
@@ -94,7 +100,7 @@ class Compras extends Controller
         } else {
             $total_cantidad = $comprobar['cantidad'] + $cantidad;
             $subTotal = $total_cantidad * $precio;
-            $data = $this->model->actualizarDetalleAire($codigo, $marca, $capacidad, $seer, $precio, $total_cantidad, $subTotal, $comprobar['id']);
+            $data = $this->model->actualizarDetalleAire($codigo, $marca, $capacidad, $seer, $precio, $total_cantidad, $subTotal, $proveedor, $comprobar['id']);
             if ($data == "modificado") {
                 $msg = "modificado";
             } else {
@@ -103,6 +109,21 @@ class Compras extends Controller
         }
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
         die();
+    }
+    public function listar()
+    {
+        $data['detalles'] = $this->model->getDetalles();
+        $data['total_pagar'] = $this->model->calcularCompra();
+        echo json_encode($data);
+        die();
+    }
+    public function listaraire()
+    {
+        $data['detalles'] = $this->model->getDetallesAire();
+        $data['total_pagar'] = $this->model->calcularCompraAire();
+        echo json_encode($data);
+        die();
+
     }
 
     public function getCodigosCompras($codigo)
@@ -131,21 +152,6 @@ class Compras extends Controller
         die();
     }
 
-    public function listar()
-    {
-        $data['detalles'] = $this->model->getDetalles();
-        $data['total_pagar'] = $this->model->calcularCompra();
-        echo json_encode($data);
-        die();
-    }
-    public function listaraire()
-    {
-        $data['detalles'] = $this->model->getDetallesAire();
-        $data['total_pagar'] = $this->model->calcularCompraAire();
-        echo json_encode($data);
-        die();
-
-    }
     public function eliminar($id)
     {
         $data = $this->model->eliminarDetalle($id);
@@ -171,31 +177,27 @@ class Compras extends Controller
 
     public function registrarCompra()
     {
-        $cmpCompra = $this->model->getDetallesAire();
+        $cmpCompra = $this->model->getDetalles();
         if (empty($cmpCompra)) {
             $msg = 'vacioCompra';
         } else {
-            $datos = $this->model->calcularCompra()['total'];
-            $data = $this->model->guardarCompra($datos);
-            if ($data == "¡OK!") {
-                $id_compra = $this->model->getIdCompra();
-                $detalles = $this->model->getDetalles();
-                foreach ($detalles as $row) {
-                    $producto = $row['producto'];
-                    $precio = $row['precio'];
-                    $cantidad = $row['cantidad'];
-                    $subtotal = $precio;
-                    $this->model->registrarDetallesCompra($id_compra['id'], $producto, $precio, $cantidad, $subtotal);
-                    $codigoProducto = $row['codigo'];
-                    $stockActual = $this->model->GetProductos($codigoProducto);
-                    $stock = $stockActual[0]['unidades'] + $cantidad;
-                    $this->model->actualizarStock($stock, $codigoProducto);
-                }
-                $this->model->vaciarDetalles();
-                $msg = array('msg' => 'ok', 'id_compra' => $id_compra['id']);
-            } else {
-                $msg = "Error al registrar la compra";
+            $detalles = $this->model->getDetalles();
+            foreach ($detalles as $row) {
+                $codigo = $row['codigo'];
+                $producto = $row['producto'];
+                $precio = $row['precio'];
+                $cantidad = $row['cantidad'];
+                $proveedor = $row['proveedor'];
+                $subtotal = $precio;
+                $this->model->registrarDetallesCompra($codigo, $producto, $precio, $cantidad, $subtotal, $proveedor);
+                $codigoProducto = $row['codigo'];
+                $stockActual = $this->model->GetProductos($codigoProducto);
+                $stock = $stockActual[0]['unidades'] + $cantidad;
+                $this->model->actualizarStock($stock, $codigoProducto);
             }
+            $this->model->vaciarDetalles();
+            $msg = array('msg' => 'ok');
+
         }
 
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
@@ -207,120 +209,27 @@ class Compras extends Controller
         if (empty($cmpCompra)) {
             $msg = 'vacioCompra';
         } else {
-            $datos = $this->model->calcularCompraAire()['total'];
-            $data = $this->model->guardarCompraAire($datos);
-            if ($data == "¡OK!") {
-                $id_compra = $this->model->getIdCompraAire();
-                $detalles = $this->model->getDetallesAire();
-                foreach ($detalles as $row) {
-                    $marca = $row['marca'];
-                    $capacidad = $row['capacidad'];
-                    $seer = $row['seer'];
-                    $precio = $row['precio'];
-                    $cantidad = $row['cantidad'];
-                    $subtotal = $precio;
-                    $this->model->registrarDetallesCompraAire($id_compra['id'], $marca, $capacidad, $seer, $precio, $cantidad, $subtotal);
-                    $codigoProducto = $row['codigo'];
-                    $stockActual = $this->model->GetAires($codigoProducto);
-                    $stock = $stockActual[0]['cantidad'] + $cantidad;
-                    $this->model->actualizarStockAires($stock, $codigoProducto);
-                }
-                $this->model->vaciarDetallesAir();
-                $msg = array('msg' => 'ok', 'id_compra' => $id_compra['id']);
-            } else {
-                $msg = "Error al registrar la compra";
+            $detalles = $this->model->getDetallesAire();
+            foreach ($detalles as $row) {
+                $codigo = $row['codigo'];
+                $marca = $row['marca'];
+                $capacidad = $row['capacidad'];
+                $seer = $row['seer'];
+                $precio = $row['precio'];
+                $cantidad = $row['cantidad'];
+                $proveedor = $row['proveedor'];
+                $subtotal = $precio;
+                $this->model->registrarDetallesCompraAire($codigo, $marca, $capacidad, $seer, $precio, $cantidad, $subtotal,$proveedor);
+                $codigoProducto = $row['codigo'];
+                $stockActual = $this->model->GetAires($codigoProducto);
+                $stock = $stockActual[0]['cantidad'] + $cantidad;
+                $this->model->actualizarStockAires($stock, $codigoProducto);
             }
+            $this->model->vaciarDetallesAir();
+            $msg = array('msg' => 'ok');
         }
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
         die();
-    }
-    public function generarPDF($id_compra)
-    {
-        $data = $this->model->getEmpresa();
-        $productosCompras = $this->model->getProCompras($id_compra);
-        $infoCompra = $this->model->getInfoCompras($id_compra);
-        $fecha = date_create($infoCompra[0]['fecha']);
-        $fecha = date_format($fecha, "d-m-Y H:i:s");
-        //se llama la libreria
-        require('Libraries/fpdf/fpdf.php');
-        //ajustes
-        $pdf = new FPDF('P', 'mm', array(80, 200));
-        $pdf->AddPage();
-        $pdf->SetMargins(5, 0, 0);
-        $pdf->SetTitle('Comprobante de compra');
-        //Nombre
-        $pdf->SetFont('Arial', 'B', 14);
-        $pdf->Cell(65, 10, utf8_decode($data['nombre']), 0, 1, 'C');
-
-        // Definir el tamaño de la fuente y el ancho de la celda
-        $font_size = 10;
-        $cell_width = 70;
-
-        // Definir el texto largo
-        $long_text = utf8_decode($data['direccion']);
-
-        // Calcular la altura de la celda necesaria para contener todo el texto
-        $cell_height = $font_size * 0.5;
-
-        // Imprimir el texto en una celda MultiCell
-        $pdf->SetFont('Arial', '', $font_size);
-        $pdf->MultiCell($cell_width, $cell_height, $long_text, 0, 'J', false);
-        $pdf->Ln();
-        $pdf->SetFont('Arial', 'B', 9);
-        $pdf->Cell(65, 5, $fecha, 0, 1, 'C');
-        $pdf->Cell(65, 5, 'Telefono: ' . utf8_decode($data['telefono']), 0, 1, 'C');
-        $pdf->Cell(65, 5, utf8_decode($data['dueno']), 0, 1, 'C');
-        $pdf->Cell(10, 5, '------------------------------------------------------------------', 0, 1, 'L');
-        $pdf->SetFont('Arial', 'B', 9);
-        $pdf->Cell(10, 5, 'Cant: ', 0, 0, 'L');
-        $pdf->Cell(33, 5, 'Desc: ', 0, 0, 'L');
-        $pdf->Cell(12, 5, 'Precio: ', 0, 0, 'L');
-        $pdf->Cell(15, 5, 'Sub Total: ', 0, 1, 'L');
-        $total = 0.00;
-        $pdf->SetFont('Arial', '', 9);
-        foreach ($productosCompras as $row) {
-            $pdf->Cell(10, 5, $row['cantidad'], 0, 0, 'L');
-            $pdf->Cell(33, 5, utf8_decode($row['producto']), 0, 0, 'L');
-            $pdf->Cell(12, 5, '$' . number_format($row['precio'], 2, '.', ','), 0, 0, 'L');
-            $pdf->Cell(15, 5, '$' . number_format($row['subtotal'], 2, '.', ','), 0, 1, 'L');
-            $total = $total + $row['subtotal'];
-        }
-        $pdf->SetFont('Arial', 'B', 9);
-        $pdf->Cell(10, 5, '------------------------------------------------------------------', 0, 1, 'L');
-        $pdf->Cell(70, 5, 'Total pagado:', 0, 1, 'R');
-        $pdf->Cell(70, 5, '$' . number_format($total, 2, '.', ','), 0, 1, 'R');
-        $pdf->Output();
-    }
-    public function generarPDFAire($id_compra)
-    {
-        $productosCompras = $this->model->getProComprasAire($id_compra);
-        $infoCompra = $this->model->getInfoComprasAire($id_compra);
-        $fecha = date_create($infoCompra[0]['fecha']);
-        $fecha = date_format($fecha, "d-m-Y");
-        //se llama la libreria
-        require('Libraries/fpdf/fpdf.php');
-        //ajustes
-        $pdf = new FPDF('P', 'mm', array(170, 200));
-        $pdf->AddPage();
-        $pdf->SetMargins(10, 0, 0);
-        $pdf->SetTitle('Factura de compra');
-        $pdf->SetFont('Arial', '', 9);
-        $pdf->Cell(150, 35, $fecha, 0, 1, 'R');
-        $total = 0.00;
-        foreach ($productosCompras as $row) {
-            $pdf->Cell(10, 10, $row['cantidad'], 0, 0, 'L');
-            $pdf->Cell(30, 10, "Aire Acondicionado ", 0, 0, 'L');
-            $pdf->Cell(20, 10, utf8_decode($row['marca']), 0, 0, 'L');
-            $pdf->Cell(16, 10, "capacidad: ", 0, 0, 'L');
-            $pdf->Cell(16, 10, utf8_decode($row['capacidad']), 0, 0, 'L');
-            $pdf->Cell(8, 10, "seer: ", 0, 0, 'L');
-            $pdf->Cell(18, 10, utf8_decode($row['seer']), 0, 0, 'L');
-            $pdf->Cell(0, 10, '$' . number_format($row['precio'], 2, '.', ','), 0, 1, 'L');
-            $total = $total + $row['subtotal'];
-        }
-        $pdf->Ln();
-        $pdf->Cell(150, 70, '$' . number_format($total, 2, '.', ','), 0, 0, 'R');
-        $pdf->Output();
     }
 }
 ?>

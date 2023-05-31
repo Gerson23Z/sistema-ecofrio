@@ -62,38 +62,25 @@
                                             type="submit">Login</button>
                                         <hr>
                                     </form>
-                                    <hr>
-                                    <div class="text-center">
-                                        <a class="small" href="">Olvido su contraseña?</a>
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
-
     </div>
 
-    <!-- Bootstrap core JavaScript-->
     <script src="<?php echo base_url; ?>Assets/vendor/jquery/jquery.min.js"></script>
     <script src="<?php echo base_url; ?>Assets/vendor/bootstrap/js/bootstrap.bundle.min.js"
         crossorigin=" anonymous"></script>
-
-    <!-- Core plugin JavaScript-->
     <script src="<?php echo base_url; ?>Assets/vendor/jquery-easing/jquery.easing.min.js"
         crossorigin=" anonymous"></script>
 
-    <!-- Custom scripts for all pages-->
     <script src="<?php echo base_url; ?>Assets/js/sb-admin-2.min.js" crossorigin=" anonymous"></script>
     <script>
         const base_url = "<?php echo base_url; ?>";
     </script>
     <script src="<?php echo base_url; ?>Assets/js/funciones.js" crossorigin=" anonymous"></script>
-
 </body>
-
 </html>

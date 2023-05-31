@@ -8,9 +8,13 @@
     <thead class="table-success">
         <tr>
             <th>#</th>
-            <th>Total</th>
+            <th>Codigo</th>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
             <th>Fecha</th>
-            <th></th>
+            <th>Proveedor</th>
         </tr>
     </thead>
 </table>

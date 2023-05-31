@@ -8,13 +8,25 @@ class HistorialVentasModel extends Query
 
   public function getHistorialVentas()
   {
-    $sql = "SELECT v.*,v.id_usuario, u.user AS usuario FROM ventas v INNER JOIN usuarios u ON v.id_usuario = u.id";
+    $sql = "SELECT v.*, u.user AS usuario FROM ventas v INNER JOIN usuarios u ON v.id_usuario = u.id";
+    $data = $this->selectAll($sql);
+    return $data;
+  }
+  public function getHistorialVentasProductos()
+  {
+    $sql = "SELECT v.*, u.user AS usuario FROM detalles_ventas v INNER JOIN usuarios u ON v.id_usuario = u.id";
     $data = $this->selectAll($sql);
     return $data;
   }
   public function getHistorialVentasAires()
   {
-    $sql = "SELECT v.*,v.id_usuario, u.user AS usuario FROM ventasaires v INNER JOIN usuarios u ON v.id_usuario = u.id";
+    $sql = "SELECT v.*,u.user AS usuario FROM ventasaires v INNER JOIN usuarios u ON v.id_usuario = u.id";
+    $data = $this->selectAll($sql);
+    return $data;
+  }
+  public function getHistorialVentasAiresPro()
+  {
+    $sql = "SELECT v.*, u.user AS usuario FROM detalles_ventasaires v INNER JOIN usuarios u ON v.id_usuario = u.id";
     $data = $this->selectAll($sql);
     return $data;
   }

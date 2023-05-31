@@ -5,33 +5,34 @@
         <h4>Nueva Compra</h4>
     </div>
 
-<style>
-.item-lista {
-  /* Estilos personalizados */
-  background-color: #f2f2f2;
-  color: #333;
-  padding: 5px 10px;
-  cursor: pointer;
-  list-style-type: none; /* Quitar las viñetas */
-  margin: 0;
-}
+    <style>
+        .item-lista {
+            /* Estilos personalizados */
+            background-color: #f2f2f2;
+            color: #333;
+            padding: 5px 10px;
+            cursor: pointer;
+            list-style-type: none;
+            /* Quitar las viñetas */
+            margin: 0;
+        }
 
-.item-lista:hover {
-  /* Estilos al pasar el cursor por encima */
-  background-color: #ddd;
-}
-</style>
+        .item-lista:hover {
+            /* Estilos al pasar el cursor por encima */
+            background-color: #ddd;
+        }
+    </style>
 
     <div class="card-body">
         <form id="frmCompras">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="form-group">
                         <input type="hidden" id="id" name="id">
                         <label for="txtCodigo">Codigo</label>
                         <input id="txtCodigo" class="form-control" type="text" name="txtCodigo" autocomplete="off"
                             onkeyup="getCodigosCompras(event)">
-                            <ul id="lista"></ul>
+                        <ul id="lista"></ul>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -43,15 +44,31 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="txtCantidad">Cantidad</label>
-                        <input id="txtCantidad" class="form-control" type="number" name="txtCantidad" onkeyup="salto(event)">
+                        <input id="txtCantidad" class="form-control" type="number" name="txtCantidad"
+                            onkeyup="salto(event)">
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="txtPrecio">Precio</label>
-                        <input id="txtPrecio" class="form-control" type="text" name="txtPrecio" onkeyup="calcularPrecioCompra(event)">
+                        <input id="txtPrecio" class="form-control" type="text" name="txtPrecio"
+                            onkeyup="calcularPrecioCompra(event)">
                         <span class="simbolo">$</span>
                     </div>
+                </div>
+                <div class="col-md-2 float-right">
+                    <div class="form-group">
+                        <label for="txtStock">En Existencia</label>
+                        <input id="txtStock" class="form-control" type="text" name="txtStock" disabled>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label for="slctProveedor">Proveedor</label>
+                    <select name="slctProveedor" class="form-select">
+                        <?php foreach ($data as $row) { ?>
+                            <option value="<?php echo $row['nombre']; ?>"><?php echo $row['nombre']; ?></option>
+                        <?php } ?>
+                    </select>
                 </div>
             </div>
         </form>

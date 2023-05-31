@@ -39,6 +39,7 @@ class Citas extends Controller
             $id = $_POST['id'];
             if ($id == '') {
                 $data = $this->model->registrarCita($nombre, $dui, $telefono, $direccion, $tipo, $fecha);
+                $this->model->RegistrarInfoCliente($dui, $nombre, $telefono, $direccion);
                 if ($data == 'ok') {
                     $msg = array('msg' => 'Cita Registrada', 'estado' => true, 'tipo' => 'success');
                 } else {

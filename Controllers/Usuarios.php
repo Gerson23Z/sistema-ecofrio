@@ -4,14 +4,14 @@ class Usuarios extends Controller
   public function __construct()
   {
     session_start();
-    if (empty($_SESSION['activo'])) {
-      header("location:" . base_url);
-    }
     parent::__construct();
   }
 
   public function index()
   {
+    if (empty($_SESSION['activo'])) {
+      header("location:" . base_url);
+    }
     $id_usuario = $_SESSION['id'];
     $verificar = $this->model->verificarPermiso($id_usuario, 'Usuarios');
     if (!empty($verificar) || $id_usuario == 1) {
@@ -28,7 +28,7 @@ class Usuarios extends Controller
     $data['datos'] = $this->model->getPermisos();
     $permisos = $this->model->getDetallesPermisos($id);
     $data['asignados'] = array();
-    foreach($permisos as $permiso){
+    foreach ($permisos as $permiso) {
       $data['asignados'][$permiso['id_permiso']] = true;
     }
     $data['id_usuario'] = $id;
@@ -39,10 +39,10 @@ class Usuarios extends Controller
   {
     $data = $this->model->GetUsuarios();
     for ($i = 0; $i < count($data); $i++) {
-      if( $data[$i]['id']==1){
+      $data[$i]['estado'] = '<span class="badge badge-success">Activo</span>';
+      if ($data[$i]['id'] == 1) {
         $data[$i]['acciones'] = '<span class="badge badge-success">Administrador</span>';
-      }else{
-        $data[$i]['estado'] = '<span class="badge badge-success">Activo</span>';
+      } else {
         $data[$i]['acciones'] = '<div>
         <a type="button" class="btn btn-dark" href="' . base_url . 'Usuarios/permisos/' . $data[$i]['id'] . '"><i class="fas fa-key"></i></a>
         <button type="button" class="btn btn-primary" onclick="btnEditarUsuario(' . $data[$i]['id'] . ')"><i class="fas fa-pen-to-square"></i></button>

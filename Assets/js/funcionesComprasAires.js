@@ -26,6 +26,7 @@ function getCodigosComprasAires(event) {
         } else {
           document.getElementById("txtProducto").value = res[0].marca + " " + res[0].capacidad + " " + res[0].seer;
           document.getElementById("id").value = res[0].id;
+          document.getElementById("txtStock").value = res[0].cantidad;
           document.getElementById("txtCantidad").focus();
         }
       }
@@ -160,24 +161,15 @@ function registrarCompraAire() {
           if (res.msg == "ok") {
             alerttime("Venta registrada", "success");
             CargarDetallesCmpAir();
-            const ruta = base_url + "Compras/generarPDFAire/" + res.id_compra;
-            window.open(ruta);
           } else if (res == "vacioCompra") {
             alerttime("No hay Compras a registrar", "error");
-          } else if (res == "vacioCompras") {
-            alerttime("No hay compras a registrar", "error");
-          } else {
+          }else {
             alerttime("error", "error");
           }
         }
       };
     }
   })
-}
-
-function mostrarPdfVntAire(id) {
-  const ruta = base_url + "Compras/generarPDFAire/" + id;
-  window.open(ruta);
 }
 
 function salto(e) {

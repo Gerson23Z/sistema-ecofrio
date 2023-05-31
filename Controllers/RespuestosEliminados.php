@@ -13,7 +13,7 @@ class RespuestosEliminados extends Controller
   public function index()
   {
     $id_usuario = $_SESSION['id'];
-    $verificar = $this->model->verificarPermiso($id_usuario, 'Respuestos');
+    $verificar = $this->model->verificarPermiso($id_usuario, 'Inventario');
     if (!empty($verificar) || $id_usuario == 1) {
       $this->Views->getView($this, "index");
     } else {
@@ -25,6 +25,7 @@ class RespuestosEliminados extends Controller
   {
     $data = $this->model->getRespuestosEliminados();
     for ($i = 0; $i < count($data); $i++) {
+      $data[$i]['precio'] = '$'.$data[$i]['precio'];
       $fechaCita = $data[$i]['fecha'];
       $fechaCita = date_create($fechaCita);
       $data[$i]['fecha_cita'] = date_format($fechaCita, "d-m-Y");
@@ -41,11 +42,17 @@ class RespuestosEliminados extends Controller
 
   public function reingresar(int $id)
   {
+    $id_usuario = $_SESSION['id'];
+    $verificar = $this->model->verificarPermiso($id_usuario, 'Editar Inventarios');
+    if (!empty($verificar) || $id_usuario == 1) {
     $data = $this->model->reingresarRespuesto($id);
     if ($data == 1) {
       $msg = "ok";
     } else {
       $msg = "Error al reingresar el producto";
+    }
+        } else {
+      $msg = "denegado";
     }
     echo json_encode($msg, JSON_UNESCAPED_UNICODE);
     die();

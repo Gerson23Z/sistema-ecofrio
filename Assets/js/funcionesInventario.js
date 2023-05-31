@@ -136,9 +136,62 @@ document.addEventListener("DOMContentLoaded", function () {
     language: {
       "url": "//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json"
     },
-    dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'><'col-sm-4'f>>" +
-      "<'row'<'col-sm-12'tr>>" +
-      "<'row'<'col-sm-5'i><'col-sm-7'p>>"
+    dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>" +
+    "<'row'<'col-sm-12'tr>>" +
+    "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+  buttons: [{
+    //Botón para Excel
+    extend: 'excelHtml5',
+    footer: true,
+    title: 'Archivo',
+    filename: 'Export_File',
+
+    //Aquí es donde generas el botón personalizado
+    text: '<span class="badge badge-success"><i class="fas fa-file-excel"></i></span>'
+  },
+  //Botón para PDF
+  {
+    extend: 'pdfHtml5',
+    download: 'open',
+    footer: true,
+    title: 'Reporte de inventario',
+    filename: 'Reporte de inventario',
+    text: '<span class="badge  badge-danger"><i class="fas fa-file-pdf"></i></span>',
+    exportOptions: {
+      columns: [0, ':visible']
+    }
+  },
+  //Botón para copiar
+  {
+    extend: 'copyHtml5',
+    footer: true,
+    title: 'Reporte de inventario',
+    filename: 'Reporte de inventario',
+    text: '<span class="badge  badge-primary"><i class="fas fa-copy"></i></span>',
+    exportOptions: {
+      columns: [0, ':visible']
+    }
+  },
+  //Botón para print
+  {
+    extend: 'print',
+    footer: true,
+    filename: 'Export_File_print',
+    text: '<span class="badge badge-light"><i class="fas fa-print"></i></span>'
+  },
+  //Botón para cvs
+  {
+    extend: 'csvHtml5',
+    footer: true,
+    filename: 'Export_File_csv',
+    text: '<span class="badge  badge-success"><i class="fas fa-file-csv"></i></span>'
+  },
+  {
+    extend: 'colvis',
+    text: '<span class="badge  badge-info"><i class="fas fa-columns"></i></span>',
+    postfixButtons: ['colvisRestore']
+  }
+  ]
   });
 
   tblInventarioAires = $("#tblInventarioAires").DataTable({
@@ -186,9 +239,64 @@ document.addEventListener("DOMContentLoaded", function () {
     ],
     language: {
       "url": "//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json"
-    }
-  });
+    },
+    dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>" +
+      "<'row'<'col-sm-12'tr>>" +
+      "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+    buttons: [{
+      //Botón para Excel
+      extend: 'excelHtml5',
+      footer: true,
+      title: 'Archivo',
+      filename: 'Export_File',
 
+      //Aquí es donde generas el botón personalizado
+      text: '<span class="badge badge-success"><i class="fas fa-file-excel"></i></span>'
+    },
+    //Botón para PDF
+    {
+      extend: 'pdfHtml5',
+      download: 'open',
+      footer: true,
+      title: 'Reporte de inventario',
+      filename: 'Reporte de inventario',
+      text: '<span class="badge  badge-danger"><i class="fas fa-file-pdf"></i></span>',
+      exportOptions: {
+        columns: [0, ':visible']
+      }
+    },
+    //Botón para copiar
+    {
+      extend: 'copyHtml5',
+      footer: true,
+      title: 'Reporte de inventario',
+      filename: 'Reporte de inventario',
+      text: '<span class="badge  badge-primary"><i class="fas fa-copy"></i></span>',
+      exportOptions: {
+        columns: [0, ':visible']
+      }
+    },
+    //Botón para print
+    {
+      extend: 'print',
+      footer: true,
+      filename: 'Export_File_print',
+      text: '<span class="badge badge-light"><i class="fas fa-print"></i></span>'
+    },
+    //Botón para cvs
+    {
+      extend: 'csvHtml5',
+      footer: true,
+      filename: 'Export_File_csv',
+      text: '<span class="badge  badge-success"><i class="fas fa-file-csv"></i></span>'
+    },
+    {
+      extend: 'colvis',
+      text: '<span class="badge  badge-info"><i class="fas fa-columns"></i></span>',
+      postfixButtons: ['colvisRestore']
+    }
+    ]
+  });
   tblAiresEliminados = $("#tblAiresEliminados").DataTable({
     ajax: {
       url: base_url + "AiresEliminados/listar",
@@ -234,7 +342,63 @@ document.addEventListener("DOMContentLoaded", function () {
     ],
     language: {
       "url": "//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json"
+    },
+    dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>" +
+      "<'row'<'col-sm-12'tr>>" +
+      "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+    buttons: [{
+      //Botón para Excel
+      extend: 'excelHtml5',
+      footer: true,
+      title: 'Archivo',
+      filename: 'Export_File',
+
+      //Aquí es donde generas el botón personalizado
+      text: '<span class="badge badge-success"><i class="fas fa-file-excel"></i></span>'
+    },
+    //Botón para PDF
+    {
+      extend: 'pdfHtml5',
+      download: 'open',
+      footer: true,
+      title: 'Reporte de inventario',
+      filename: 'Reporte de inventario',
+      text: '<span class="badge  badge-danger"><i class="fas fa-file-pdf"></i></span>',
+      exportOptions: {
+        columns: [0, ':visible']
+      }
+    },
+    //Botón para copiar
+    {
+      extend: 'copyHtml5',
+      footer: true,
+      title: 'Reporte de inventario',
+      filename: 'Reporte de inventario',
+      text: '<span class="badge  badge-primary"><i class="fas fa-copy"></i></span>',
+      exportOptions: {
+        columns: [0, ':visible']
+      }
+    },
+    //Botón para print
+    {
+      extend: 'print',
+      footer: true,
+      filename: 'Export_File_print',
+      text: '<span class="badge badge-light"><i class="fas fa-print"></i></span>'
+    },
+    //Botón para cvs
+    {
+      extend: 'csvHtml5',
+      footer: true,
+      filename: 'Export_File_csv',
+      text: '<span class="badge  badge-success"><i class="fas fa-file-csv"></i></span>'
+    },
+    {
+      extend: 'colvis',
+      text: '<span class="badge  badge-info"><i class="fas fa-columns"></i></span>',
+      postfixButtons: ['colvisRestore']
     }
+    ]
   });
 });
 
@@ -283,6 +447,9 @@ function registrarRespuesto(event) {
             alerta("Producto", "modificado");
             $("#nuevo_respuesto").modal("hide");
             tblInventarioRespuestos.ajax.reload();
+          } else if (res == "denegado") {
+            alerttime("No tienes permiso para realizar esta accion", "warning")
+            $("nuevo_respuesto").modal("hide");
           } else {
             Swal.fire("Error", res, "error");
           }
@@ -335,8 +502,10 @@ function btnEliminarRespuesto(id) {
           if (res == "ok") {
             alerta("Producto", "borrado");
             tblInventarioRespuestos.ajax.reload();
+          } else if (res == "denegado") {
+            alerttime("No tienes permiso para realizar esta accion", "warning")
           } else {
-            Swal.fire("Mensaje", res, "error");
+
           }
         }
       };
@@ -365,6 +534,8 @@ function btnReingresarRespuesto(id) {
           if (res == "ok") {
             alerta("Producto", "reingrsado");
             tblRespuestosEliminados.ajax.reload();
+          } else if (res == "denegado") {
+            alerttime("No tienes permiso para realizar esta accion", "warning")
           } else {
             Swal.fire("Mensaje", res, "error");
           }
@@ -403,6 +574,9 @@ function registrarAire(event) {
             alerta("Producto", "modificado");
             $("#nuevo_aire").modal("hide");
             tblInventarioAires.ajax.reload();
+          } else if (res == "denegado") {
+            alerttime("No tienes permiso para realizar esta accion", "warning")
+            $("nuevo_aire").modal("hide");
           } else {
             Swal.fire("Error", res, "error");
           }
@@ -460,6 +634,8 @@ function btnEliminarAire(id) {
           if (res == "ok") {
             Swal.fire("Mensaje", "Producto Borrado Éxitosamente", "success");
             tblInventarioAires.ajax.reload();
+          } else if (res == "denegado") {
+            alerttime("No tienes permiso para realizar esta accion", "warning")
           } else {
             Swal.fire("Mensaje", res, "error");
           }
@@ -494,6 +670,8 @@ function btnReingresarAire(id) {
               "success"
             );
             tblAiresEliminados.ajax.reload();
+          } else if (res == "denegado") {
+            alerttime("No tienes permiso para realizar esta accion", "warning")
           } else {
             Swal.fire("Mensaje", res, "error");
           }

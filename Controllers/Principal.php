@@ -22,7 +22,7 @@ class Principal extends Controller
         $data['gananciasres'] = $this->model->getDatos('gananciasres');
         $data['gananciasair'] = $this->model->getDatos('gananciasair');
         $data['gananciastotales'] = $data['gananciasres']['total'] + $data['gananciasair']['total'];
-        $data['compras'] = $this->model->getDatos('compras');
+        $data['proveedores'] = $this->model->getDatos('proveedores');
         $data['inventarioaires'] = $this->model->getDatos('inventarioaires');
         $this->Views->getView($this, "reportes", $data);
     }

@@ -32,13 +32,12 @@
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center"
-                href="<?php echo base_url . "Principal"?>">
+                href="<?php echo base_url . "Principal" ?>">
                 <div class="sidebar-brand-text mx-3">Ecofrio</div>
             </a>
 
@@ -77,6 +76,9 @@
                         <a class="collapse-item" href="<?php echo base_url . "HistorialVentas/aires" ?>"> <i
                                 class="fas fa-list fa-sm fa-fw mr-2"></i>
                             Historial Aires</a>
+                        <a class="collapse-item" href="<?php echo base_url . "Configuracion/caja" ?>"> <i
+                                class="fas fa-list fa-cash-register  fa-fw mr-2"></i>
+                            Caja</a>
                     </div>
                 </div>
             </li>
@@ -108,12 +110,18 @@
                     <span>Clientes</span></a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="<?php echo base_url . "Proveedores" ?>">
+                    <i class="fas fa-truck-field fa-2x"></i>
+                    <span>Proveedores</span></a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapseInventario"
                     aria-expanded="true" aria-controls="collapseInventario">
                     <i class="fas fa-box-open fa-2x"></i>
                     <span>Inventario</span>
                 </a>
-                <div id="collapseInventario" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseInventario" class="collapse" aria-labelledby="headingTwo"
+                    data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="<?php echo base_url . "InventarioRespuestos" ?>"> <i
                                 class="fas fa-box-open fa-sm fa-fw mr-2"></i> Respuestos</a>
@@ -122,12 +130,6 @@
                             Aires</a>
                     </div>
                 </div>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url . "Configuracion/caja" ?>">
-                    <i class="fas fa-box-open fa-2x"></i>
-                    <span>Caja</span></a>
             </li>
 
             <li class="nav-item">

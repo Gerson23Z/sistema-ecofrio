@@ -39,6 +39,12 @@ class Configuracion extends Controller
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();
     }
+    public function comprobar()
+    {
+        $data = $this->model->comprobarCaja();
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        die();
+    }
     public function editar(int $id)
     {
         $nombre = $_POST['nombre'];
@@ -59,6 +65,7 @@ class Configuracion extends Controller
     {
         $id = $_POST['id'];
         $montoInicial = $_POST['montoIncial'];
+        $montoInicial = str_replace("$", "", $montoInicial);
         $fechaApertura = date('Y-m-d');
         $id_usuario = $_SESSION['id'];
         if (empty($montoInicial)) {

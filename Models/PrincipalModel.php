@@ -21,8 +21,8 @@ class PrincipalModel extends Query
             $sql = "SELECT SUM(total) AS total FROM ventasaires WHERE apertura = 1";
         }else if($tabla=="gananciasres"){
             $sql = "SELECT SUM(total) AS total FROM ventas WHERE apertura = 1";
-        }else if($tabla=="compras"){
-            $sql = "SELECT (SELECT COUNT(*) FROM compras) + (SELECT COUNT(*) FROM comprasaires) AS total;";
+        }else if($tabla=="proveedores"){
+            $sql = "SELECT COUNT(*) AS total FROM proveedores";
         }else if($tabla=="inventarioaires"){
             $sql = "SELECT COUNT(*) AS total FROM inventarioaires";
         }

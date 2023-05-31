@@ -193,11 +193,12 @@ class Ventas extends Controller
                 $id_venta = $this->model->getIdVenta();
                 $detalles = $this->model->getDetalles();
                 foreach ($detalles as $row) {
+                    $codigo = $row['codigo'];
                     $producto = $row['producto'];
                     $precio = $row['precio'];
                     $cantidad = $row['cantidad'];
                     $subtotal = $precio * $cantidad;
-                    $this->model->registrarDetallesVenta($id_venta['id'], $producto, $precio, $cantidad, $subtotal, $id_usuario);
+                    $this->model->registrarDetallesVenta($id_venta['id'], $codigo, $producto, $precio, $cantidad, $subtotal, $id_usuario);
                     $codigoProducto = $row['codigo'];
                     $stockActual = $this->model->GetProductos($codigoProducto);
                     $stock = $stockActual[0]['unidades'] - $cantidad;
@@ -235,13 +236,14 @@ class Ventas extends Controller
                     $id_venta = $this->model->getIdVentaAire();
                     $detalles = $this->model->getDetallesAire();
                     foreach ($detalles as $row) {
+                        $codigo = $row['codigo'];
                         $marca = $row['marca'];
                         $capacidad = $row['capacidad'];
                         $seer = $row['seer'];
                         $precio = $row['precio'];
                         $cantidad = $row['cantidad'];
                         $subtotal = $precio * $cantidad;
-                        $this->model->registrarDetallesVentaAire($id_venta['id'], $marca, $capacidad, $seer, $precio, $cantidad, $subtotal);
+                        $this->model->registrarDetallesVentaAire($id_venta['id'], $codigo, $marca, $capacidad, $seer, $precio, $cantidad, $subtotal, $nombre, $id_usuario);
                         $codigoProducto = $row['codigo'];
                         $stockActual = $this->model->GetAires($codigoProducto);
                         $stock = $stockActual[0]['cantidad'] - $cantidad;
@@ -295,6 +297,7 @@ class Ventas extends Controller
         $pdf->MultiCell($cell_width, $cell_height, $long_text, 0, 'J', false);
         $pdf->Ln();
         $pdf->SetFont('Arial', 'B', 9);
+        $pdf->Cell(65, 5, 'Registro No.  ' . utf8_decode($data['ncr']), 0, 1, 'C');
         $pdf->Cell(65, 5, $fecha, 0, 1, 'C');
         $pdf->Cell(65, 5, 'Telefono: ' . utf8_decode($data['telefono']), 0, 1, 'C');
         $pdf->Cell(65, 5, utf8_decode($data['dueno']), 0, 1, 'C');

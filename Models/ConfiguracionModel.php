@@ -21,6 +21,12 @@ class ConfiguracionModel extends Query
         $data = $this->select($sql);
         return $data;
     }
+    public function comprobarCaja()
+    {
+        $sql = "SELECT * FROM cierre_caja WHERE estado = 1";
+        $data = $this->select($sql);
+        return $data;
+    }
     public function modificarInfo(string $nombre, string $direccion, string $telefono, string $dueno, string $mensaje, int $id)
     {
         $this->id = $id;

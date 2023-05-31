@@ -58,10 +58,10 @@ class ComprasModel extends Query
         return $data;
     }
 
-    public function RegistrarDetalle(int $codigo, string $producto, string $precio, int $cantidad, string $subTotal)
+    public function RegistrarDetalle(int $codigo, string $producto, string $precio, int $cantidad, string $subTotal, string $proveedor)
     {
-        $sql = "INSERT INTO detallescmp(codigo, producto, precio, cantidad, subtotal) VALUES (?,?,?,?,?)";
-        $datos = array($codigo, $producto, $precio, $cantidad, $subTotal);
+        $sql = "INSERT INTO detallescmp(codigo, producto, precio, cantidad, subtotal, proveedor) VALUES (?,?,?,?,?,?)";
+        $datos = array($codigo, $producto, $precio, $cantidad, $subTotal, $proveedor);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
             $res = "¡OK!";
@@ -70,10 +70,10 @@ class ComprasModel extends Query
         }
         return $res;
     }
-    public function RegistrarDetalleAire(int $codigo, string $marca, string $capacidad, string $seer, string $precio, int $cantidad, string $subTotal)
+    public function RegistrarDetalleAire(int $codigo, string $marca, string $capacidad, string $seer, string $precio, int $cantidad, string $subTotal, string $proveedor)
     {
-        $sql = "INSERT INTO detallescmpair(codigo, marca, capacidad, seer, precio, cantidad, subtotal) VALUES (?,?,?,?,?,?,?)";
-        $datos = array($codigo, $marca, $capacidad, $seer, $precio, $cantidad, $subTotal);
+        $sql = "INSERT INTO detallescmpair(codigo, marca, capacidad, seer, precio, cantidad, subtotal, proveedor) VALUES (?,?,?,?,?,?,?,?)";
+        $datos = array($codigo, $marca, $capacidad, $seer, $precio, $cantidad, $subTotal, $proveedor);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
             $res = "¡OK!";
@@ -82,10 +82,10 @@ class ComprasModel extends Query
         }
         return $res;
     }
-    public function actualizarDetalle(int $codigo, string $producto, string $precio, string $total_cantidad, string $subTotal, int $id)
+    public function actualizarDetalle(int $codigo, string $producto, string $precio, string $total_cantidad, string $subTotal,string $proveedor, int $id)
     {
-        $sql = "UPDATE detallescmp SET codigo = ?,producto = ?,precio = ?,cantidad = ?,subTotal = ? WHERE id = ?";
-        $datos = array($codigo, $producto, $precio, $total_cantidad, $subTotal, $id);
+        $sql = "UPDATE detallescmp SET codigo = ?,producto = ?,precio = ?,cantidad = ?,subTotal = ?,proveedor = ? WHERE id = ?";
+        $datos = array($codigo, $producto, $precio, $total_cantidad, $subTotal, $proveedor, $id);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
             $res = "modificado";
@@ -94,10 +94,10 @@ class ComprasModel extends Query
         }
         return $res;
     }
-    public function actualizarDetalleAire(int $codigo, string $marca, string $capacidad, string $seer, string $precio, string $total_cantidad, string $subTotal, int $id)
+    public function actualizarDetalleAire(int $codigo, string $marca, string $capacidad, string $seer, string $precio, string $total_cantidad, string $subTotal,string $proveedor, int $id)
     {
-        $sql = "UPDATE detallescmpair SET codigo = ?,marca = ?,capacidad = ?,seer = ?,precio = ?,cantidad = ?,subTotal = ? WHERE id = ?";
-        $datos = array($codigo, $marca, $capacidad, $seer, $precio, $total_cantidad, $subTotal, $id);
+        $sql = "UPDATE detallescmpair SET codigo = ?,marca = ?,capacidad = ?,seer = ?,precio = ?,cantidad = ?,subTotal = ?,proveedor = ? WHERE id = ?";
+        $datos = array($codigo, $marca, $capacidad, $seer, $precio, $total_cantidad, $subTotal, $proveedor, $id);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
             $res = "modificado";
@@ -132,18 +132,6 @@ class ComprasModel extends Query
         $data = $this->selectAll($sql);
         return $data;
     }
-    public function calcularCompra()
-    {
-        $sql = "SELECT subtotal, SUM(subtotal) AS total FROM detallescmp";
-        $data = $this->select($sql);
-        return $data;
-    }
-    public function calcularCompraAire()
-    {
-        $sql = "SELECT subtotal, SUM(subtotal) AS total FROM detallescmpair";
-        $data = $this->select($sql);
-        return $data;
-    }
     public function eliminarDetalle(int $id)
     {
         $sql = "DELETE FROM detallescmp WHERE id = ?";
@@ -168,6 +156,18 @@ class ComprasModel extends Query
         }
         return $res;
     }
+    public function calcularCompra()
+    {
+        $sql = "SELECT subtotal, SUM(subtotal) AS total FROM detallescmp";
+        $data = $this->select($sql);
+        return $data;
+    }
+    public function calcularCompraAire()
+    {
+        $sql = "SELECT subtotal, SUM(subtotal) AS total FROM detallescmpair";
+        $data = $this->select($sql);
+        return $data;
+    }
     public function comprobarDetalle(int $codigo)
     {
         $sql = "SELECT * FROM detallescmp WHERE codigo = $codigo";
@@ -180,10 +180,10 @@ class ComprasModel extends Query
         $data = $this->select($sql);
         return $data;
     }
-    public function guardarCompra($total)
+    public function registrarDetallesCompra(int $codigo, string $producto, string $precio, int $cantidad, string $subtotal, string $proveedor)
     {
-        $sql = "INSERT INTO compras(total) VALUES (?)";
-        $datos = array($total);
+        $sql = "INSERT INTO detalles_compras(codigo, producto, precio, cantidad, subtotal, proveedor) VALUES (?,?,?,?,?,?)";
+        $datos = array($codigo, $producto, $precio, $cantidad, $subtotal, $proveedor);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
             $res = "¡OK!";
@@ -192,46 +192,10 @@ class ComprasModel extends Query
         }
         return $res;
     }
-    public function guardarCompraAire($total)
+    public function registrarDetallesCompraAire(int $codigo, string $marca, string $capacidad, string $seer, string $precio, int $cantidad, string $subtotal, string $proveedor)
     {
-        $sql = "INSERT INTO comprasaires(total) VALUES (?)";
-        $datos = array($total);
-        $data = $this->save($sql, $datos);
-        if ($data == 1) {
-            $res = "¡OK!";
-        } else {
-            $res = "error";
-        }
-        return $res;
-    }
-    public function getIdCompra()
-    {
-        $sql = "SELECT MAX(id) AS id FROM compras";
-        $data = $this->select($sql);
-        return $data;
-    }
-    public function getIdCompraAire()
-    {
-        $sql = "SELECT MAX(id) AS id FROM comprasaires";
-        $data = $this->select($sql);
-        return $data;
-    }
-    public function registrarDetallesCompra(int $id_compra, string $producto, string $precio, int $cantidad, string $subtotal)
-    {
-        $sql = "INSERT INTO detalles_compras(id_compra, producto, precio, cantidad, subtotal) VALUES (?,?,?,?,?)";
-        $datos = array($id_compra, $producto, $precio, $cantidad, $subtotal);
-        $data = $this->save($sql, $datos);
-        if ($data == 1) {
-            $res = "¡OK!";
-        } else {
-            $res = "error";
-        }
-        return $res;
-    }
-    public function registrarDetallesCompraAire(int $id_compra, string $marca, string $capacidad, string $seer, string $precio, int $cantidad, string $subtotal)
-    {
-        $sql = "INSERT INTO detalles_comprasaires(id_compra, marca,capacidad,seer, precio, cantidad, subtotal) VALUES (?,?,?,?,?,?,?)";
-        $datos = array($id_compra, $marca, $capacidad, $seer, $precio, $cantidad, $subtotal);
+        $sql = "INSERT INTO detalles_comprasaires(codigo, marca, capacidad, seer, precio, cantidad, subtotal, proveedor) VALUES (?,?,?,?,?,?,?,?)";
+        $datos = array($codigo, $marca, $capacidad, $seer, $precio, $cantidad, $subtotal, $proveedor);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
             $res = "¡OK!";
@@ -259,30 +223,13 @@ class ComprasModel extends Query
         $data = $this->select($sql);
         return $data;
     }
-    public function getProCompras($id_compra)
+    public function getProveedores()
     {
-        $sql = "SELECT * FROM detalles_compras WHERE id_compra = $id_compra";
+        $sql = "SELECT * FROM proveedores";
         $data = $this->selectAll($sql);
         return $data;
     }
-    public function getInfoCompras($id_compra)
-    {
-      $sql = "SELECT fecha FROM compras WHERE id = $id_compra";
-      $data = $this->selectAll($sql);
-      return $data;
-    }
-    public function getProComprasAire($id_compra)
-    {
-        $sql = "SELECT * FROM detalles_comprasaires WHERE id_compra = $id_compra";
-        $data = $this->selectAll($sql);
-        return $data;
-    }
-    public function getInfoComprasAire($id_compra)
-    {
-      $sql = "SELECT fecha FROM comprasaires WHERE id = $id_compra";
-      $data = $this->selectAll($sql);
-      return $data;
-    }
+
     public function verificarPermiso(int $id_usuario, string $nombre)
     {
         $sql = "SELECT p.id, p.permiso, d.id, d.id_usuario, d.id_permiso FROM permisos p INNER JOIN detalle_permisos d ON p.id = d.id_permiso WHERE d.id_usuario = $id_usuario AND p.permiso = '$nombre'";

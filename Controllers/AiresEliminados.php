@@ -13,7 +13,7 @@ class AiresEliminados extends Controller
   public function index()
   {
     $id_usuario = $_SESSION['id'];
-    $verificar = $this->model->verificarPermiso($id_usuario, 'Respuestos');
+    $verificar = $this->model->verificarPermiso($id_usuario, 'Inventario');
     if (!empty($verificar) || $id_usuario == 1) {
       $this->Views->getView($this, "index");
     } else {
@@ -25,6 +25,7 @@ class AiresEliminados extends Controller
   {
     $data = $this->model->getAiresEliminados();
     for ($i = 0; $i < count($data); $i++) {
+      $data[$i]['precio'] = '$'.$data[$i]['precio'];
       if ($data[$i]['estado'] == 0) {
         $data[$i]['estado'] = '<span class="badge badge-danger">Eliminado</span>';
         $data[$i]['acciones'] = ' <div>
@@ -38,11 +39,17 @@ class AiresEliminados extends Controller
 
   public function reingresar(int $id)
   {
-    $data = $this->model->reingresarAire($id);
-    if ($data == 1) {
-      $msg = "ok";
+    $id_usuario = $_SESSION['id'];
+    $verificar = $this->model->verificarPermiso($id_usuario, 'Editar Inventarios');
+    if (!empty($verificar) || $id_usuario == 1) {
+      $data = $this->model->reingresarAire($id);
+      if ($data == 1) {
+        $msg = "ok";
+      } else {
+        $msg = "Error al reingresar el producto";
+      }
     } else {
-      $msg = "Error al reingresar el producto";
+      $msg = "denegado";
     }
     echo json_encode($msg, JSON_UNESCAPED_UNICODE);
     die();

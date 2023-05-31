@@ -85,5 +85,11 @@ class CitasModel extends Query
         $data = $this->selectAll($sql);
         return $data;
     }
+    public function RegistrarInfoCliente(int $dui, string $nombre, string $telefono, string $direccion)
+    {
+        $sql = "INSERT INTO clientes(dui, nombre, telefono, direccion) VALUES (?,?,?,?)";
+        $datos = array($dui, $nombre, $telefono, $direccion);
+        $this->save($sql, $datos);
+    }
 }
 ?>

@@ -199,10 +199,10 @@ class VentasModel extends Query
         $data = $this->selectAll($sql);
         return $data;
     }
-    public function registrarDetallesVenta(int $id_venta, string $producto, string $precio, int $cantidad, string $subtotal, string $id_usuario)
+    public function registrarDetallesVenta(int $id_venta, string $codigo, string $producto, string $precio, int $cantidad, string $subtotal, string $id_usuario)
     {
-        $sql = "INSERT INTO detalles_ventas(id_venta, producto, precio, cantidad, subtotal, id_usuario) VALUES (?,?,?,?,?,?)";
-        $datos = array($id_venta, $producto, $precio, $cantidad, $subtotal, $id_usuario);
+        $sql = "INSERT INTO detalles_ventas(id_venta, codigo, producto, precio, cantidad, subtotal, id_usuario) VALUES (?,?,?,?,?,?,?)";
+        $datos = array($id_venta, $codigo, $producto, $precio, $cantidad, $subtotal, $id_usuario);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
             $res = "¡OK!";
@@ -211,10 +211,10 @@ class VentasModel extends Query
         }
         return $res;
     }
-    public function registrarDetallesVentaAire(int $id_venta, string $marca, string $capacidad, string $seer, string $precio, int $cantidad, string $subtotal)
+    public function registrarDetallesVentaAire(int $id_venta, string $codigo, string $marca, string $capacidad, string $seer, string $precio, int $cantidad, string $subtotal, string $cliente, int $id_usuario)
     {
-        $sql = "INSERT INTO detalles_ventasaires(id_venta, marca,capacidad,seer, precio, cantidad, subtotal) VALUES (?,?,?,?,?,?,?)";
-        $datos = array($id_venta, $marca, $capacidad, $seer, $precio, $cantidad, $subtotal);
+        $sql = "INSERT INTO detalles_ventasaires(id_venta, codigo, marca, capacidad,seer, precio, cantidad, subtotal, cliente, id_usuario) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        $datos = array($id_venta, $codigo, $marca, $capacidad, $seer, $precio, $cantidad, $subtotal, $cliente, $id_usuario);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
             $res = "¡OK!";

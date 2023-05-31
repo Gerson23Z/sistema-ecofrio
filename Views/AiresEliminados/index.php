@@ -3,6 +3,7 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Aires Eliminados</h1>
 </div>
+
 <button class="btn btn-light mb-2 text-light" type="button" disabled>Agregar</button>
 <a href="InventarioAires" class="btn btn-primary mb-2 float-right">Volver a Inventario</a>
 
@@ -10,13 +11,14 @@
     <thead class="table-success">
         <tr>
             <th>Id</th>
+            <th>Codigo</th>
             <th>Marca</th>
             <th>Capacidad</th>
             <th>Seer</th>
             <th>Voltaje</th>
             <th>Modelo</th>
             <th>Caracteristica</th>
-            <th>Tipo</th>
+            <th>Precio</th>
             <th>Cantidad</th>
             <th>Estado</th>
             <th></th>

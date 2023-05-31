@@ -26,6 +26,7 @@ function getCodigosCompras(event) {
         } else {
           document.getElementById("txtProducto").value = res[0].producto;
           document.getElementById("id").value = res[0].id;
+          document.getElementById("txtStock").value = res[0].unidades;
           document.getElementById("txtCantidad").focus();
         }
       }
@@ -76,6 +77,7 @@ function calcularPrecioCompra(event) {
     http.send(new FormData(frm));
     http.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText);
         const res = JSON.parse(this.responseText);
         if (res == "si") {
           frm.reset();
@@ -156,12 +158,11 @@ function registrarCompra() {
       http.send(new FormData(frm));
       http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
+          console.log(this.responseText);
           const res = JSON.parse(this.responseText);
           if (res.msg == "ok") {
             alerttime("Compra registrada", "success");
             CargarDetallesCmp();
-            const ruta = base_url + "Compras/generarPDF/" + res.id_compra;
-            window.open(ruta);
           } else if (res == "vacioCompra") {
             alerttime("No hay compras a registrar", "error");
           } else {
@@ -172,12 +173,6 @@ function registrarCompra() {
     }
   })
 }
-
-function mostrarPdfCmp(id) {
-  const ruta = base_url + "Compras/generarPDF/" + id;
-  window.open(ruta);
-}
-
 function salto(e) {
   e.preventDefault();
   if (e.which == 13) {

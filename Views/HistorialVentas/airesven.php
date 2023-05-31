@@ -1,10 +1,11 @@
 <?php include "Views/Templates/header.php"; ?>
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Historial de Compras de lotes de Aires</h1>
+    <h1 class="h3 mb-0 text-gray-800">Historial Productos</h1>
 </div>
-
-<table class="table table-light" id="tblHistorialComprasAires">
+<button class="btn btn-light mb-2 text-light" type="button" disabled>Agregar</button>
+<a href="<?php echo base_url . "HistorialVentas/aires" ?>" class="btn btn-primary float-right">Volver</a>
+<table class="table table-light" id="tblAiresPro">
     <thead class="table-success">
         <tr>
             <th>#</th>
@@ -16,9 +17,10 @@
             <th>Cantidad</th>
             <th>Subtotal</th>
             <th>Fecha</th>
-            <th>Proveedor</th>
+            <th>Ciente</th>
+            <th>Usuario</th>
         </tr>
     </thead>
 </table>
-<script src="<?php echo base_url; ?>Assets/js/funcionesComprasAires.js"></script>
+<script src="<?php echo base_url; ?>Assets/js/funcionesCompras.js"></script>
 <?php include "Views/Templates/footer.php"; ?>

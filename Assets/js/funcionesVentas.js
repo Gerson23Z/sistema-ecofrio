@@ -8,6 +8,7 @@ txtCodigo.addEventListener("input", function () {
   getCodigosVentas(event);
 });
 
+
 function getCodigosVentas(event) {
   if (event.which == 13) {
     event.preventDefault();

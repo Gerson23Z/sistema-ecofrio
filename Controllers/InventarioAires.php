@@ -25,12 +25,13 @@ class InventarioAires extends Controller
   {
     $data = $this->model->GetInventarioAires();
     for ($i = 0; $i < count($data); $i++) {
+      $data[$i]['precio'] = '$'.$data[$i]['precio'];
       if ($data[$i]['cantidad'] > 0) {
         $data[$i]['estado'] = '<span class="badge badge-success">Disponible</span>';
         $data[$i]['acciones'] = '<div><button type="button" class="btn btn-primary" onclick="btnEditarAire(' . $data[$i]['id'] . ')"><i class="fas fa-pen-to-square"></i></button>
             <button type="button" class="btn btn-danger"onclick="btnEliminarAire(' . $data[$i]['id'] . ')"><i class="fas fa-trash"></i></button>
             </div>';
-      }else{
+      } else {
         $data[$i]['estado'] = '<span class="badge badge-danger">No Disponible</span>';
         $data[$i]['acciones'] = '<div><button type="button" class="btn btn-primary" onclick="btnEditarAire(' . $data[$i]['id'] . ')"><i class="fas fa-pen-to-square"></i></button>
             <button type="button" class="btn btn-danger"onclick="btnEliminarAire(' . $data[$i]['id'] . ')"><i class="fas fa-trash"></i></button>
@@ -52,26 +53,33 @@ class InventarioAires extends Controller
     $modelo = $_POST['slctModelo'];
     $caracteristica = $_POST['slctCaracteristica'];
     $precio = $_POST['precio'];
+    $precio = str_replace("$", "", $precio);
     $cantidad = $_POST['txtCantidad'];
-    if(empty($cantidad)){
-      $cantidad=0;
+    if (empty($cantidad)) {
+      $cantidad = 0;
     }
     if (empty($codigo) || empty($marca) || empty($capacidad) || empty($seer) || empty($voltaje) || empty($modelo) || empty($caracteristica) || empty($precio)) {
       $msg = "Todos los campos son obligatorios";
     } else {
       if ($id == "") {
-          $data = $this->model->registrarAire($codigo, $marca, $capacidad, $seer, $voltaje, $modelo, $caracteristica, $precio, $cantidad);
-          if ($data == "¡OK!") {
-            $msg = "si";
-          }else {
-            $msg = "Error al registrar el producto";
-          }
+        $data = $this->model->registrarAire($codigo, $marca, $capacidad, $seer, $voltaje, $modelo, $caracteristica, $precio, $cantidad);
+        if ($data == "¡OK!") {
+          $msg = "si";
+        } else {
+          $msg = "Error al registrar el producto";
+        }
       } else {
-        $data = $this->model->modificarAire($codigo, $marca, $capacidad, $seer, $voltaje, $modelo, $caracteristica, $precio, $cantidad, $id);
-        if ($data == "modificado") {
-          $msg = "modificado";
-        }else {
-          $msg = "Error al Modificar el Producto";
+        $id_usuario = $_SESSION['id'];
+        $verificar = $this->model->verificarPermiso($id_usuario, 'Editar Inventarios');
+        if (!empty($verificar) || $id_usuario == 1) {
+          $data = $this->model->modificarAire($codigo, $marca, $capacidad, $seer, $voltaje, $modelo, $caracteristica, $precio, $cantidad, $id);
+          if ($data == "modificado") {
+            $msg = "modificado";
+          } else {
+            $msg = "Error al Modificar el Producto";
+          }
+        } else {
+          $msg = "denegado";
         }
       }
     }
@@ -87,11 +95,17 @@ class InventarioAires extends Controller
 
   public function eliminar(int $id)
   {
-    $data = $this->model->eliminarAire($id);
-    if ($data == 1) {
-      $msg = "ok";
+    $id_usuario = $_SESSION['id'];
+    $verificar = $this->model->verificarPermiso($id_usuario, 'Editar Inventarios');
+    if (!empty($verificar) || $id_usuario == 1) {
+      $data = $this->model->eliminarAire($id);
+      if ($data == 1) {
+        $msg = "ok";
+      } else {
+        $msg = "Error al eliminar el producto";
+      }
     } else {
-      $msg = "Error al eliminar el producto";
+      $msg = "denegado";
     }
     echo json_encode($msg, JSON_UNESCAPED_UNICODE);
     die();

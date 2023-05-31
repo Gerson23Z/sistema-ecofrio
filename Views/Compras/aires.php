@@ -26,7 +26,7 @@
     <div class="card-body">
         <form id="frmCompraAires">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="form-group">
                         <input type="hidden" id="id" name="id">
                         <label for="txtCodigo">Codigo</label>
@@ -44,15 +44,31 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="txtCantidad">Cantidad</label>
-                        <input id="txtCantidad" class="form-control" type="number" name="txtCantidad"  onkeyup="salto(event)">
+                        <input id="txtCantidad" class="form-control" type="number" name="txtCantidad"
+                            onkeyup="salto(event)">
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="txtPrecio">Precio</label>
-                        <input id="txtPrecio" class="form-control" type="text" name="txtPrecio" onkeyup="calcularPrecioCompraAire(event)">
+                        <input id="txtPrecio" class="form-control" type="text" name="txtPrecio"
+                            onkeyup="calcularPrecioCompraAire(event)">
                         <span class="simbolo">$</span>
                     </div>
+                </div>
+                <div class="col-md-2 float-right">
+                    <div class="form-group">
+                        <label for="txtStock">En Existencia</label>
+                        <input id="txtStock" class="form-control" type="text" name="txtStock" disabled>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label for="slctProveedor">Proveedor</label>
+                    <select name="slctProveedor" class="form-select">
+                        <?php foreach ($data as $row) { ?>
+                            <option value="<?php echo $row['nombre']; ?>"><?php echo $row['nombre']; ?></option>
+                        <?php } ?>
+                    </select>
                 </div>
             </div>
         </form>

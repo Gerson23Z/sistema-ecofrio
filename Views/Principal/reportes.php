@@ -95,13 +95,13 @@
     <div class="col-xl-3 col-md-6">
         <div class="card bg-dark text-white">
             <div class="card-body d-flex">
-                Compras
-                <i class="fas fa-cart-shopping fa-2x ml-auto"></i>
+                Proveedores
+                <i class="fas fa-truck-field fa-2x ml-auto"></i>
             </div>
             <div class="card-footer bg-dark text-white d-flex align-items-center justify-content-between">
-                <a href="<?php echo base_url; ?>HistorialCompras" class="text-white">Ver detalles</a>
+                <a href="<?php echo base_url; ?>Proveedores" class="text-white">Ver detalles</a>
                 <span>
-                    <?php echo $data['compras']['total'] ?>
+                    <?php echo $data['proveedores']['total'] ?>
                 </span>
             </div>
         </div>
