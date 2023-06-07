@@ -1,18 +1,18 @@
 <?php
 class InventarioRespuestosModel extends Query
 {
-  private $codigo, $producto, $marca,$unidades,$estado, $precio, $id;
-    public function __construct()
-    {
-      parent::__construct();
-    }
-    public function getInventarioRespuestos()
-    {
-      $sql = "SELECT * FROM inventariorespuestos WHERE estado = 1";
-      $data = $this->selectAll($sql);
-      return $data;
-    }
-    public function registrarRespuesto(string $codigo, string $producto, string $marca, int $unidades, float $precio)
+  private $codigo, $producto, $marca, $unidades, $estado, $precio, $id;
+  public function __construct()
+  {
+    parent::__construct();
+  }
+  public function getInventarioRespuestos()
+  {
+    $sql = "SELECT * FROM inventariorespuestos WHERE estado = 1";
+    $data = $this->selectAll($sql);
+    return $data;
+  }
+  public function registrarRespuesto(string $codigo, string $producto, string $marca, int $unidades, float $precio)
   {
     $this->codigo = $codigo;
     $this->producto = $producto;
@@ -36,7 +36,7 @@ class InventarioRespuestosModel extends Query
     return $res;
   }
 
-  public function modificarRespuesto(string $codigo, string $producto, string $marca, string $unidades,float $precio, int $id)
+  public function modificarRespuesto(string $codigo, string $producto, string $marca, string $unidades, float $precio, int $id)
   {
     $this->id = $id;
     $this->codigo = $codigo;
@@ -54,20 +54,20 @@ class InventarioRespuestosModel extends Query
         $res = "modificado";
       } else {
         $res = "error";
-      }}
-    else {
-    $verificar = "SELECT * FROM inventariorespuestos WHERE id = '$this->id'";
-    $existe = $this->select($verificar);
-      if($existe['codigo']==$codigo){
+      }
+    } else {
+      $verificar = "SELECT * FROM inventariorespuestos WHERE id = '$this->id'";
+      $existe = $this->select($verificar);
+      if ($existe['codigo'] == $codigo) {
         $sql = "UPDATE inventariorespuestos SET codigo = ?,producto = ?,marca = ?,unidades = ?,precio = ? WHERE id = ?";
-        $datos = array($this->codigo, $this->producto, $this->marca, $this->unidades,  $this->precio,$this->id);
+        $datos = array($this->codigo, $this->producto, $this->marca, $this->unidades, $this->precio, $this->id);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
           $res = "modificado";
         } else {
           $res = "error";
         }
-      }else{
+      } else {
         $res = "existe";
       }
     }
@@ -91,9 +91,9 @@ class InventarioRespuestosModel extends Query
   }
   public function verificarPermiso(int $id_usuario, string $nombre)
   {
-      $sql = "SELECT p.id, p.permiso, d.id, d.id_usuario, d.id_permiso FROM permisos p INNER JOIN detalle_permisos d ON p.id = d.id_permiso WHERE d.id_usuario = $id_usuario AND p.permiso = '$nombre'";
-      $data = $this->selectAll($sql);
-      return $data;
+    $sql = "SELECT p.id, p.permiso, d.id, d.id_usuario, d.id_permiso FROM permisos p INNER JOIN detalle_permisos d ON p.id = d.id_permiso WHERE d.id_usuario = $id_usuario AND p.permiso = '$nombre'";
+    $data = $this->selectAll($sql);
+    return $data;
   }
 }
 ?>

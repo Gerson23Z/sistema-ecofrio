@@ -25,7 +25,8 @@ function getCodigosAires(event) {
           document.getElementById("txtCodigo").focus();
         } else {
           document.getElementById("txtProducto").value = res[0].marca + " " + res[0].capacidad + " " + res[0].seer;
-          document.getElementById("txtPrecio").value = res[0].precio;
+          let precioS = "$" + res[0].precio;
+          document.getElementById("txtPrecio").value = precioS;
           document.getElementById("id").value = res[0].id;
           document.getElementById("txtStock").value = res[0].cantidad;
           document.getElementById("txtCantidad").focus();
@@ -72,7 +73,8 @@ function calcularPrecioAire(event) {
   event.preventDefault();
   const cantidad = document.getElementById("txtCantidad").value;
   const precio = document.getElementById("txtPrecio").value;
-  document.getElementById("txtSubTotal").value = cantidad * precio;
+  let precioClean = precio.replace("$", "");
+  document.getElementById("txtSubTotal").value = "$" + cantidad * precioClean;
   if (event.which == 13) {
     lista.style.display = "none";
     if (cantidad > 0) {
@@ -83,6 +85,7 @@ function calcularPrecioAire(event) {
       http.send(new FormData(frm));
       http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
+          console.log(this.responseText);
           const res = JSON.parse(this.responseText);
           if (res == "si") {
             frm.reset();
@@ -114,12 +117,11 @@ function CargarDetallesVntAir() {
         <td>${row['marca']}</td>
         <td>${row['capacidad']}</td>
         <td>${row['seer']}</td>
-        <td>${row['precio']}</td>
+        <td>$${row['precio']}</td>
         <td>${row['cantidad']}</td>
-        <td>${row['subtotal']}</td>
+        <td>$${row['subtotal']}</td>
         <td>
         <button type="button" class="btn btn-danger" type="button" onclick="eliminarDetalleAire('${row['id']}')"><i class="fas fa-trash"></i></button>
-
         </td>
         </tr>`;
       });

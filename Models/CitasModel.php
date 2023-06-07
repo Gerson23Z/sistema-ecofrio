@@ -85,11 +85,19 @@ class CitasModel extends Query
         $data = $this->selectAll($sql);
         return $data;
     }
-    public function RegistrarInfoCliente(int $dui, string $nombre, string $telefono, string $direccion)
+    public function RegistrarInfoCliente(int $dui, string $nombre, string $telefono)
     {
-        $sql = "INSERT INTO clientes(dui, nombre, telefono, direccion) VALUES (?,?,?,?)";
-        $datos = array($dui, $nombre, $telefono, $direccion);
-        $this->save($sql, $datos);
+        $verificar = "SELECT * FROM clientes WHERE dui = $dui";
+        $existe = $this->select($verificar);
+        if (empty($existe)) {
+            $sql = "INSERT INTO clientes(dui, nombre, telefono) VALUES (?,?,?)";
+            $datos = array($dui, $nombre, $telefono);
+            $this->save($sql, $datos);
+        } else {
+            $sql = "UPDATE clientes SET dui = ?,nombre = ?,telefono = ? WHERE id = ?";
+            $datos = array($dui, $nombre, $telefono, $existe['id']);
+            $this->save($sql, $datos);
+        }
     }
 }
 ?>

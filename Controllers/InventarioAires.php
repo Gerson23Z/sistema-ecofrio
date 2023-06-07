@@ -25,7 +25,7 @@ class InventarioAires extends Controller
   {
     $data = $this->model->GetInventarioAires();
     for ($i = 0; $i < count($data); $i++) {
-      $data[$i]['precio'] = '$'.$data[$i]['precio'];
+      $data[$i]['precio'] = '$' . $data[$i]['precio'];
       if ($data[$i]['cantidad'] > 0) {
         $data[$i]['estado'] = '<span class="badge badge-success">Disponible</span>';
         $data[$i]['acciones'] = '<div><button type="button" class="btn btn-primary" onclick="btnEditarAire(' . $data[$i]['id'] . ')"><i class="fas fa-pen-to-square"></i></button>

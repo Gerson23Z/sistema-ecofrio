@@ -77,7 +77,6 @@ function calcularPrecioCompra(event) {
     http.send(new FormData(frm));
     http.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
-        console.log(this.responseText);
         const res = JSON.parse(this.responseText);
         if (res == "si") {
           frm.reset();
@@ -104,12 +103,11 @@ function CargarDetallesCmp() {
         html += `<tr>
           <td>${row['codigo']}</td>
           <td>${row['producto']}</td>
-          <td>${row['precio']}</td>
+          <td>$${row['precio']}</td>
           <td>${row['cantidad']}</td>
-          <td>${row['subtotal']}</td>
+          <td>$${row['subtotal']}</td>
           <td>
           <button type="button" class="btn btn-danger" type="button" onclick="eliminarDetalleCmp('${row['id']}')"><i class="fas fa-trash"></i></button>
-
           </td>
           </tr>`;
       });
@@ -158,7 +156,6 @@ function registrarCompra() {
       http.send(new FormData(frm));
       http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-          console.log(this.responseText);
           const res = JSON.parse(this.responseText);
           if (res.msg == "ok") {
             alerttime("Compra registrada", "success");

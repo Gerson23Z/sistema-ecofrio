@@ -1,6 +1,6 @@
-<?php include "Views/Templates/header.php";?>
+<?php include "Views/Templates/header.php"; ?>
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800"> Informacion de la empresa</h1>
+  <h1 class="h3 mb-0 text-gray-800"> Informacion de la empresa</h1>
 </div>
 <form id="frmInfo">
   <div class="form-group">
@@ -24,8 +24,8 @@
     <textarea class="form-control" id="mensaje" name="mensaje" rows="3"></textarea>
   </div>
   <div class="d-flex justify-content-center">
-  <button class="btn btn-info center" type="button" onclick="actualizar(event)" id="btnInfo">Guardar</button>
-</div>
+    <button class="btn btn-info center" type="button" onclick="actualizar(event)" id="btnInfo">Guardar</button>
+  </div>
 </form>
 <script src="<?php echo base_url; ?>Assets/js/funcionesInfo.js"></script>
 

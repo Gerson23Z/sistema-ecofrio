@@ -55,12 +55,12 @@ class HistorialVentas extends Controller
   public function listar()
   {
     $data = $this->model->getHistorialVentas();
-    for ($i=0; $i < count($data); $i++) {
+    for ($i = 0; $i < count($data); $i++) {
       $data[$i]['acciones'] = '<div><button type="button" class="btn btn-danger" onclick="mostrarPdfVnt(' . $data[$i]['id'] . ')"><i class="fas fa-file-lines"></i></button>';
-      $fecha=$data[$i]['fecha'];
+      $fecha = $data[$i]['fecha'];
       $fecha = date_create($fecha);
-      $data[$i]['total'] = '$'.$data[$i]['total'];
-      $data[$i]['fecha_venta'] = date_format($fecha,"d-m-Y H:i:s");
+      $data[$i]['total'] = '$' . $data[$i]['total'];
+      $data[$i]['fecha_venta'] = date_format($fecha, "d-m-Y H:i:s");
     }
     echo json_encode($data, JSON_UNESCAPED_UNICODE);
     die();
@@ -68,12 +68,12 @@ class HistorialVentas extends Controller
   public function listarProductos()
   {
     $data = $this->model->getHistorialVentasProductos();
-    for ($i=0; $i < count($data); $i++) {
-      $data[$i]['precio'] = '$'.$data[$i]['precio'];
-      $data[$i]['subtotal'] = '$'.$data[$i]['subtotal'];
-      $fecha=$data[$i]['fecha'];
+    for ($i = 0; $i < count($data); $i++) {
+      $data[$i]['precio'] = '$' . $data[$i]['precio'];
+      $data[$i]['subtotal'] = '$' . $data[$i]['subtotal'];
+      $fecha = $data[$i]['fecha'];
       $fecha = date_create($fecha);
-      $data[$i]['fecha_venta'] = date_format($fecha,"d-m-Y H:i:s");
+      $data[$i]['fecha_venta'] = date_format($fecha, "d-m-Y H:i:s");
 
     }
     echo json_encode($data, JSON_UNESCAPED_UNICODE);
@@ -82,12 +82,12 @@ class HistorialVentas extends Controller
   public function listarAires()
   {
     $data = $this->model->getHistorialVentasAires();
-    for ($i=0; $i < count($data); $i++) {
+    for ($i = 0; $i < count($data); $i++) {
       $data[$i]['acciones'] = '<div><button type="button" class="btn btn-danger" onclick="mostrarPdfVntAire(' . $data[$i]['id'] . ')"><i class="fas fa-file-lines"></i></button>';
-      $fecha=$data[$i]['fecha'];
+      $fecha = $data[$i]['fecha'];
       $fecha = date_create($fecha);
-      $data[$i]['total'] = '$'.$data[$i]['total'];
-      $data[$i]['fecha_venta'] = date_format($fecha,"d-m-Y H:i:s");
+      $data[$i]['total'] = '$' . $data[$i]['total'];
+      $data[$i]['fecha_venta'] = date_format($fecha, "d-m-Y H:i:s");
     }
     echo json_encode($data, JSON_UNESCAPED_UNICODE);
     die();
@@ -95,12 +95,12 @@ class HistorialVentas extends Controller
   public function listarAiresPro()
   {
     $data = $this->model->getHistorialVentasAiresPro();
-    for ($i=0; $i < count($data); $i++) {
-      $data[$i]['precio'] = '$'.$data[$i]['precio'];
-      $data[$i]['subtotal'] = '$'.$data[$i]['subtotal'];
-      $fecha=$data[$i]['fecha'];
+    for ($i = 0; $i < count($data); $i++) {
+      $data[$i]['precio'] = '$' . $data[$i]['precio'];
+      $data[$i]['subtotal'] = '$' . $data[$i]['subtotal'];
+      $fecha = $data[$i]['fecha'];
       $fecha = date_create($fecha);
-      $data[$i]['fecha_venta'] = date_format($fecha,"d-m-Y H:i:s");
+      $data[$i]['fecha_venta'] = date_format($fecha, "d-m-Y H:i:s");
     }
     echo json_encode($data, JSON_UNESCAPED_UNICODE);
     die();

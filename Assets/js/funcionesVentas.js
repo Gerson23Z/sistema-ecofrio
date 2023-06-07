@@ -27,7 +27,8 @@ function getCodigosVentas(event) {
         } else {
           lista.style.display = "none";
           document.getElementById("txtProducto").value = res[0].producto;
-          document.getElementById("txtPrecio").value = res[0].precio;
+          let precioS = "$" + res[0].precio;
+          document.getElementById("txtPrecio").value = precioS;
           document.getElementById("id").value = res[0].id;
           document.getElementById("txtStock").value = res[0].unidades;
           document.getElementById("txtCantidad").focus();
@@ -73,7 +74,8 @@ function calcularPrecioVenta(event) {
   event.preventDefault();
   const cantidad = document.getElementById("txtCantidad").value;
   const precio = document.getElementById("txtPrecio").value;
-  document.getElementById("txtSubTotal").value = cantidad * precio;
+  let precioClean = precio.replace("$", "");
+  document.getElementById("txtSubTotal").value = "$" + cantidad * precioClean;
   if (event.which == 13) {
     lista.style.display = "none";
     if (cantidad > 0) {
@@ -113,9 +115,9 @@ function CargarDetallesVnt() {
         html += `<tr>
           <td>${row['codigo']}</td>
           <td>${row['producto']}</td>
-          <td>${row['precio']}</td>
+          <td>$${row['precio']}</td>
           <td>${row['cantidad']}</td>
-          <td>${row['subtotal']}</td>
+          <td>$${row['subtotal']}</td>
           <td>
           <button type="button" class="btn btn-danger" type="button" onclick="eliminarDetalleVnt('${row['id']}')"><i class="fas fa-trash"></i></button>
 
@@ -166,7 +168,6 @@ function registrarVenta() {
       http.send(new FormData(frm));
       http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-          console.log(this.responseText);
           const res = JSON.parse(this.responseText);
           if (res.msg == "ok") {
             alerttime("Venta registrada", "success");

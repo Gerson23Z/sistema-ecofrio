@@ -56,7 +56,7 @@ class Compras extends Controller
         $proveedor = $_POST['slctProveedor'];
         $comprobar = $this->model->comprobarDetalle($datos[0]['codigo']);
         if (empty($comprobar)) {
-            $subTotal = $precio;
+            $subTotal = $precio * $cantidad;
             $data = $this->model->RegistrarDetalle($codigo, $producto, $precio, $cantidad, $subTotal, $proveedor);
             if ($data == "¡OK!") {
                 $msg = "si";
@@ -90,7 +90,7 @@ class Compras extends Controller
         $proveedor = $_POST['slctProveedor'];
         $comprobar = $this->model->comprobarDetalleAire($datos[0]['codigo']);
         if (empty($comprobar)) {
-            $subTotal = $precio;
+            $subTotal = $precio * $cantidad;
             $data = $this->model->RegistrarDetalleAire($codigo, $marca, $capacidad, $seer, $precio, $cantidad, $subTotal, $proveedor);
             if ($data == "¡OK!") {
                 $msg = "si";
@@ -187,8 +187,8 @@ class Compras extends Controller
                 $producto = $row['producto'];
                 $precio = $row['precio'];
                 $cantidad = $row['cantidad'];
-                $proveedor = $row['proveedor'];
-                $subtotal = $precio;
+                $proveedor = $row['id_proveedor'];
+                $subtotal = $precio * $cantidad;
                 $this->model->registrarDetallesCompra($codigo, $producto, $precio, $cantidad, $subtotal, $proveedor);
                 $codigoProducto = $row['codigo'];
                 $stockActual = $this->model->GetProductos($codigoProducto);
@@ -217,9 +217,9 @@ class Compras extends Controller
                 $seer = $row['seer'];
                 $precio = $row['precio'];
                 $cantidad = $row['cantidad'];
-                $proveedor = $row['proveedor'];
-                $subtotal = $precio;
-                $this->model->registrarDetallesCompraAire($codigo, $marca, $capacidad, $seer, $precio, $cantidad, $subtotal,$proveedor);
+                $proveedor = $row['id_proveedor'];
+                $subtotal = $precio * $cantidad;
+                $this->model->registrarDetallesCompraAire($codigo, $marca, $capacidad, $seer, $precio, $cantidad, $subtotal, $proveedor);
                 $codigoProducto = $row['codigo'];
                 $stockActual = $this->model->GetAires($codigoProducto);
                 $stock = $stockActual[0]['cantidad'] + $cantidad;

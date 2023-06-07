@@ -83,4 +83,5 @@
     </script>
     <script src="<?php echo base_url; ?>Assets/js/funciones.js" crossorigin=" anonymous"></script>
 </body>
+
 </html>

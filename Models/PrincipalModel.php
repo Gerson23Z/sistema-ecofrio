@@ -7,23 +7,23 @@ class PrincipalModel extends Query
     }
     public function getDatos($tabla)
     {
-        if($tabla=="usuarios"){
+        if ($tabla == "usuarios") {
             $sql = "SELECT COUNT(*) AS total FROM usuarios WHERE estado = 1";
-        }else if($tabla=="ventas"){
+        } else if ($tabla == "ventas") {
             $sql = "SELECT COUNT(*) AS total FROM ventas";
-        }elseif($tabla=="citas"){
+        } elseif ($tabla == "citas") {
             $sql = "SELECT COUNT(*) AS total FROM citas WHERE completado = 0";
-        }else if($tabla=="ventasaires"){
+        } else if ($tabla == "ventasaires") {
             $sql = "SELECT COUNT(*) AS total FROM ventasaires";
-        }else if($tabla=="inventariores"){
+        } else if ($tabla == "inventariores") {
             $sql = "SELECT COUNT(*) AS total FROM inventariorespuestos WHERE estado = 1";
-        }else if($tabla=="gananciasair"){
+        } else if ($tabla == "gananciasair") {
             $sql = "SELECT SUM(total) AS total FROM ventasaires WHERE apertura = 1";
-        }else if($tabla=="gananciasres"){
+        } else if ($tabla == "gananciasres") {
             $sql = "SELECT SUM(total) AS total FROM ventas WHERE apertura = 1";
-        }else if($tabla=="proveedores"){
+        } else if ($tabla == "proveedores") {
             $sql = "SELECT COUNT(*) AS total FROM proveedores";
-        }else if($tabla=="inventarioaires"){
+        } else if ($tabla == "inventarioaires") {
             $sql = "SELECT COUNT(*) AS total FROM inventarioaires";
         }
         $data = $this->select($sql);

@@ -824,6 +824,9 @@ document.addEventListener("DOMContentLoaded", function () {
         data: "fecha_venta",
       },
       {
+        data: "cliente",
+      },
+      {
         data: "usuario",
       },
       {
@@ -1185,7 +1188,7 @@ function registrarUser(event) {
         $("#nuevo_usuario").modal("hide");
         tblUsuarios.ajax.reload();
       } else {
-        alerterror();
+        alerttime("El usuario ya existe", "error");
       }
     }
   };
@@ -1449,6 +1452,7 @@ function btnEliminarCliente(id) {
       http.send();
       http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
+          console.log(this.responseText);
           const res = JSON.parse(this.responseText);
           if (res == "denegado") {
             alerttime("No tienes permiso para realizar esta accion", "warning")
@@ -1501,7 +1505,6 @@ function cerrarCaja() {
   http.send();
   http.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-      console.log(this.responseText);
       const res = JSON.parse(this.responseText);
       document.getElementById("id").value = res.inicial.id;
       document.getElementById("montoInicial").value = res.inicial.monto_inicial;
@@ -1525,7 +1528,6 @@ function registrarPermisos(e) {
   http.send(new FormData(frm));
   http.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-      console.log(this.responseText);
       const res = JSON.parse(this.responseText);
       if (res.msg != "") {
         alerttime(res.msg, res.icono);
@@ -1559,7 +1561,6 @@ function registrarProveedor() {
     http.send(new FormData(frm));
     http.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
-        console.log(this.responseText);
         const res = JSON.parse(this.responseText);
         if (res == "si") {
           alerta("Proveedor", "registrado");
@@ -1641,13 +1642,18 @@ window.addEventListener('load', function () {
     http.send();
     http.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
-        console.log(this.responseText);
         const res = JSON.parse(this.responseText);
         if (res == "") {
           Swal.fire("Alerta", "Caja cerrada", "warning");
         }
       }
     }
+    CargarDetallesVnt();
+    CargarDetallesVntAir();
+  }
+  if (window.location.pathname == "/sistema-ecofrio/Compras" || window.location.pathname == "/sistema-ecofrio/Compras/aires") {
+    CargarDetallesCmp();
+    CargarDetallesCmpAir();
   }
 });
 

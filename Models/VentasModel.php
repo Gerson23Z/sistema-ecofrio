@@ -157,15 +157,15 @@ class VentasModel extends Query
         }
         return $res;
     }
-    public function guardarVentaAire($dui, $total, $id_usuario)
+    public function guardarVentaAire($dui, $total, $id_usuario, $id_cliente)
     {
         $verificar = "SELECT * FROM cierre_caja WHERE estado = 1";
         $existe = $this->select($verificar);
         if (empty($existe)) {
             $res = "vacio";
         } else {
-            $sql = "INSERT INTO ventasaires(dui, total, id_usuario) VALUES (?,?,?)";
-            $datos = array($dui, $total, $id_usuario);
+            $sql = "INSERT INTO ventasaires(dui, total, id_usuario, id_cliente) VALUES (?,?,?,?)";
+            $datos = array($dui, $total, $id_usuario, $id_cliente);
             $data = $this->save($sql, $datos);
             if ($data == 1) {
                 $res = "¡OK!";
@@ -211,10 +211,10 @@ class VentasModel extends Query
         }
         return $res;
     }
-    public function registrarDetallesVentaAire(int $id_venta, string $codigo, string $marca, string $capacidad, string $seer, string $precio, int $cantidad, string $subtotal, string $cliente, int $id_usuario)
+    public function registrarDetallesVentaAire(int $id_venta, string $codigo, string $marca, string $capacidad, string $seer, string $precio, int $cantidad, string $subtotal, int $id_cliente, int $id_usuario)
     {
-        $sql = "INSERT INTO detalles_ventasaires(id_venta, codigo, marca, capacidad,seer, precio, cantidad, subtotal, cliente, id_usuario) VALUES (?,?,?,?,?,?,?,?,?,?)";
-        $datos = array($id_venta, $codigo, $marca, $capacidad, $seer, $precio, $cantidad, $subtotal, $cliente, $id_usuario);
+        $sql = "INSERT INTO detalles_ventasaires(id_venta, codigo, marca, capacidad,seer, precio, cantidad, subtotal, id_cliente, id_usuario) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        $datos = array($id_venta, $codigo, $marca, $capacidad, $seer, $precio, $cantidad, $subtotal, $id_cliente, $id_usuario);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
             $res = "¡OK!";
@@ -233,6 +233,12 @@ class VentasModel extends Query
     {
         $sql = "SELECT * FROM inventarioaires WHERE codigo = $codigoProducto";
         $data = $this->selectAll($sql);
+        return $data;
+    }
+    function geiIdCliente($dui)
+    {
+        $sql = "SELECT id AS id_cliente FROM clientes WHERE dui = $dui";
+        $data = $this->select($sql);
         return $data;
     }
     function comprobarCaja()
@@ -297,9 +303,17 @@ class VentasModel extends Query
     }
     public function RegistrarInfoCliente(int $dui, string $nombre, string $telefono, string $direccion)
     {
-        $sql = "INSERT INTO clientes(dui, nombre, telefono, direccion) VALUES (?,?,?,?)";
-        $datos = array($dui, $nombre, $telefono, $direccion);
-        $this->save($sql, $datos);
+        $verificar = "SELECT * FROM clientes WHERE dui = $dui";
+        $existe = $this->select($verificar);
+        if (empty($existe)) {
+            $sql = "INSERT INTO clientes(dui, nombre, telefono, direccion) VALUES (?,?,?,?)";
+            $datos = array($dui, $nombre, $telefono, $direccion);
+            $this->save($sql, $datos);
+        } else {
+            $sql = "UPDATE clientes SET dui = ?,nombre = ?,telefono = ?,direccion = ? WHERE id = ?";
+            $datos = array($dui, $nombre, $telefono, $direccion, $existe['id']);
+            $this->save($sql, $datos);
+        }
     }
     public function getEmpresa()
     {

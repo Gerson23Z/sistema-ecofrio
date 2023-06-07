@@ -70,23 +70,23 @@ function calcularPrecioCompraAire(event) {
   event.preventDefault();
   if (event.which == 13) {
     lista.style.display = "none";
-      const url = base_url + "Compras/ingresarAire";
-      const frm = document.getElementById("frmCompraAires");
-      const http = new XMLHttpRequest();
-      http.open("POST", url, true);
-      http.send(new FormData(frm));
-      http.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          const res = JSON.parse(this.responseText);
-          if (res == "si") {
-            frm.reset();
-            CargarDetallesCmpAir();
-          } else if (res == "modificado") {
-            frm.reset();
-            CargarDetallesCmpAir();
-          }
+    const url = base_url + "Compras/ingresarAire";
+    const frm = document.getElementById("frmCompraAires");
+    const http = new XMLHttpRequest();
+    http.open("POST", url, true);
+    http.send(new FormData(frm));
+    http.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        const res = JSON.parse(this.responseText);
+        if (res == "si") {
+          frm.reset();
+          CargarDetallesCmpAir();
+        } else if (res == "modificado") {
+          frm.reset();
+          CargarDetallesCmpAir();
         }
-      };
+      }
+    };
   }
 }
 
@@ -105,9 +105,9 @@ function CargarDetallesCmpAir() {
         <td>${row['marca']}</td>
         <td>${row['capacidad']}</td>
         <td>${row['seer']}</td>
-        <td>${row['precio']}</td>
+        <td>$${row['precio']}</td>
         <td>${row['cantidad']}</td>
-        <td>${row['subtotal']}</td>
+        <td>$${row['subtotal']}</td>
         <td>
         <button type="button" class="btn btn-danger" type="button" onclick="eliminarDetalleAire('${row['id']}')"><i class="fas fa-trash"></i></button>
 
@@ -159,11 +159,11 @@ function registrarCompraAire() {
         if (this.readyState == 4 && this.status == 200) {
           const res = JSON.parse(this.responseText);
           if (res.msg == "ok") {
-            alerttime("Venta registrada", "success");
+            alerttime("Compra registrada", "success");
             CargarDetallesCmpAir();
           } else if (res == "vacioCompra") {
             alerttime("No hay Compras a registrar", "error");
-          }else {
+          } else {
             alerttime("error", "error");
           }
         }

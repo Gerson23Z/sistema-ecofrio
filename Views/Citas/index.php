@@ -18,9 +18,8 @@
             </div>
             <form id="formulario">
                 <div class="modal-body">
-                <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="dui" id="dui"
-                        onkeyup="clienteClck(event)">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="dui" id="dui" onkeyup="clienteClck(event)">
                         <label for="dui" class="form-label">DUI</label>
                     </div>
                     <div class="form-floating mb-3">

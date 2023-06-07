@@ -25,7 +25,7 @@ class AiresEliminados extends Controller
   {
     $data = $this->model->getAiresEliminados();
     for ($i = 0; $i < count($data); $i++) {
-      $data[$i]['precio'] = '$'.$data[$i]['precio'];
+      $data[$i]['precio'] = '$' . $data[$i]['precio'];
       if ($data[$i]['estado'] == 0) {
         $data[$i]['estado'] = '<span class="badge badge-danger">Eliminado</span>';
         $data[$i]['acciones'] = ' <div>

@@ -25,11 +25,11 @@ class ControlCompletados extends Controller
   {
     $data = $this->model->GetCitasCompletadas();
     for ($i = 0; $i < count($data); $i++) {
-        $fechaCita=$data[$i]['fecha'];
-        $fechaCita = date_create($fechaCita);
-        $data[$i]['fecha_cita'] = date_format($fechaCita,"d-m-Y");
-        $data[$i]['estado'] = '<span class="badge badge-primary">Completado</span>';
-        $data[$i]['acciones'] = '<div><button type="button" class="btn btn-primary" onclick="btnEditarCita(' . $data[$i]['id'] . ')"><i class="fas fa-pen-to-square"></i></button>
+      $fechaCita = $data[$i]['fecha'];
+      $fechaCita = date_create($fechaCita);
+      $data[$i]['fecha_cita'] = date_format($fechaCita, "d-m-Y");
+      $data[$i]['estado'] = '<span class="badge badge-primary">Completado</span>';
+      $data[$i]['acciones'] = '<div><button type="button" class="btn btn-primary" onclick="btnEditarCita(' . $data[$i]['id'] . ')"><i class="fas fa-pen-to-square"></i></button>
             <button type="button" class="btn btn-danger"onclick="btnEliminarCita(' . $data[$i]['id'] . ')"><i class="fas fa-trash"></i></button>
             </div>';
     }

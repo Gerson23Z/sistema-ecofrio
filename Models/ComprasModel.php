@@ -58,9 +58,9 @@ class ComprasModel extends Query
         return $data;
     }
 
-    public function RegistrarDetalle(int $codigo, string $producto, string $precio, int $cantidad, string $subTotal, string $proveedor)
+    public function RegistrarDetalle(int $codigo, string $producto, string $precio, int $cantidad, string $subTotal, int $proveedor)
     {
-        $sql = "INSERT INTO detallescmp(codigo, producto, precio, cantidad, subtotal, proveedor) VALUES (?,?,?,?,?,?)";
+        $sql = "INSERT INTO detallescmp(codigo, producto, precio, cantidad, subtotal, id_proveedor) VALUES (?,?,?,?,?,?)";
         $datos = array($codigo, $producto, $precio, $cantidad, $subTotal, $proveedor);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
@@ -70,9 +70,9 @@ class ComprasModel extends Query
         }
         return $res;
     }
-    public function RegistrarDetalleAire(int $codigo, string $marca, string $capacidad, string $seer, string $precio, int $cantidad, string $subTotal, string $proveedor)
+    public function RegistrarDetalleAire(int $codigo, string $marca, string $capacidad, string $seer, string $precio, int $cantidad, string $subTotal, int $proveedor)
     {
-        $sql = "INSERT INTO detallescmpair(codigo, marca, capacidad, seer, precio, cantidad, subtotal, proveedor) VALUES (?,?,?,?,?,?,?,?)";
+        $sql = "INSERT INTO detallescmpair(codigo, marca, capacidad, seer, precio, cantidad, subtotal, id_proveedor) VALUES (?,?,?,?,?,?,?,?)";
         $datos = array($codigo, $marca, $capacidad, $seer, $precio, $cantidad, $subTotal, $proveedor);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
@@ -82,9 +82,9 @@ class ComprasModel extends Query
         }
         return $res;
     }
-    public function actualizarDetalle(int $codigo, string $producto, string $precio, string $total_cantidad, string $subTotal,string $proveedor, int $id)
+    public function actualizarDetalle(int $codigo, string $producto, string $precio, string $total_cantidad, string $subTotal, int $proveedor, int $id)
     {
-        $sql = "UPDATE detallescmp SET codigo = ?,producto = ?,precio = ?,cantidad = ?,subTotal = ?,proveedor = ? WHERE id = ?";
+        $sql = "UPDATE detallescmp SET codigo = ?,producto = ?,precio = ?,cantidad = ?,subTotal = ?,id_proveedor = ? WHERE id = ?";
         $datos = array($codigo, $producto, $precio, $total_cantidad, $subTotal, $proveedor, $id);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
@@ -94,9 +94,9 @@ class ComprasModel extends Query
         }
         return $res;
     }
-    public function actualizarDetalleAire(int $codigo, string $marca, string $capacidad, string $seer, string $precio, string $total_cantidad, string $subTotal,string $proveedor, int $id)
+    public function actualizarDetalleAire(int $codigo, string $marca, string $capacidad, string $seer, string $precio, string $total_cantidad, string $subTotal, int $proveedor, int $id)
     {
-        $sql = "UPDATE detallescmpair SET codigo = ?,marca = ?,capacidad = ?,seer = ?,precio = ?,cantidad = ?,subTotal = ?,proveedor = ? WHERE id = ?";
+        $sql = "UPDATE detallescmpair SET codigo = ?,marca = ?,capacidad = ?,seer = ?,precio = ?,cantidad = ?,subTotal = ?,id_proveedor = ? WHERE id = ?";
         $datos = array($codigo, $marca, $capacidad, $seer, $precio, $total_cantidad, $subTotal, $proveedor, $id);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
@@ -180,9 +180,9 @@ class ComprasModel extends Query
         $data = $this->select($sql);
         return $data;
     }
-    public function registrarDetallesCompra(int $codigo, string $producto, string $precio, int $cantidad, string $subtotal, string $proveedor)
+    public function registrarDetallesCompra(int $codigo, string $producto, string $precio, int $cantidad, string $subtotal, int $proveedor)
     {
-        $sql = "INSERT INTO detalles_compras(codigo, producto, precio, cantidad, subtotal, proveedor) VALUES (?,?,?,?,?,?)";
+        $sql = "INSERT INTO detalles_compras(codigo, producto, precio, cantidad, subtotal, id_proveedor) VALUES (?,?,?,?,?,?)";
         $datos = array($codigo, $producto, $precio, $cantidad, $subtotal, $proveedor);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
@@ -192,9 +192,9 @@ class ComprasModel extends Query
         }
         return $res;
     }
-    public function registrarDetallesCompraAire(int $codigo, string $marca, string $capacidad, string $seer, string $precio, int $cantidad, string $subtotal, string $proveedor)
+    public function registrarDetallesCompraAire(int $codigo, string $marca, string $capacidad, string $seer, string $precio, int $cantidad, string $subtotal, int $proveedor)
     {
-        $sql = "INSERT INTO detalles_comprasaires(codigo, marca, capacidad, seer, precio, cantidad, subtotal, proveedor) VALUES (?,?,?,?,?,?,?,?)";
+        $sql = "INSERT INTO detalles_comprasaires(codigo, marca, capacidad, seer, precio, cantidad, subtotal, id_proveedor) VALUES (?,?,?,?,?,?,?,?)";
         $datos = array($codigo, $marca, $capacidad, $seer, $precio, $cantidad, $subtotal, $proveedor);
         $data = $this->save($sql, $datos);
         if ($data == 1) {

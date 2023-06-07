@@ -26,13 +26,13 @@
     <div class="card-body">
         <form id="frmVentas">
             <div class="row">
-            <div class="col-md-2">
+                <div class="col-md-2">
                     <div class="form-group">
                         <input type="hidden" id="id" name="id">
                         <label for="txtCodigo">Codigo</label>
                         <input id="txtCodigo" class="form-control" type="text" name="txtCodigo" autocomplete="off"
                             onkeyup="getCodigosVentas(event)">
-                            <ul id="lista"></ul>
+                        <ul id="lista"></ul>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -52,7 +52,6 @@
                     <div class="form-group">
                         <label for="txtPrecio">Precio</label>
                         <input id="txtPrecio" class="form-control" type="text" name="txtPrecio" disabled>
-                        <span class="simbolo">$</span>
                     </div>
                 </div>
                 <div class="col-md-2 float-right">
@@ -65,21 +64,12 @@
                     <div class="form-group">
                         <label for="txtSubTotal">Sub total</label>
                         <input id="txtSubTotal" class="form-control" type="text" name="txtSubTotal" disabled>
-                        <span class="simbolo">$</span>
                     </div>
                 </div>
             </div>
         </form>
     </div>
 </div>
-<style>
-    .simbolo {
-        position: absolute;
-        top: 60%;
-        left: 200px;
-        transform: translateY(-50%);
-    }
-</style>
 
 <table class="table table-light table-bordered table-hover">
     <thead class="table-success">

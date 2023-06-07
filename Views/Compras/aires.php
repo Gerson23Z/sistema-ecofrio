@@ -53,7 +53,6 @@
                         <label for="txtPrecio">Precio</label>
                         <input id="txtPrecio" class="form-control" type="text" name="txtPrecio"
                             onkeyup="calcularPrecioCompraAire(event)">
-                        <span class="simbolo">$</span>
                     </div>
                 </div>
                 <div class="col-md-2 float-right">
@@ -66,7 +65,7 @@
                     <label for="slctProveedor">Proveedor</label>
                     <select name="slctProveedor" class="form-select">
                         <?php foreach ($data as $row) { ?>
-                            <option value="<?php echo $row['nombre']; ?>"><?php echo $row['nombre']; ?></option>
+                            <option value="<?php echo $row['id']; ?>"><?php echo $row['nombre']; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -74,14 +73,6 @@
         </form>
     </div>
 </div>
-<style>
-    .simbolo {
-        position: absolute;
-        top: 60%;
-        left: 200px;
-        transform: translateY(-50%);
-    }
-</style>
 
 <table class="table table-light table-bordered table-hover">
     <thead class="table-success">

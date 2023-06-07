@@ -9,7 +9,7 @@
 <table class="table table-light" id="tblRespuestosEliminados">
     <thead class="table-success">
         <tr>
-        <th>Id</th>
+            <th>Id</th>
             <th>Codigo</th>
             <th>Producto</th>
             <th>Marca</th>

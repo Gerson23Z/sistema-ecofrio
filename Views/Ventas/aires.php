@@ -5,22 +5,23 @@
         <h4>Venta de Aire Acondicionado</h4>
     </div>
 
-<style>
-.item-lista {
-  /* Estilos personalizados */
-  background-color: #f2f2f2;
-  color: #333;
-  padding: 5px 10px;
-  cursor: pointer;
-  list-style-type: none; /* Quitar las viñetas */
-  margin: 0;
-}
+    <style>
+        .item-lista {
+            /* Estilos personalizados */
+            background-color: #f2f2f2;
+            color: #333;
+            padding: 5px 10px;
+            cursor: pointer;
+            list-style-type: none;
+            /* Quitar las viñetas */
+            margin: 0;
+        }
 
-.item-lista:hover {
-  /* Estilos al pasar el cursor por encima */
-  background-color: #ddd;
-}
-</style>
+        .item-lista:hover {
+            /* Estilos al pasar el cursor por encima */
+            background-color: #ddd;
+        }
+    </style>
 
     <div class="card-body">
         <form id="frmAires">
@@ -31,7 +32,7 @@
                         <label for="txtCodigo">Codigo</label>
                         <input id="txtCodigo" class="form-control" type="text" name="txtCodigo" autocomplete="off"
                             onkeyup="getCodigosAires(event)">
-                            <ul id="lista"></ul>
+                        <ul id="lista"></ul>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -51,7 +52,6 @@
                     <div class="form-group">
                         <label for="txtPrecio">Precio</label>
                         <input id="txtPrecio" class="form-control" type="text" name="txtPrecio" disabled>
-                        <span class="simbolo">$</span>
                     </div>
                 </div>
                 <div class="col-md-2 float-right">
@@ -64,20 +64,11 @@
                     <div class="form-group">
                         <label for="txtSubTotal">Sub total</label>
                         <input id="txtSubTotal" class="form-control" type="text" name="txtSubTotal" disabled>
-                        <span class="simbolo">$</span>
                     </div>
                 </div>
             </div>
     </div>
 </div>
-<style>
-    .simbolo {
-        position: absolute;
-        top: 60%;
-        left: 200px;
-        transform: translateY(-50%);
-    }
-</style>
 
 <table class="table table-light table-bordered table-hover">
     <thead class="table-success">

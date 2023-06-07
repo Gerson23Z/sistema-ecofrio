@@ -25,8 +25,8 @@ class UsuariosEliminados extends Controller
   {
     $data = $this->model->getUsuariosEliminados();
     for ($i = 0; $i < count($data); $i++) {
-        $data[$i]['estado'] = '<span class="badge badge-danger">Inactivo</span>';
-        $data[$i]['acciones'] = ' <div>
+      $data[$i]['estado'] = '<span class="badge badge-danger">Inactivo</span>';
+      $data[$i]['acciones'] = ' <div>
         <button type="button" class="btn btn-success" type="button" onclick="btnReingresarUsuario(' . $data[$i]['id'] . ')"><i class="fas fa-rotate-left"></i></button>
         </div> ';
     }

@@ -28,13 +28,14 @@ class Query extends Conexion
   }
 
   public function selectCo(string $sql, array $params = [])
-{
+  {
     $stmt = $this->con->prepare($sql);
     $stmt->execute($params);
     return $stmt;
-}
+  }
 
-  public function save(string $sql, array $datos){
+  public function save(string $sql, array $datos)
+  {
     $this->sql = $sql;
     $this->datos = $datos;
     $insert = $this->con->prepare($this->sql);

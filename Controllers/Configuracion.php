@@ -28,7 +28,7 @@ class Configuracion extends Controller
             $data = $this->model->getCajas();
             $this->Views->getView($this, "caja", $data);
         } else {
-          header("location:" . base_url . "Errors/permisos");
+            header("location:" . base_url . "Errors/permisos");
         }
     }
 
@@ -66,7 +66,7 @@ class Configuracion extends Controller
         $id = $_POST['id'];
         $montoInicial = $_POST['montoIncial'];
         $montoInicial = str_replace("$", "", $montoInicial);
-        $fechaApertura = date('Y-m-d');
+        $fechaApertura = date('Y-m-d H:i:s');
         $id_usuario = $_SESSION['id'];
         if (empty($montoInicial)) {
             $msg = array('msg' => 'todos los campos son requeridos', 'estado' => false);
@@ -103,6 +103,13 @@ class Configuracion extends Controller
     {
         $data = $this->model->getCajas();
         for ($i = 0; $i < count($data); $i++) {
+            $fechaApertura = date_create($data[$i]['fecha_apertura']);
+            $data[$i]['fecha_apertura'] = date_format($fechaApertura, "d-m-Y H:i:s");
+            $fechaCierre = date_create($data[$i]['fecha_cierre']);
+            $data[$i]['fecha_cierre'] = date_format($fechaCierre, "d-m-Y H:i:s");
+            if($data[$i]['fecha_cierre']=="30-11--0001 00:00:00"){
+                $data[$i]['fecha_cierre'] = "00-00-0000";
+            }
             if ($data[$i]['estado'] == 1) {
                 $data[$i]['estado'] = '<span class="badge badge-success">Abierta</span>';
             } else {
@@ -112,10 +119,7 @@ class Configuracion extends Controller
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();
     }
-    function cerrar()
-    {
 
-    }
     public function ventas()
     {
         $id_usuario = $_SESSION['id'];

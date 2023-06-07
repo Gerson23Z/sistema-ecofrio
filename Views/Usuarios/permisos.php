@@ -98,7 +98,7 @@ debemos poner definir este valor.
                     <?php foreach ($data['datos'] as $row) { ?>
                         <div class="col-md-4">
                             <label class="content-input">
-                                <input type="checkbox" name="permisos[]" id="" value="<?php echo $row['id']; ?>" <?php echo isset($data['asignados'][$row['id']]) ? 'checked' : '' ?> >
+                                <input type="checkbox" name="permisos[]" id="" value="<?php echo $row['id']; ?>" <?php echo isset($data['asignados'][$row['id']]) ? 'checked' : '' ?>>
                                 <i></i>
                                 <span>
                                     <?php echo $row['permiso']; ?>
@@ -114,4 +114,4 @@ debemos poner definir este valor.
         </div>
     </div>
 </div>
-    <?php include "Views/Templates/footer.php"; ?>
+<?php include "Views/Templates/footer.php"; ?>

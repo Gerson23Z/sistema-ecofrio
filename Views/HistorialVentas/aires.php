@@ -11,6 +11,7 @@
             <th>#</th>
             <th>Total</th>
             <th>Fecha</th>
+            <th>Cliente</th>
             <th>Usuario</th>
             <th></th>
         </tr>

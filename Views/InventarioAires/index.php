@@ -42,7 +42,7 @@
             </div>
             <div class="modal-body">
                 <form method="post" id="frmAires">
-                <div class="form-group">
+                    <div class="form-group">
                         <label for="codigo">Codigo</label>
                         <input id="codigo" class="form-control" type="text" name="codigo">
                     </div>

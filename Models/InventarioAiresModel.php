@@ -26,7 +26,7 @@ class InventarioAiresModel extends Query
     $this->cantidad = $cantidad;
 
     $sql = "INSERT INTO inventarioaires(codigo, marca, capacidad, seer, voltaje, modelo,  caracteristica, precio, cantidad, estado) VALUES (?,?,?,?,?,?,?,?,?,?)";
-    $datos = array($this->codigo,$this->marca, $this->capacidad, $this->seer, $this->voltaje, $this->modelo, $this->caracteristica, $this->precio, $this->cantidad, 1);
+    $datos = array($this->codigo, $this->marca, $this->capacidad, $this->seer, $this->voltaje, $this->modelo, $this->caracteristica, $this->precio, $this->cantidad, 1);
     $data = $this->save($sql, $datos);
     if ($data == 1) {
       $res = "¡OK!";
@@ -50,7 +50,7 @@ class InventarioAiresModel extends Query
     $this->cantidad = $cantidad;
 
     $sql = "UPDATE inventarioaires SET codigo = ?,marca = ?,capacidad = ?,seer = ?,voltaje = ?,modelo = ?,caracteristica = ?,precio = ?, cantidad = ? WHERE id = ?";
-    $datos = array($this->codigo,$this->marca, $this->capacidad, $this->seer, $this->voltaje, $this->modelo, $this->caracteristica, $this->precio, $this->cantidad, $this->id);
+    $datos = array($this->codigo, $this->marca, $this->capacidad, $this->seer, $this->voltaje, $this->modelo, $this->caracteristica, $this->precio, $this->cantidad, $this->id);
     $data = $this->save($sql, $datos);
     if ($data == 1) {
       $res = "modificado";
@@ -77,9 +77,9 @@ class InventarioAiresModel extends Query
   }
   public function verificarPermiso(int $id_usuario, string $nombre)
   {
-      $sql = "SELECT p.id, p.permiso, d.id, d.id_usuario, d.id_permiso FROM permisos p INNER JOIN detalle_permisos d ON p.id = d.id_permiso WHERE d.id_usuario = $id_usuario AND p.permiso = '$nombre'";
-      $data = $this->selectAll($sql);
-      return $data;
+    $sql = "SELECT p.id, p.permiso, d.id, d.id_usuario, d.id_permiso FROM permisos p INNER JOIN detalle_permisos d ON p.id = d.id_permiso WHERE d.id_usuario = $id_usuario AND p.permiso = '$nombre'";
+    $data = $this->selectAll($sql);
+    return $data;
   }
 }
 ?>

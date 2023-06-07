@@ -36,8 +36,21 @@ class ClientesModel extends Query
             } else {
                 $res = "error";
             }
-        }else{
-            $res = "existe";
+        } else {
+            $verificar = "SELECT * FROM clientes WHERE id = '$this->id'";
+            $existe = $this->select($verificar);
+            if ($existe['dui'] == $dui) {
+                $sql = "UPDATE clientes SET dui = ?,nombre = ?,telefono = ?,direccion = ? WHERE id = ?";
+                $datos = array($this->dui, $this->nombre, $this->telefono, $this->direccion, $this->id);
+                $data = $this->save($sql, $datos);
+                if ($data == 1) {
+                    $res = "modificado";
+                } else {
+                    $res = "error";
+                }
+            } else {
+                $res = "existe";
+            }
         }
         return $res;
     }

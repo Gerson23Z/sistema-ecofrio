@@ -87,7 +87,7 @@
             </div>
             <div class="card-footer bg-info text-white d-flex align-items-center justify-content-between">
                 <span>
-                    <?php echo  '$ '.$data['gananciastotales']; ?>
+                    <?php echo '$ ' . $data['gananciastotales']; ?>
                 </span>
             </div>
         </div>

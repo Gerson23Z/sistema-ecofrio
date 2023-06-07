@@ -42,7 +42,8 @@
                     </div>
                     <div class="form-group">
                         <label for="txtApellido">Apellido</label>
-                        <input id="txtApellido" class="form-control" type="text" name="txtApellido" placeholder="Apellido">
+                        <input id="txtApellido" class="form-control" type="text" name="txtApellido"
+                            placeholder="Apellido">
                     </div>
                     <div class="form-group">
                         <label for="txtUsuario">Usuario</label>
@@ -62,7 +63,8 @@
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary" type="button" onclick="registrarUser(event)" id="btnId">Registrar</button>
+                    <button class="btn btn-primary" type="button" onclick="registrarUser(event)"
+                        id="btnId">Registrar</button>
                     <button class="btn btn-danger" type="button" data-dismiss="modal">Cancelar</button>
                 </form>
             </div>

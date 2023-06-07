@@ -25,7 +25,7 @@ class InventarioRespuestos extends Controller
   {
     $data = $this->model->getInventarioRespuestos();
     for ($i = 0; $i < count($data); $i++) {
-      $data[$i]['precio'] = '$'.$data[$i]['precio'];
+      $data[$i]['precio'] = '$' . $data[$i]['precio'];
       $fechaCita = $data[$i]['fecha'];
       $fechaCita = date_create($fechaCita);
       $data[$i]['fecha_cita'] = date_format($fechaCita, "d-m-Y");

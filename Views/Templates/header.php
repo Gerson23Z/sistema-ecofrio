@@ -8,19 +8,19 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <!-- Bootstrap CSS -->
+
     <link href="<?php echo base_url; ?>Assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo base_url; ?>Assets/css/main.min.css" rel="stylesheet">
 
     <title>Sistema</title>
 
-    <!-- Custom fonts for this template-->
+
     <link href="<?php echo base_url; ?>Assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="<?php echo base_url; ?>Assets/css.css" rel="stylesheet">
     <link href="<?php echo base_url; ?>Assets/DataTables/datatables.min.css" rel="stylesheet">
     <link href="<?php echo base_url; ?>Assets/css/select2.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this template-->
+
     <link href="<?php echo base_url; ?>Assets/css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
         integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
@@ -30,21 +30,18 @@
 
 <body id="page-top">
 
-    <!-- Page Wrapper -->
+
     <div id="wrapper">
-        <!-- Sidebar -->
+
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center"
                 href="<?php echo base_url . "Principal" ?>">
                 <div class="sidebar-brand-text mx-3">Ecofrio</div>
             </a>
 
-            <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Divider -->
             <hr class="sidebar-divider">
 
             <li class="nav-item">
@@ -53,7 +50,6 @@
                     <span>Inicio</span></a>
             </li>
 
-            <!-- Heading -->
             <div class="sidebar-heading">
                 Caja
             </div>
@@ -161,10 +157,8 @@
                 </div>
             </li>
 
-            <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Heading -->
             <div class="sidebar-heading">
                 Administrar
             </div>
@@ -189,39 +183,26 @@
                 </div>
             </li>
 
-            <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
-            <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
 
         </ul>
-        <!-- End of Sidebar -->
 
-        <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
-            <!-- Main Content -->
             <div id="content">
 
-                <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-                    <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-
-
-
                         <div class="topbar-divider d-none d-sm-block"></div>
-
-                        <!-- usuario informacion -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -232,7 +213,6 @@
                                 <img class="img-profile rounded-circle"
                                     src="<?php echo base_url; ?>Assets/img/undraw_profile.svg">
                             </a>
-                            <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="<?php echo base_url; ?>Usuarios/salir">
@@ -241,9 +221,7 @@
                                 </a>
                             </div>
                         </li>
-
                     </ul>
 
                 </nav>
-                <!-- End of Topbar -->
                 <div class="container-fluid">

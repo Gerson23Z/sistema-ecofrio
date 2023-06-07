@@ -228,10 +228,11 @@ class Ventas extends Controller
             if (empty($dui) || empty($nombre) || empty($telefono) || empty($direccion)) {
                 $msg = 'vacio';
             } else {
-                $this->model->RegistrarInfoCliente($dui, $nombre, $telefono, $direccion);
                 $datos = $this->model->calcularVentaAire()['total'];
                 $id_usuario = $_SESSION['id'];
-                $data = $this->model->guardarVentaAire($dui, $datos, $id_usuario);
+                $this->model->RegistrarInfoCliente($dui, $nombre, $telefono, $direccion);
+                $id_cliente = $this->model->geiIdCliente($dui);
+                $data = $this->model->guardarVentaAire($dui, $datos, $id_usuario, $id_cliente['id_cliente']);
                 if ($data == "¡OK!") {
                     $id_venta = $this->model->getIdVentaAire();
                     $detalles = $this->model->getDetallesAire();
@@ -243,7 +244,7 @@ class Ventas extends Controller
                         $precio = $row['precio'];
                         $cantidad = $row['cantidad'];
                         $subtotal = $precio * $cantidad;
-                        $this->model->registrarDetallesVentaAire($id_venta['id'], $codigo, $marca, $capacidad, $seer, $precio, $cantidad, $subtotal, $nombre, $id_usuario);
+                        $this->model->registrarDetallesVentaAire($id_venta['id'], $codigo, $marca, $capacidad, $seer, $precio, $cantidad, $subtotal, $id_cliente['id_cliente'], $id_usuario);
                         $codigoProducto = $row['codigo'];
                         $stockActual = $this->model->GetAires($codigoProducto);
                         $stock = $stockActual[0]['cantidad'] - $cantidad;
@@ -323,8 +324,10 @@ class Ventas extends Controller
         }
         $pdf->SetFont('Arial', 'B', 9);
         $pdf->Cell(10, 5, '------------------------------------------------------------------', 0, 1, 'L');
-        $pdf->Cell(70, 5, 'Total a pagar:', 0, 1, 'R');
-        $pdf->Cell(70, 5, '$' . number_format($total, 2, '.', ','), 0, 1, 'R');
+        $pdf->Cell(70, 5, 'Total a pagar: ' . '$' . number_format($total, 2, '.', ','), 0, 1, 'R');
+        $pdf->Ln();
+        $pdf->Cell(70, 5, 'IVA: ' . '$' . number_format($total * 0.13, 2, '.', ','), 0, 1, 'R');
+        $pdf->Cell(70, 5, 'Total (IVA Incluido): ' . '$' . number_format($total + ($total * 0.13), 2, '.', ','), 0, 1, 'R');
         $pdf->Ln();
         $pdf->SetFont('Arial', '', 9);
         $pdf->Cell(65, 10, utf8_decode($data['mensaje']), 0, 1, 'C');
@@ -365,7 +368,9 @@ class Ventas extends Controller
             $total = $total + $row['subtotal'];
         }
         $pdf->Ln();
-        $pdf->Cell(150, 70, '$' . number_format($total, 2, '.', ','), 0, 0, 'R');
+        $pdf->Cell(150, 5, '$' . number_format($total, 2, '.', ','), 0, 1, 'R');
+        $pdf->Cell(150, 10, '$' . number_format($total*0.13, 2, '.', ','), 0, 1, 'R');
+        $pdf->Cell(150, 0, '$' . number_format($total+($total*0.13), 2, '.', ','), 0, 0, 'R');
         $pdf->Output();
     }
 }

@@ -1,18 +1,18 @@
-document.addEventListener("DOMContentLoaded", function (){
-    const url = base_url + "Configuracion/mostrar/" + 1;
-    const http = new XMLHttpRequest();
-    http.open("GET", url, true);
-    http.send();
-    http.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        const res = JSON.parse(this.responseText);
-        document.getElementById("nombre").value = res.nombre;
-        document.getElementById("direccion").value = res.direccion;
-        document.getElementById("telefono").value = res.telefono;
-        document.getElementById("dueno").value = res.dueno;
-        document.getElementById("mensaje").value = res.mensaje;
-      }
-    };
+document.addEventListener("DOMContentLoaded", function () {
+  const url = base_url + "Configuracion/mostrar/" + 1;
+  const http = new XMLHttpRequest();
+  http.open("GET", url, true);
+  http.send();
+  http.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      const res = JSON.parse(this.responseText);
+      document.getElementById("nombre").value = res.nombre;
+      document.getElementById("direccion").value = res.direccion;
+      document.getElementById("telefono").value = res.telefono;
+      document.getElementById("dueno").value = res.dueno;
+      document.getElementById("mensaje").value = res.mensaje;
+    }
+  };
 });
 
 function actualizar(event) {
@@ -42,12 +42,12 @@ function actualizar(event) {
         if (this.readyState == 4 && this.status == 200) {
           const res = JSON.parse(this.responseText);
           if (res == "modificado") {
-            alerttime("informacion editada","success");
-            setTimeout(function() {
+            alerttime("informacion editada", "success");
+            setTimeout(function () {
               location.reload();
             }, 2000);
           } else {
-            alerttime("error","error");
+            alerttime("error", "error");
           }
         }
       };

@@ -12,8 +12,8 @@ class Principal extends Controller
     {
         $this->Views->getView($this, "index");
     }
-    public function reportes()
-    {
+    public function reportes(
+    ) {
         $data['usuarios'] = $this->model->getDatos('usuarios');
         $data['ventas'] = $this->model->getDatos('ventas');
         $data['ventasaires'] = $this->model->getDatos('ventasaires');

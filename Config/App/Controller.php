@@ -5,6 +5,7 @@ class Controller
   {
     $this->Views = new Views();
     $this->cargarModel();
+    date_default_timezone_set('America/El_Salvador');
   }
   public function cargarModel()
   {

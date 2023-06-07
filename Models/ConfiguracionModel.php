@@ -67,7 +67,7 @@ class ConfiguracionModel extends Query
     public function actualizarArqueo($id_usuario, $montoFinal, $fechaCierre, $totalVentas, $general, $id)
     {
         $sql = "UPDATE cierre_caja SET id_usuario = ?,monto_final = ?,fecha_cierre = ?,total_ventas = ?,monto_total=?, estado = ? WHERE id = ?";
-        $datos = array($id_usuario, $montoFinal, $fechaCierre, $totalVentas, $general,0, $id);
+        $datos = array($id_usuario, $montoFinal, $fechaCierre, $totalVentas, $general, 0, $id);
         $data = $this->save($sql, $datos);
         $sql = "UPDATE ventas SET apertura = ? WHERE id_usuario = ? AND apertura = 1";
         $datos = array(0, $id_usuario);

@@ -126,7 +126,6 @@ document.addEventListener('DOMContentLoaded', function () {
           };
         }
       }
-
     }
   })
   eliminar.addEventListener("click", function () {
@@ -180,7 +179,6 @@ function clienteClck(event) {
         } else {
           document.getElementById("nombre").value = res[0].nombre;
           document.getElementById("telefono").value = res[0].telefono;
-          document.getElementById("direccion").value = res[0].direccion;
         }
       }
     }
