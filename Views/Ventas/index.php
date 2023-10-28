@@ -76,6 +76,7 @@
         <tr>
             <th>Codigo</th>
             <th>Nombre</th>
+            <th>Marca</th>
             <th>Precio</th>
             <th>Cantidad</th>
             <th>Sub total</th>

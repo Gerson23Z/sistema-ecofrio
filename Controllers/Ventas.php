@@ -78,6 +78,7 @@ class Ventas extends Controller
         $datos = $this->model->GetProducto($id);
         $codigo = $datos[0]['codigo'];
         $producto = $datos[0]['producto'];
+        $marca = $datos[0]['marca'];
         $precio = $datos[0]['precio'];
         $cantidad = $_POST['txtCantidad'];
         if ($datos[0]['unidades'] < $cantidad) {
@@ -86,7 +87,7 @@ class Ventas extends Controller
             $comprobar = $this->model->comprobarDetalle($datos[0]['codigo']);
             if (empty($comprobar)) {
                 $subTotal = $precio * $cantidad;
-                $data = $this->model->RegistrarDetalle($codigo, $producto, $precio, $cantidad, $subTotal);
+                $data = $this->model->RegistrarDetalle($codigo, $producto, $marca, $precio, $cantidad, $subTotal);
                 if ($data == "¡OK!") {
                     $msg = "si";
                 } else {
@@ -195,10 +196,11 @@ class Ventas extends Controller
                 foreach ($detalles as $row) {
                     $codigo = $row['codigo'];
                     $producto = $row['producto'];
+                    $marca = $row['marca'];
                     $precio = $row['precio'];
                     $cantidad = $row['cantidad'];
                     $subtotal = $precio * $cantidad;
-                    $this->model->registrarDetallesVenta($id_venta['id'], $codigo, $producto, $precio, $cantidad, $subtotal, $id_usuario);
+                    $this->model->registrarDetallesVenta($id_venta['id'], $codigo, $producto, $marca, $precio, $cantidad, $subtotal, $id_usuario);
                     $codigoProducto = $row['codigo'];
                     $stockActual = $this->model->GetProductos($codigoProducto);
                     $stock = $stockActual[0]['unidades'] - $cantidad;
@@ -317,7 +319,8 @@ class Ventas extends Controller
         $pdf->SetFont('Arial', '', 9);
         foreach ($productosCompras as $row) {
             $pdf->Cell(10, 5, $row['cantidad'], 0, 0, 'L');
-            $pdf->Cell(33, 5, utf8_decode($row['producto']), 0, 0, 'L');
+            $pdf->Cell(18, 5, utf8_decode($row['producto']), 0, 0, 'L');
+            $pdf->Cell(15, 5, utf8_decode($row['marca']), 0, 0, 'L');
             $pdf->Cell(12, 5, '$' . number_format($row['precio'], 2, '.', ','), 0, 0, 'L');
             $pdf->Cell(15, 5, '$' . number_format($row['subtotal'], 2, '.', ','), 0, 1, 'L');
             $total = $total + $row['subtotal'];
@@ -328,6 +331,9 @@ class Ventas extends Controller
         $pdf->Ln();
         $pdf->Cell(70, 5, 'IVA: ' . '$' . number_format($total * 0.13, 2, '.', ','), 0, 1, 'R');
         $pdf->Cell(70, 5, 'Total (IVA Incluido): ' . '$' . number_format($total + ($total * 0.13), 2, '.', ','), 0, 1, 'R');
+        $pdf->Cell(70, 5, 'Sub total Gravado: ' . '$' . number_format($total, 2, '.', ','), 0, 1, 'R');
+        $pdf->Cell(70, 5, 'Sub total Exento: $0.00', 0, 1, 'R');
+        $pdf->Cell(70, 5, 'Sub total No sujeto: $0.00', 0, 1, 'R');
         $pdf->Ln();
         $pdf->SetFont('Arial', '', 9);
         $pdf->Cell(65, 10, utf8_decode($data['mensaje']), 0, 1, 'C');
@@ -364,13 +370,17 @@ class Ventas extends Controller
             $pdf->Cell(16, 10, utf8_decode($row['capacidad']), 0, 0, 'L');
             $pdf->Cell(8, 10, "seer: ", 0, 0, 'L');
             $pdf->Cell(18, 10, utf8_decode($row['seer']), 0, 0, 'L');
-            $pdf->Cell(0, 10, '$' . number_format($row['precio'], 2, '.', ','), 0, 1, 'L');
+            $pdf->Cell(18, 10, '$' . number_format($row['precio'], 2, '.', ','), 0, 0, 'L');
+            $pdf->Cell(0, 10, '$' . number_format($row['precio']*$row['cantidad'], 2, '.', ','), 0, 1, 'L');
             $total = $total + $row['subtotal'];
         }
         $pdf->Ln();
         $pdf->Cell(150, 5, '$' . number_format($total, 2, '.', ','), 0, 1, 'R');
         $pdf->Cell(150, 10, '$' . number_format($total*0.13, 2, '.', ','), 0, 1, 'R');
-        $pdf->Cell(150, 0, '$' . number_format($total+($total*0.13), 2, '.', ','), 0, 0, 'R');
+        $pdf->Cell(150, 5, '$' . number_format($total+($total*0.13), 2, '.', ','), 0, 1, 'R');
+        $pdf->Cell(150, 10, '$0.00', 0, 1, 'R');
+        $pdf->Cell(150, 0, '$0.00', 0, 1, 'R');
+        $pdf->Cell(150, 10, '$' . number_format($total, 2, '.', ','), 0, 1, 'R');
         $pdf->Output();
     }
 }

@@ -55,10 +55,10 @@ class VentasModel extends Query
         $data = $this->select($sql);
         return $data;
     }
-    public function RegistrarDetalle(int $codigo, string $producto, string $precio, int $cantidad, string $subTotal)
+    public function RegistrarDetalle(int $codigo, string $producto, string $marca, string $precio, int $cantidad, string $subTotal)
     {
-        $sql = "INSERT INTO detallesvnt(codigo, producto, precio, cantidad, subtotal) VALUES (?,?,?,?,?)";
-        $datos = array($codigo, $producto, $precio, $cantidad, $subTotal);
+        $sql = "INSERT INTO detallesvnt(codigo, producto, marca, precio, cantidad, subtotal) VALUES (?,?,?,?,?,?)";
+        $datos = array($codigo, $producto, $marca, $precio, $cantidad, $subTotal);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
             $res = "¡OK!";
@@ -199,10 +199,10 @@ class VentasModel extends Query
         $data = $this->selectAll($sql);
         return $data;
     }
-    public function registrarDetallesVenta(int $id_venta, string $codigo, string $producto, string $precio, int $cantidad, string $subtotal, string $id_usuario)
+    public function registrarDetallesVenta(int $id_venta, string $codigo, string $producto, string $marca, string $precio, int $cantidad, string $subtotal, string $id_usuario)
     {
-        $sql = "INSERT INTO detalles_ventas(id_venta, codigo, producto, precio, cantidad, subtotal, id_usuario) VALUES (?,?,?,?,?,?,?)";
-        $datos = array($id_venta, $codigo, $producto, $precio, $cantidad, $subtotal, $id_usuario);
+        $sql = "INSERT INTO detalles_ventas(id_venta, codigo, producto, marca, precio, cantidad, subtotal, id_usuario) VALUES (?,?,?,?,?,?,?,?)";
+        $datos = array($id_venta, $codigo, $producto, $marca, $precio, $cantidad, $subtotal, $id_usuario);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
             $res = "¡OK!";

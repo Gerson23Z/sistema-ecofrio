@@ -37,7 +37,7 @@
                                 <div class="p-5">
                                     <div class="text-center">
                                         <div id="tit">
-                                            <h1 class="h4 text-gray-900 mb-4">Binvenido a</h1>
+                                            <h1 class="h4 text-gray-900 mb-4">Bienvenido a</h1>
                                             <h1 class="h4 text-success mb-4"> Eco</h1>
                                             <h1 class="h4 text-primary mb-4">frio</h1>
                                         </div>
